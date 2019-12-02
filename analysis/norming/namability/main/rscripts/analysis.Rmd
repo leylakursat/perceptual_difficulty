@@ -1,0 +1,68 @@
+---
+title: "Perceptual Difficulty - Norming for Namability"
+output: rmarkdown::github_document
+#output:
+  #html_document: default
+  #pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r data import, include=FALSE}
+library(tidyverse)
+theme_set(theme_bw())
+
+df = read.csv("../data/trials_merged.csv", header = TRUE)
+demo = read.csv("../data/subject_info_merged.csv", header = TRUE)
+
+df$cresponse = str_to_lower(gsub(" ", "", df$response))
+df$cresponse = str_to_lower(gsub("\n", "", df$cresponse))
+```
+
+```{r responses, include=FALSE}
+responses = df %>%
+  filter(str_detect(utterance,"bot_check", negate = TRUE)) %>%
+  group_by(object,cresponse) %>%
+  summarize(count=n()) %>%
+  mutate(utt = str_split(object, "_")[[1]][1])
+
+df_split <- split(responses, responses$utt)
+
+plot_df_subset = function(df_subset, utt){
+  ggplot(df_subset,aes(x=reorder(cresponse, -count), y=count))+
+  geom_bar(stat="identity", fill="steelblue")+
+  facet_wrap(~object, scales="free") +
+  labs(title = utt) +
+  theme(axis.text.x=element_text(angle = 60, size=8, hjust = 1), plot.title = element_text(face="bold", hjust = 0.5, size=20),axis.title.x=element_blank())
+}
+
+```
+
+```{r objects, echo=FALSE}
+plot_df_subset(df_split[["bag"]],"Bag")
+plot_df_subset(df_split[["ball"]],"Ball")
+plot_df_subset(df_split[["boots"]],"Boots")
+plot_df_subset(df_split[["bottle"]],"Bottle")
+plot_df_subset(df_split[["bowl"]],"Bowl")
+plot_df_subset(df_split[["box"]],"Box")
+plot_df_subset(df_split[["chair"]],"Chair")
+plot_df_subset(df_split[["cup"]],"Cup")
+plot_df_subset(df_split[["door"]],"Door")
+plot_df_subset(df_split[["jacket"]],"Jacket")
+plot_df_subset(df_split[["pitcher"]],"Pitcher")
+plot_df_subset(df_split[["plate"]],"Plate")
+plot_df_subset(df_split[["pot"]],"Pot")
+plot_df_subset(df_split[["ruler"]],"Ruler")
+plot_df_subset(df_split[["spoon"]],"Spoon")
+plot_df_subset(df_split[["table"]],"Table")
+plot_df_subset(df_split[["vase"]],"Vase")
+```
+
+
+
+
+
+
+

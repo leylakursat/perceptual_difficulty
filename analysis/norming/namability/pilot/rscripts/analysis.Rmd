@@ -1,0 +1,38 @@
+---
+title: "Perceptual Difficulty - Norming for Namability"
+ output: html_document
+#output: rmarkdown::github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r data import, include=FALSE}
+library(tidyverse)
+theme_set(theme_bw())
+
+df = read.csv("../data/example-trials.csv", header = TRUE)
+demo = read.csv("../data/example-subject_information.csv", header = TRUE)
+
+df$cresponse = str_to_lower(gsub(" ", "", df$response))
+
+```
+
+```{r responses, include=FALSE}
+responses = df %>%
+  filter(str_detect(utterance,"bot_check", negate = TRUE)) %>%
+  group_by(object,cresponse) %>%
+  mutate(count = n())
+
+ggplot(responses,aes(x=response, y=n))+
+  geom_bar(stat="identity") +
+  facet_wrap(~object)
+```
+
+
+
+
+
+
+

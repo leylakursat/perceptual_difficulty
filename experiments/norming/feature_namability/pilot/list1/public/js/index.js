@@ -132,7 +132,7 @@ function getArticleItem(item_id) {
  //var continueButton = document.getElementById("continue");
 
  input.keydown(function(event) {
-  if (event.keyCode == 13) {
+  if (event.keyCode == 13){
     event.preventDefault();
     event.stopPropagation();
     console.log("enter on first text field")
@@ -182,7 +182,7 @@ function getArticleItem(item_id) {
         _stream.apply(this); //use exp.go() if and only if there is no "present" data.
       } else if (($("#answer").val().length < 2) || ($("#answer2").val().length < 2))  {
         console.log("lengths are wrong show error, answer1: " + length1 + " answer2: " + length2)
-        $(".err").show();
+        //$(".err").show();
       }
     },
     // init_sliders : function() {
@@ -422,8 +422,8 @@ function init() {
       screenUW: exp.width
     };
   //blocks of the experiment:
-  // exp.structure=["bot","i0","objecttrial", 'subj_info', 'thanks'];
-  exp.structure=["objecttrial", 'subj_info', 'thanks'];
+  exp.structure=["bot","i0","objecttrial", 'subj_info', 'thanks'];
+  //exp.structure=["objecttrial", 'subj_info', 'thanks'];
   // 
   
   exp.data_trials = [];

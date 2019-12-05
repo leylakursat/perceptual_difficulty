@@ -1,5 +1,5 @@
 ---
-title: "Perceptual Difficulty - Norming for Namability"
+title: "Perceptual Difficulty - Norming for Feature Namability"
 output: rmarkdown::github_document
 #output:
   #html_document: default
@@ -12,57 +12,196 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r data import, include=FALSE}
 library(tidyverse)
+library(cowplot)
+
 theme_set(theme_bw())
 
+#df = read.csv("../data/example-trials.csv", header = TRUE)
 df = read.csv("../data/trials_merged.csv", header = TRUE)
-demo = read.csv("../data/subject_info_merged.csv", header = TRUE)
+#demo = read.csv("../data/subject_info_merged.csv", header = TRUE)
 
-df$cresponse = str_to_lower(gsub(" ", "", df$response))
-df$cresponse = str_to_lower(gsub("\n", "", df$cresponse))
+df <- separate(df,response,into=c("r_material","r_color"),sep=",")
+df$r_material <- as.character(gsub("\\[","",df$r_material))
+df$r_color <- as.character(gsub("\\]","",df$r_color))
+df$r_material <- as.character(gsub(" ","",df$r_material))
+df$r_color <- as.character(gsub(" ","",df$r_color))
+df$r_material <- tolower(df$r_material)
+df$r_color <- tolower(df$r_color)
+df$r_material <- as.character(gsub("\\'","",df$r_material))
+df$r_color <- as.character(gsub("\\'","",df$r_color))
+
+#df <- separate(df,object,into=c("object","material","color"),sep="_")
+
 ```
 
 ```{r responses, include=FALSE}
 responses = df %>%
-  filter(str_detect(utterance,"bot_check", negate = TRUE)) %>%
-  group_by(object,cresponse) %>%
-  summarize(count=n()) %>%
-  mutate(utt = str_split(object, "_")[[1]][1])
+  filter(str_detect(utterance,"bot_check", negate = TRUE)) 
 
-df_split <- split(responses, responses$utt)
+plot_subset = function(object_material_color){
+  df_subset = responses %>%
+    filter(object == object_material_color)
+  
+  sp = strsplit(object_material_color, "_")
+  obj = sp[[1]][1]
+  mat = sp[[1]][2]
+  col = sp[[1]][3]
+  
+  name = paste(col, mat, obj, sep=" ")
 
-plot_df_subset = function(df_subset, utt){
-  ggplot(df_subset,aes(x=reorder(cresponse, -count), y=count))+
-  geom_bar(stat="identity", fill="steelblue")+
-  facet_wrap(~object, scales="free") +
-  labs(title = utt) +
-  theme(axis.text.x=element_text(angle = 60, size=8, hjust = 1), plot.title = element_text(face="bold", hjust = 0.5, size=20),axis.title.x=element_blank())
+  material = ggplot(df_subset, aes(r_material)) +
+    geom_bar(fill ="lightblue") +
+    xlab("Material") +
+    theme(axis.text.x=element_text(angle = 60, size=10, hjust = 1), plot.title = element_text(face="bold", hjust = 0.5, size=20),axis.title.x=element_text(size=15))
+  
+  color = ggplot(df_subset, aes(r_color)) +
+    geom_bar(fill ="lightpink") +
+    xlab("Color") +
+   theme(axis.text.x=element_text(angle = 60, size=10, hjust = 1), plot.title = element_text(face="bold", hjust = 0.5, size=20),axis.title.x=element_text(size=15))
+  
+  plot_row <- plot_grid(color,material)
+  title <- ggdraw() + draw_label(name,fontface = 'bold',x = 0, hjust = 0,size=15) + theme(plot.margin = margin(0, 0, 0, 10))
+  
+plot_grid(
+  title, plot_row,
+  ncol = 1,
+  # rel_heights values control vertical title margins
+  rel_heights = c(0.1, 1)
+)
+
 }
 
 ```
 
 ```{r objects, echo=FALSE}
-plot_df_subset(df_split[["bag"]],"Bag")
-plot_df_subset(df_split[["ball"]],"Ball")
-plot_df_subset(df_split[["boots"]],"Boots")
-plot_df_subset(df_split[["bottle"]],"Bottle")
-plot_df_subset(df_split[["bowl"]],"Bowl")
-plot_df_subset(df_split[["box"]],"Box")
-plot_df_subset(df_split[["chair"]],"Chair")
-plot_df_subset(df_split[["cup"]],"Cup")
-plot_df_subset(df_split[["door"]],"Door")
-plot_df_subset(df_split[["jacket"]],"Jacket")
-plot_df_subset(df_split[["pitcher"]],"Pitcher")
-plot_df_subset(df_split[["plate"]],"Plate")
-plot_df_subset(df_split[["pot"]],"Pot")
-plot_df_subset(df_split[["ruler"]],"Ruler")
-plot_df_subset(df_split[["spoon"]],"Spoon")
-plot_df_subset(df_split[["table"]],"Table")
-plot_df_subset(df_split[["vase"]],"Vase")
+
+plot_subset("bag_canvas_original")
+plot_subset("bag_canvas_blue")
+plot_subset("bag_canvas_green")
+plot_subset("bag_paper_original")
+plot_subset("bag_paper_blue")
+plot_subset("bag_canvas_green")
+plot_subset("bag_plastic_original")
+plot_subset("bag_plastic_blue")
+plot_subset("bag_plastic_green")
+
+plot_subset("ball_metal_green")
+plot_subset("ball_metal_original")
+plot_subset("ball_metal_red")
+plot_subset("ball_plastic_green")
+plot_subset("ball_plastic_original")
+plot_subset("ball_plastic_red")
+
+plot_subset("boot_leather_brown")
+plot_subset("boot_leather_green")
+plot_subset("boot_leather_original")
+plot_subset("boot_rubber_brown")
+plot_subset("boot_rubber_green")
+plot_subset("boot_rubber_original")
+
+plot_subset("bottle_glass_green")
+plot_subset("bottle_glass_original")
+plot_subset("bottle_glass_yellow")
+plot_subset("bottle_plastic_green")
+plot_subset("bottle_plastic_original")
+plot_subset("bottle_plastic_yellow")
+
+plot_subset("bowl_glass_blue")
+plot_subset("bowl_glass_original")
+plot_subset("bowl_glass_purple")
+plot_subset("bowl_wood_blue")
+plot_subset("bowl_wood_original")
+plot_subset("bowl_glass_purple")
+
+plot_subset("box_cardboard_blue")
+plot_subset("box_cardboard_green")
+plot_subset("box_cardboard_original")
+plot_subset("box_wood_blue")
+plot_subset("box_wood_green")
+plot_subset("box_wood_original")
+
+plot_subset("chair_metal_green")
+plot_subset("chair_metal_original")
+plot_subset("chair_metal_pink")
+plot_subset("chair_plastic_green")
+plot_subset("chair_plastic_original")
+plot_subset("chair_plastic_pink")
+plot_subset("chair_wood_green")
+plot_subset("chair_wood_original")
+plot_subset("chair_wood_pink")
+
+plot_subset("cup_metal_blue")
+plot_subset("cup_metal_green")
+plot_subset("cup_metal_original")
+plot_subset("cup_plastic_blue")
+plot_subset("cup_plastic_green")
+plot_subset("cup_plastic_original")
+
+plot_subset("door_steel_original")
+plot_subset("door_steel_red")
+plot_subset("door_steel_yellow")
+plot_subset("door_wood_original")
+plot_subset("door_wood_red")
+plot_subset("door_wood_yellow")
+
+plot_subset("jacket_denim_green")
+plot_subset("jacket_denim_original")
+plot_subset("jacket_denim_purple")
+plot_subset("jacket_leather_green")
+plot_subset("jacket_leather_original")
+plot_subset("jacket_leather_purple")
+
+plot_subset("pitcher_glass_green")
+plot_subset("pitcher_glass_orange")
+plot_subset("pitcher_glass_original")
+plot_subset("pitcher_metal_green")
+plot_subset("pitcher_metal_orange")
+plot_subset("pitcher_metal_original")
+plot_subset("pitcher_plastic_green")
+plot_subset("pitcher_plastic_orange")
+plot_subset("pitcher_plastic_original")
+
+plot_subset("plate_metal_green")
+plot_subset("plate_metal_original")
+plot_subset("plate_metal_pink")
+plot_subset("plate_paper_green")
+plot_subset("plate_paper_original")
+plot_subset("plate_paper_pink")
+plot_subset("plate_plastic_green")
+plot_subset("plate_plastic_original")
+plot_subset("plate_plastic_pink")
+
+plot_subset("ruler_metal_blue")
+plot_subset("ruler_metal_green")
+plot_subset("ruler_metal_original")
+plot_subset("ruler_wood_blue")
+plot_subset("ruler_wood_green")
+plot_subset("ruler_wood_original")
+
+plot_subset("spoon_metal_blue")
+plot_subset("spoon_metal_green")
+plot_subset("spoon_metal_original")
+plot_subset("spoon_plastic_blue")
+plot_subset("spoon_plastic_green")
+plot_subset("spoon_plastic_original")
+plot_subset("spoon_wood_blue")
+plot_subset("spoon_wood_green")
+plot_subset("spoon_wood_original")
+
+plot_subset("table_metal_blue")
+plot_subset("table_metal_original")
+plot_subset("table_metal_yellow")
+plot_subset("table_wood_blue")
+plot_subset("table_wood_original")
+plot_subset("table_wood_yellow")
+
+plot_subset("vase_glass_blue")
+plot_subset("vase_glass_green")
+plot_subset("vase_glass_original")
+plot_subset("vase_wood_blue")
+plot_subset("vase_wood_green")
+plot_subset("vase_wood_original")
 ```
-
-
-
-
 
 
 

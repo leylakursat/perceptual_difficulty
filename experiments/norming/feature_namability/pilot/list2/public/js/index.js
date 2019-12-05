@@ -239,157 +239,157 @@ function getArticleItem(item_id) {
 
 /// init ///
 function init() {
-  var items_target = _.shuffle([
+    var items_target = _.shuffle([
 {
-"label": "bag_canvas_blue",
+"label": "bag_canvas_green",
 "item": ["bag"]
 },
 {
-"label": "bag_paper_green",
+"label": "bag_paper_original",
 "item": ["bag"]
 },
 {
-"label": "bag_plastic_original",
+"label": "bag_plastic_blue",
 "item": ["bag"]
 },
 {
-"label": "ball_metal_green",
+"label": "ball_metal_original",
 "item": ["ball"]
 },
 {
-"label": "ball_plastic_red",
+"label": "ball_plastic_green",
 "item": ["ball"]
 },
 {
-"label": "boot_leather_brown",
+"label": "boot_leather_green",
 "item": ["boot"]
 },
 {
-"label": "boot_rubber_original",
+"label": "boot_rubber_brown",
 "item": ["boot"]
 },
 {
-"label": "bottle_glass_green",
+"label": "bottle_glass_original",
 "item": ["bottle"]
 },
 {
-"label": "bottle_plastic_yellow",
+"label": "bottle_plastic_green",
 "item": ["bottle"]
 },
 {
-"label": "bowl_glass_blue",
+"label": "bowl_glass_original",
 "item": ["bowl"]
 },
 {
-"label": "bowl_metal_purple",
+"label": "bowl_metal_blue",
 "item": ["bowl"]
 },
 {
-"label": "bowl_wood_original",
+"label": "bowl_wood_purple",
 "item": ["bowl"]
 },
 {
-"label": "box_cardboard_original",
+"label": "box_cardboard_green",
 "item": ["box"]
 },
 {
-"label": "box_wood_green",
+"label": "box_wood_blue",
 "item": ["box"]
 },
 {
-"label": "chair_metal_pink",
+"label": "chair_metal_original",
 "item": ["chair"]
 },
 {
-"label": "chair_plastic_original",
+"label": "chair_plastic_green",
 "item": ["chair"]
 },
 {
-"label": "chair_wood_green",
+"label": "chair_wood_pink",
 "item": ["chair"]
 },
 {
-"label": "cup_metal_original",
+"label": "cup_metal_blue",
 "item": ["cup"]
 },
 {
-"label": "cup_plastic_green",
+"label": "cup_plastic_original",
 "item": ["cup"]
 },
 {
-"label": "door_steel_red",
+"label": "door_steel_yellow",
 "item": ["door"]
 },
 {
-"label": "door_wood_original",
+"label": "door_wood_red",
 "item": ["door"]
 },
 {
-"label": "jacket_denim_green",
+"label": "jacket_denim_original",
 "item": ["jacket"]
 },
 {
-"label": "jacket_leather_purple",
+"label": "jacket_leather_green",
 "item": ["jacket"]
 },
 {
-"label": "pitcher_glass_orange",
+"label": "pitcher_glass_original",
 "item": ["pitcher"]
 },
 {
-"label": "pitcher_metal_green",
+"label": "pitcher_metal_orange",
 "item": ["pitcher"]
 },
 {
-"label": "pitcher_plastic_original",
+"label": "pitcher_plastic_green",
 "item": ["pitcher"]
 },
 {
-"label": "plate_metal_pink",
+"label": "plate_metal_green",
 "item": ["plate"]
 },
 {
-"label": "plate_paper_original",
+"label": "plate_paper_pink",
 "item": ["plate"]
 },
 {
-"label": "plate_plastic_green",
+"label": "plate_plastic_original",
 "item": ["plate"]
 },
 {
-"label": "ruler_metal_green",
+"label": "ruler_metal_original",
 "item": ["ruler"]
 },
 {
-"label": "ruler_wood_blue",
+"label": "ruler_wood_green",
 "item": ["ruler"]
 },
 {
-"label": "spoon_metal_original",
+"label": "spoon_metal_blue",
 "item": ["spoon"]
 },
 {
-"label": "spoon_plastic_green",
+"label": "spoon_plastic_original",
 "item": ["spoon"]
 },
 {
-"label": "spoon_wood_blue",
+"label": "spoon_wood_green",
 "item": ["spoon"]
 },
 {
-"label": "table_metal_yellow",
+"label": "table_metal_blue",
 "item": ["table"]
 },
 {
-"label": "table_wood_blue",
+"label": "table_wood_original",
 "item": ["table"]
 },
 {
-"label": "vase_glass_original",
+"label": "vase_glass_green",
 "item": ["vase"]
 },
 {
-"label": "vase_wood_blue",
+"label": "vase_wood_original",
 "item": ["vase"]
 },
 ]);

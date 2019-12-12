@@ -1,0 +1,126 @@
+---
+title: "Perceptual Difficulty - Norming for Feature Namability"
+output: rmarkdown::github_document
+#output:
+  #html_document: default
+  #pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r data import, include=FALSE}
+library(tidyverse)
+library(cowplot)
+
+theme_set(theme_bw())
+
+#df = read.csv("../data/example-trials.csv", header = TRUE)
+df = read.csv("../data/trials_merged.csv", header = TRUE)
+#demo = read.csv("../data/subject_info_merged.csv", header = TRUE)
+
+df <- separate(df,response,into=c("r_material","r_color"),sep=",")
+df$r_material <- as.character(gsub("\\[","",df$r_material))
+df$r_color <- as.character(gsub("\\]","",df$r_color))
+df$r_material <- as.character(gsub(" ","",df$r_material))
+df$r_color <- as.character(gsub(" ","",df$r_color))
+df$r_material <- tolower(df$r_material)
+df$r_color <- tolower(df$r_color)
+df$r_material <- as.character(gsub("\\'","",df$r_material))
+df$r_color <- as.character(gsub("\\'","",df$r_color))
+
+#df <- separate(df,object,into=c("object","material","color"),sep="_")
+
+```
+
+```{r responses, include=FALSE}
+responses = df %>%
+  filter(str_detect(utterance,"bot_check", negate = TRUE)) 
+
+plot_subset = function(object_material_color){
+  df_subset = responses %>%
+    filter(object == object_material_color)
+  
+  sp = strsplit(object_material_color, "_")
+  obj = sp[[1]][1]
+  mat = sp[[1]][2]
+  col = sp[[1]][3]
+  
+  name = paste(col, mat, obj, sep=" ")
+
+  material = ggplot(df_subset, aes(r_material)) +
+    geom_bar(fill ="lightblue") +
+    xlab("Material") +
+    theme(axis.text.x=element_text(angle = 60, size=10, hjust = 1), plot.title = element_text(face="bold", hjust = 0.5, size=20),axis.title.x=element_text(size=15))
+  
+  color = ggplot(df_subset, aes(r_color)) +
+    geom_bar(fill ="lightpink") +
+    xlab("Color") +
+   theme(axis.text.x=element_text(angle = 60, size=10, hjust = 1), plot.title = element_text(face="bold", hjust = 0.5, size=20),axis.title.x=element_text(size=15))
+  
+  plot_row <- plot_grid(color,material)
+  title <- ggdraw() + draw_label(name,fontface = 'bold',x = 0, hjust = 0,size=15) + theme(plot.margin = margin(0, 0, 0, 10))
+  
+plot_grid(
+  title, plot_row,
+  ncol = 1,
+  # rel_heights values control vertical title margins
+  rel_heights = c(0.1, 1)
+)
+
+}
+
+```
+
+```{r objects, echo=FALSE}
+
+plot_subset("ball_plastic_blue")
+plot_subset("ball_plastic_green")
+plot_subset("ball_plastic_original")
+plot_subset("ball_rubber_blue")
+plot_subset("ball_rubber_green")
+plot_subset("ball_rubber_original")
+
+plot_subset("boot_leather_blue")
+plot_subset("boot_rubber_blue")
+
+plot_subset("bottle_glass_blue")
+plot_subset("bottle_glass_green")
+plot_subset("bottle_plastic_blue")
+plot_subset("bottle_plastic_green")
+
+plot_subset("bowl_glass_green")
+plot_subset("bowl_metal_blue")
+plot_subset("bowl_metal_green")
+
+plot_subset("chair_metal_purple")
+plot_subset("chair_plastic_purple")
+plot_subset("chair_wood_purple")
+
+plot_subset("cup_metal_blue")
+plot_subset("cup_plastic_blue")
+plot_subset("cup_plastic_green")
+
+plot_subset("pitcher_glass_blue")
+plot_subset("pitcher_glass_green")
+plot_subset("pitcher_metal_blue")
+plot_subset("pitcher_plastic_blue")
+
+plot_subset("plate_paper_blue")
+
+plot_subset("spoon_metal_blue")
+plot_subset("spoon_metal_green")
+plot_subset("spoon_plastic_blue")
+plot_subset("spoon_plastic_green")
+plot_subset("spoon_plastic_original")
+
+plot_subset("table_metal_blue")
+plot_subset("table_metal_green")
+plot_subset("table_metal_original")
+plot_subset("table_wood_green")
+
+```
+
+
+

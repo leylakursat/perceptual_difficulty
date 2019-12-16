@@ -305,7 +305,7 @@ function init() {
 {
 "label": "table_wood_blue",
 "item": ["table"]
-},s
+},
 ]);
 
   function makeTargetStim(i) {

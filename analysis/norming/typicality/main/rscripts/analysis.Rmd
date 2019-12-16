@@ -1,0 +1,96 @@
+---
+title: "Perceptual Difficulty - Norming for Typicality"
+output: rmarkdown::github_document
+#output:
+  #html_document: default
+  #pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r data import, include=FALSE}
+library(tidyverse)
+theme_set(theme_bw())
+source("helpers.R")
+library(wesanderson)
+
+typ1 = read.csv("../data/typ1_trials_merged.csv", header = TRUE)
+typ2 = read.csv("../data/typ2_trials_merged.csv", header = TRUE)
+
+typ1 = separate(typ1,response,into=c("r_material","r_color"),sep=",")
+typ1$r_material <- as.character(gsub("\\[","",typ1$r_material))
+typ1$r_color <- as.character(gsub("\\]","",typ1$r_color))
+typ2$response <-as.character(gsub("\\[","",typ2$response))
+typ2$response <-as.character(gsub("\\]","",typ2$response))
+
+```
+
+
+```{r function, include=FALSE}
+typ1 = typ1 %>%
+  filter(str_detect(utterance,"bot_check", negate = TRUE)) %>%
+  mutate(r_material = as.numeric(r_material)) %>%
+  mutate(r_color = as.numeric(r_color)) %>%
+  group_by(object) %>%
+  mutate(Material_typicality = mean(r_material), Color_typicality = mean(r_color))
+
+typ2 = typ2 %>%
+  filter(str_detect(utterance,"bot_check", negate = TRUE)) %>%
+  mutate(response = as.numeric(response)) %>%
+  group_by(object) %>%
+  mutate(Overall_typicality = mean(response))
+
+plot_df_subset = function(obj) {
+  
+  typ2_subset = typ2 %>%
+    filter(utterance == obj) %>%
+    distinct(object, .keep_all = TRUE)
+  
+  typ1_subset  = typ1 %>%
+    filter(utterance == obj) %>%
+    distinct(object, .keep_all = TRUE) %>%
+    mutate(id = object)
+  
+  df = merge(typ1_subset, typ2_subset, by="object")
+  df = separate(df,object,into=c("object","material","color"),sep="_")
+  df = df %>% select("id", "object","material","color","Color_typicality", "Material_typicality", "Overall_typicality")
+  df_long = gather(df,condition,value,Color_typicality, Material_typicality, Overall_typicality)
+  
+  ggplot(df_long, aes(x=condition, y=value, color=color, shape=material, group=id)) +
+    geom_point(size=3) +
+    geom_line(size=0.8) +
+    geom_text(aes(label=ifelse(condition=="Color_typicality",paste(color,material,object,sep = " "), "")), hjust=0.9, vjust=-1.6, size=2.8, fontface="bold") +
+    labs(title=obj) +
+    xlab("") +
+    ylab("rating") +
+    scale_color_manual(values=wes_palette("GrandBudapest1"))+
+    theme(plot.title = element_text(face="bold", hjust = 0.5, size=20))
+}  
+
+```
+
+```{r objects, echo=FALSE}
+plot_df_subset("bag")
+plot_df_subset("boot")
+plot_df_subset("bottle")
+plot_df_subset("bowl")
+plot_df_subset("box")
+plot_df_subset("chair")
+plot_df_subset("cup")
+plot_df_subset("jacket")
+plot_df_subset("pitcher")
+plot_df_subset("plate")
+plot_df_subset("spoon")
+plot_df_subset("table")
+```
+
+
+
+
+
+
+
+
+

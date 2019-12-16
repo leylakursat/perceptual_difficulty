@@ -207,19 +207,11 @@ function init() {
 "item": ["bag"]
 },
 {
-"label": "ball_plastic_blue",
-"item": ["ball"]
-},
-{
-"label": "ball_rubber_original",
-"item": ["ball"]
-},
-{
 "label": "boot_leather_green",
 "item": ["boot"]
 },
 {
-"label": "boot_rubber_blue",
+"label": "boot_rubber_original",
 "item": ["boot"]
 },
 {
@@ -313,7 +305,7 @@ function init() {
 {
 "label": "table_wood_blue",
 "item": ["table"]
-},
+},s
 ]);
 
   function makeTargetStim(i) {

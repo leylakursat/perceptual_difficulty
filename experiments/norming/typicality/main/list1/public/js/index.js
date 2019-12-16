@@ -212,15 +212,7 @@ function init() {
 "item": ["bag"]
 },
 {
-"label": "ball_plastic_green",
-"item": ["ball"]
-},
-{
-"label": "ball_rubber_blue",
-"item": ["ball"]
-},
-{
-"label": "boot_leather_original",
+"label": "boot_leather_brown",
 "item": ["boot"]
 },
 {

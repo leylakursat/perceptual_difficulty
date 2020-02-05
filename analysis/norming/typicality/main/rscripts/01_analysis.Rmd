@@ -1,8 +1,8 @@
 ---
 title: "Perceptual Difficulty - Norming for Typicality"
-output: rmarkdown::github_document
-#output:
-  #html_document: default
+#output: rmarkdown::github_document
+output:
+  html_document: default
   #pdf_document: default
 ---
 

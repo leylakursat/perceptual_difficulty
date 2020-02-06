@@ -65,52 +65,48 @@ function make_slides(f) {
     start: function() {
       $('.button').hide();
       $('.instruction').hide();
-      $('.pressedyes').hide();
-      $('.pressedno').hide();
+      $('.correct').hide();
+      $('.incorrect').hide();
       $('.instruction2').hide();
       $('.dtransition').hide();
-      $('.yes_image').hide();
-      $('.no_image').hide();
 
-      setTimeout(function(){
-        $('.demo_word').html('<font size="6">green</font>');
-        $('.demo_image').html('<img src="images/ball_plastic_green.png" style="height:330px;">');
-      },800)
+      $('.demo_word').html('<font size="6">green</font>'); 
+      $('.demo_image').html('<img src="images/ball_plastic_green.png" align="center" style="height:330px;">');
 
       setTimeout(function(){
         $('.instruction').show();
-        $('.yes_image').show();
-        $('.no_image').show();
-      },2000)
+      },1200)
+
+      var a = 0;
 
       document.onkeydown = checkKey;
       function checkKey(e) {
         e = e || window.event;
-        if (e.keyCode == 74){
+        if ((a==0) && (e.keyCode == 74)){ // pressed J (YES) --> correct answer
           e = 0;
-          $('.pressedno').hide();
-          $('.pressedyes').show();
-          $(".yes_image").css('border', "2px solid black");  
+          $('.incorrect').hide();
+          $('.correct').show();
           $('.instruction').hide();
+          $('.no_image').css('border','');
+          $('.yes_image').css('border', "solid 3px green");
+          a=1;
           
           setTimeout(function(){
             $('.instruction').hide();
-            $('.pressedyes').hide();
-            $('.pressedno').hide();
+            $('.correct').hide();
+            $('.incorrect').hide();
             $('.demo_word').hide();
             $('.demo_image').hide()
             $('.yes_image').hide();
             $('.no_image').hide();
-            //$('.instruction2').show();
-            //$('.button').show();
             $('.dtransition').show();
-            //_s.button();
-          },2000)
+          },1000)
         }
-        else if (e.keyCode == 70){
+        else if ((a==0) &&  (e.keyCode == 70)){ // pressed F (NO) --> incorrect
           e = 0;
-          $('.pressedno').show();
-          $(".no_image").css('border', "2px solid black"); 
+          $('.incorrect').show();
+          $('.yes_image').css('border','');
+          $('.no_image').css('border', "solid 3px red");
         }
         else if (($('.dtransition').is(":visible")) && (e.keyCode == 32)) {
           _s.button();
@@ -126,46 +122,51 @@ function make_slides(f) {
     name : "demonstration2",
     start: function() {
       $('.button').hide();
-      $('.instruction').hide();
-      $('.pressedyes').hide();
-      $('.pressedno').hide();
       $('.instruction2').hide();
-      $('.yes_image').hide();
-      $('.no_image').hide();
+      $('.correct2').hide();
+      $('.incorrect2').hide();
+      $('.instruction22').hide();
+      
+      $('.demo_word2').html('<font size="6">metal</font>');
+      $('.demo_image2').html('<img src="images/vase_wood_original.png" style="height:330px;">');
 
       setTimeout(function(){
-        $('.demo_word2').html('<font size="6">metal</font>');
-        $('.demo_image2').html('<img src="images/vase_glass_blue.png" style="height:330px;">');
-        $('.yes_image').show();
-        $('.no_image').show();
-      },800)
+        $('.instruction2').show();
+      },1200)
 
-      setTimeout(function(){
-        $('.instruction').show();
-      },2000)
+      var a = 0;
 
       document.onkeydown = checkKey;
       function checkKey(e) {
         e = e || window.event;
-        if (e.keyCode == 74){
+        if ((a==0) && (e.keyCode == 70)){  // pressed F (NO) --> correct
           e = 0;
-          $('.pressedyes').show(); 
-        }
-        else if (e.keyCode == 70){
-          e = 0;
-          $('.pressedno').show();
-          $('.pressedyes').hide();
-          $('.instruction').hide();
-
+          $('.incorrect2').hide();
+          $('.correct2').show();
+          $('.no_image2').css('border','solid 3px green');
+          $('.yes_image2').css('border', "");
+          $('.instruction2').hide();
+          a=1;
+        
           setTimeout(function(){
-            $('.instruction').hide();
-            $('.pressedyes').hide();
-            $('.pressedno').hide();
+            $('.instruction2').hide();
+            $('.correct2').hide();
+            $('.incorrect2').hide();
             $('.demo_word2').hide();
             $('.demo_image2').hide()
-            $('.instruction2').show();
-            $('.button').show();
-          },3000)
+            $('.yes_image2').hide();
+            $('.no_image2').hide();
+            $('.instruction22').show();
+          },1000)
+        }
+        else if ((a==0) && (e.keyCode == 74)) { // pressed J (YES) --> incorrect
+          e = 0;
+          $('.incorrect2').show();
+          $('.yes_image2').css('border','solid 3px red');
+          $('.no_image2').css('border', "");
+        }
+        else if (($('.instruction22').is(":visible")) && (e.keyCode == 32)) {
+          _s.button();
         }
       }
     },
@@ -181,67 +182,130 @@ function make_slides(f) {
     "label": "ball_plastic_red", // no to material
     "item": ["ball"],
     "feature": ["glass"],
-    "correct": ["no"]
+    "feature_type": ["material"],
+    "correct_answer": ["no"]
     },
     {
     "label": "door_wood_yellow", // yes to color 
     "item": ["door"],
     "feature": ["yellow"],
-    "correct": ["yes"]
+    "feature_type": ["color"],
+    "correct_answer": ["yes"]
     },
     {
     "label": "ruler_metal_blue", // no to color
     "item": ["bag"],
     "feature": ["red"],
-    "correct": ["no"]
+    "feature_type": ["color"],
+    "correct_answer": ["no"]
     },
     {
     "label": "vase_glass_green", // yes to material 
     "item": ["vase"],
     "feature": ["glass"],
-    "correct": ["yes"]
+    "feature_type": ["material"],
+    "correct_answer": ["yes"]
     }],
 
     present_handle : function(stim) {
       this.trial_start = Date.now();
-      $(".pkeys").hide();
       $(".ptransition").hide();
   
       this.stim = stim;
-      var contextsentence = '<font size="6">'+stim.feature+'</font>';
-      var objimagehtml = '<img src="images/'+stim.label+'.png" style="height:330px;">';
+      console.log(stim.feature);
+      console.log(stim.label);
+
+      var pword = '<font size="6">'+stim.feature+'</font>';
+      var pimage = '<img src="images/'+stim.label+'.png" style="height:330px;">';
+
+      $('.pword').html('<font size="6">'+stim.feature+'</font>');
+      $('.pimage').html('<img src="images/'+stim.label+'.png" style="height:330px;">');
+      $('.pword').show();
+      $('.pimage').show();
+      $('.pyes_image').css('border', "");
+      $('.pno_image').css('border', "");
+      $('.pyes_image').show();
+      $('.pno_image').show();
+      
+      var a = 0;
+
       document.onkeydown = checkKey;
-
-      $("#pcontextsentence").html(contextsentence);
-      $("#pobjectimage").html(objimagehtml);  
-      $("#pcontextsentence").show();
-      $("#pobjectimage").show()
-        
-      setTimeout(function(){
-        $("#pcontextsentence").hide();
-        $("#pobjectimage").hide()
-        $(".pkeys").show();
-      },1000)
-
       function checkKey(e) {
         e = e || window.event;
-        if (e.keyCode == 74){
-          e = 0;
-          exp.keyCode = "Yes",
-          $(".pkeys").hide();
-          $('.ptransition').show();
-          //_s.button();
+        console.log(e.keyCode);
+
+        if (e.keyCode == 74)
+          exp.keyCode = "yes"
+        if (e.keyCode  == 70)
+          exp.keyCode = "no"
+
+        if ((a==0) && (["yes","no"].includes(exp.keyCode)) && ($('.ptransition').is(":hidden"))){
+          if (exp.keyCode == stim.correct_answer) { // gave right answer
+            if (exp.keyCode == "yes")
+              $('.pyes_image').css('border','solid 3px green'); // right answer is yes
+            if (exp.keyCode == "no") {
+              console.log("no")
+              $('.pno_image').css('border','solid 3px green');
+              console.log("border around no")
+            }
+          } if (exp.keyCode != stim.correct_answer) { // gave wrong answer
+            if (exp.keyCode == "yes")
+              $('.pyes_image').css('border','solid 3px red'); // wrong answer is yes
+            if (exp.keyCode == "no")
+            $('.pno_image').css('border','solid 3px red');
+          }
+          setTimeout(function(){
+            $(".pword").hide();
+            $(".pimage").hide();
+            $('.pyes_image').hide();
+            $('.pno_image').hide();
+            $(".ptransition"). show();
+          },700)
+          a=1;
         }
-        else if (e.keyCode == 70){
+        if (($('.ptransition').is(":visible")) && (e.keyCode == 32)) {
           e = 0;
-          exp.keyCode = "No",
-          $(".pkeys").hide();
-          $('.ptransition').show();
-          //_s.button();
-        }
-        else if (($('.ptransition').is(":visible")) && (e.keyCode == 32)) {
           _s.button();
-        }
+        }  
+
+        // if ((a==0) && ($('.ptransition').is(":hidden")) && (exp.keyCode == stim.correct_answer)) {   // CORRECT 
+        //   if (exp.keyCode == "yes") { // correct answer is yes
+        //     e = 0;
+        //     $('.pyes_image').css('border','solid 3px green');
+        //   } if (exp.keyCode == "no") { // correct answer is no
+        //     e = 0;
+        //     $('.pno_image').css('border','solid 3px green');
+        //   }  
+        //   setTimeout(function(){
+        //     $(".pword").hide();
+        //     $(".pimage").hide();
+        //     $('.pyes_image').hide();
+        //     $('.pno_image').hide();
+        //     $(".ptransition"). show();
+        //   },700)
+        //   a=1;
+        // } if ((a==0) && ($('.ptransition').is(":hidden")) && (exp.keyCode != stim.correct_answer)) { // INCORRECT
+        //   if (exp.keyCode == "yes") { // incorrect answer is yes
+        //     e = 0;
+        //     $('.pyes_image').css('border','solid 3px red');
+        //   } if (exp.keyCode == "no") { // incorrect answer is no
+        //     e = 0;
+        //     $('.pno_image').css('border','solid 3px red');
+        //   }
+        //   setTimeout(function(){
+        //     $(".pword").hide();
+        //     $(".pimage").hide();
+        //     $('.pyes_image').hide();
+        //     $('.pno_image').hide();
+        //     $(".ptransition"). show();
+        //   },700)
+        //   a=1;
+        // }
+        // if (($('.ptransition').is(":visible")) && (e.keyCode == 32)) {
+        //   e = 0;
+        //   _s.button();
+        // }
+      
       }
      }, 
     
@@ -253,10 +317,11 @@ function make_slides(f) {
     log_responses : function() {
         exp.data_trials.push({
           "slide_number_in_experiment" : "practice_trial",
-          "utterance": this.stim.item,
-          "object": this.stim.label,
+          "label": this.stim.label,
+          "item": this.stim.item,
           "feature": this.stim.feature,
-          "rt" : Date.now() - _s.trial_start,
+          "feature_type": this.stim.feature_type,
+          "correct_answer": this.correct_answer,
           "response" : [Date.now() - _s.trial_start, exp.keyCode]
         });
     }

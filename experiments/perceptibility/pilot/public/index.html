@@ -77,18 +77,16 @@
   <div class="slide" id="demonstration">
     <h3>Demonstration</h3>
     <div class="demo_word"></div>
+    <img class ="yes_image" src="images/01_yes.png" alt="YES" align="right" style="width:200;">
+    <img class ="no_image" src="images/02_no.png" alt="NO" align="left" style="width:200;">
     <div class="demo_image"></div>
-    <div class="yes_image"> 
-      <img src="images/01_yes.png" alt="YES" align="left" style="width:150;"></div>
-    <div class="no_image"> 
-      <img src="images/02_no.png" alt="NO" align="right" style="width:150;"></div>
     <div class="instruction">If the ball is <b>green</b>, press <b>J</b> to indicate YES.<br><br>If it's <b>not green</b>, press <b>F</b> to indicate NO.</p></div>
-    <div class="pressedyes"><b><font color="red">You pressed YES. That's the correct answer.</font></b></div>
-    <div class="pressedno"><b><font color="red">Please try again.</font></b></div>
+    <div class="correct"><b><font color="green">You pressed YES. That's the correct answer.</font></b></div>
+    <div class="incorrect"><b><font color="red">Please try again.</font></b></div>
     <div class="instruction2">Let's try one more example.</div><br>
     <div class="button"><button onclick="_s.button()">Continue</button></div>
     <div class = "dtransition">
-        <br><br>
+        <br><br><br><br>
         <p2><strong>Press SPACE to continue</strong></p></div>
     </div>
   </div>
@@ -96,26 +94,29 @@
   <div class="slide" id="demonstration2">
     <h3>Demonstration</h3>
     <div class="demo_word2"></div>
+    <img class ="yes_image2" src="images/01_yes.png" alt="YES" align="right" style="width:200;">
+    <img class ="no_image2" src="images/02_no.png" alt="NO" align="left" style="width:200;">
     <div class="demo_image2"></div>
-    <div class="instruction">If the vase is <b>metal</b>, press <b>J</b> to indicate YES.<br><br>If it's <b>not metal</b>, press <b>F</b> to indicate NO.</p></div>
-    <div class="pressedyes"><b><font color="red">Please try again.</font></b></div>
-    <div class="pressedno"><b><font color="red">You pressed NO. That's the correct answer.</font></b></div>
-    <div class="instruction2"> Great, now let's do 4 practice trials.<br>Please make sure that your index fingers are on the <strong>J</strong> and <strong>F</strong> keys.<br><br><b>Remember, the word and the image will disappear after 1 second.</b><br>
+    <div class="instruction2">If the vase is <b>metal</b>, press <b>J</b> to indicate YES.<br><br>If it's <b>not metal</b>, press <b>F</b> to indicate NO.</p></div>
+    <div class="correct2"><b><font color="green">You pressed NO. That's the correct answer.</font></b></div>
+    <div class="incorrect2"><b><font color="red">Please try again.</font></b></div>
+    <div class="instruction22"> Great, now let's do 4 practice trials.<br>As you have seen in the demonstration, when you press a key, a border appears around your answer. If this border is green, it means you gave the right answer; if the border is red, it means you gave the wrong answer.<br><b>Remember, once you make a selection you won't be able to change it.</b><br><br>Please make sure that your index fingers are on the <strong>J</strong> and <strong>F</strong> keys and respond as quickly as possible.<br>
     <br>
-    <img src="keypress.jpg" alt="keyboard" align="center" style="height:300px">
-    </div><br>
+    <img src="images/keypress.jpg" alt="keyboard" align="center" style="height:200px">
+    <br><br>
+    <p2><strong>Press SPACE to continue</strong></p></div>
+    </div>
     <div class="button"><button onclick="_s.button()">Continue</button></div>
   </div>
 
   <div class="slide" id="practicetrial">
     <!-- <h3>Practice Trials</h3> -->
-    <p id="pcontextsentence"></p>
-    <div id="pobjectimage"></div>
+    <br><br><br><br>
+    <div class="pword"></div>
+    <img class ="pyes_image" src="images/01_yes.png" alt="YES" align="right" style="width:200;">
+    <img class ="pno_image" src="images/02_no.png" alt="NO" align="left" style="width:200;">
+    <div class="pimage"></div>
     <br><!-- <button id="continue" onclick="_s.button()">Continue</button> --><br>
-    <div class="pkeys">
-          <img src="images/hidden_image.png" style="height:330px;">
-          <p>Press J for YES, F for NO.</p>
-    </div>
     <div class = "ptransition">
         <br><br>
         <p2><strong>Press SPACE to continue</strong></p></div>

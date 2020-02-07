@@ -75,7 +75,7 @@ function make_slides(f) {
 
       setTimeout(function(){
         $('.instruction').show();
-      },1200)
+      },500)
 
       var a = 0;
 
@@ -109,13 +109,10 @@ function make_slides(f) {
           $('.no_image').css('border', "solid 3px red");
         }
         else if (($('.dtransition').is(":visible")) && (e.keyCode == 32)) {
-          _s.button();
+          exp.go();
         }
       }
     },
-    button : function() {
-      exp.go(); 
-    }
   });
 
   slides.demonstration2 = slide({
@@ -132,7 +129,7 @@ function make_slides(f) {
 
       setTimeout(function(){
         $('.instruction2').show();
-      },1200)
+      },500)
 
       var a = 0;
 
@@ -166,20 +163,17 @@ function make_slides(f) {
           $('.no_image2').css('border', "");
         }
         else if (($('.instruction22').is(":visible")) && (e.keyCode == 32)) {
-          _s.button();
+          exp.go();
         }
       }
     },
-    button : function() {
-      exp.go(); 
-    }
   });
 
   slides.practicetrial = slide({
     name : "practicetrial",
     present: 
     [{
-    "label": "ball_plastic_red", // no to material
+    "label": "ball_metal_original", // no to material
     "item": ["ball"],
     "feature": ["glass"],
     "feature_type": ["material"],
@@ -200,9 +194,9 @@ function make_slides(f) {
     "correct_answer": ["no"]
     },
     {
-    "label": "vase_glass_green", // yes to material 
-    "item": ["vase"],
-    "feature": ["glass"],
+    "label": "ball_plastic_red", // yes to material 
+    "item": ["ball"],
+    "feature": ["plastic"],
     "feature_type": ["material"],
     "correct_answer": ["yes"]
     }],
@@ -212,8 +206,6 @@ function make_slides(f) {
       $(".ptransition").hide();
   
       this.stim = stim;
-      console.log(stim.feature);
-      console.log(stim.label);
 
       var pword = '<font size="6">'+stim.feature+'</font>';
       var pimage = '<img src="images/'+stim.label+'.png" style="height:330px;">';
@@ -228,31 +220,32 @@ function make_slides(f) {
       $('.pno_image').show();
       
       var a = 0;
+      exp.keyCode = "";
 
       document.onkeydown = checkKey;
       function checkKey(e) {
         e = e || window.event;
-        console.log(e.keyCode);
-
-        if (e.keyCode == 74)
+        
+        if (e.keyCode == 74) {
           exp.keyCode = "yes"
-        if (e.keyCode  == 70)
+          e = 0;
+        } if (e.keyCode  == 70) {
           exp.keyCode = "no"
+          e = 0;
+        }
 
-        if ((a==0) && (["yes","no"].includes(exp.keyCode)) && ($('.ptransition').is(":hidden"))){
+        if ((a==0) && (exp.keyCode == "yes"||exp.keyCode == "no") && ($('.ptransition').is(":hidden"))){
+          e = 0;
           if (exp.keyCode == stim.correct_answer) { // gave right answer
             if (exp.keyCode == "yes")
               $('.pyes_image').css('border','solid 3px green'); // right answer is yes
-            if (exp.keyCode == "no") {
-              console.log("no")
+            if (exp.keyCode == "no")
               $('.pno_image').css('border','solid 3px green');
-              console.log("border around no")
-            }
           } if (exp.keyCode != stim.correct_answer) { // gave wrong answer
             if (exp.keyCode == "yes")
               $('.pyes_image').css('border','solid 3px red'); // wrong answer is yes
             if (exp.keyCode == "no")
-            $('.pno_image').css('border','solid 3px red');
+              $('.pno_image').css('border','solid 3px red');
           }
           setTimeout(function(){
             $(".pword").hide();
@@ -260,52 +253,14 @@ function make_slides(f) {
             $('.pyes_image').hide();
             $('.pno_image').hide();
             $(".ptransition"). show();
-          },700)
+          },400)
           a=1;
         }
         if (($('.ptransition').is(":visible")) && (e.keyCode == 32)) {
           e = 0;
+          console.log("HERE2" + exp.keyCode);
           _s.button();
         }  
-
-        // if ((a==0) && ($('.ptransition').is(":hidden")) && (exp.keyCode == stim.correct_answer)) {   // CORRECT 
-        //   if (exp.keyCode == "yes") { // correct answer is yes
-        //     e = 0;
-        //     $('.pyes_image').css('border','solid 3px green');
-        //   } if (exp.keyCode == "no") { // correct answer is no
-        //     e = 0;
-        //     $('.pno_image').css('border','solid 3px green');
-        //   }  
-        //   setTimeout(function(){
-        //     $(".pword").hide();
-        //     $(".pimage").hide();
-        //     $('.pyes_image').hide();
-        //     $('.pno_image').hide();
-        //     $(".ptransition"). show();
-        //   },700)
-        //   a=1;
-        // } if ((a==0) && ($('.ptransition').is(":hidden")) && (exp.keyCode != stim.correct_answer)) { // INCORRECT
-        //   if (exp.keyCode == "yes") { // incorrect answer is yes
-        //     e = 0;
-        //     $('.pyes_image').css('border','solid 3px red');
-        //   } if (exp.keyCode == "no") { // incorrect answer is no
-        //     e = 0;
-        //     $('.pno_image').css('border','solid 3px red');
-        //   }
-        //   setTimeout(function(){
-        //     $(".pword").hide();
-        //     $(".pimage").hide();
-        //     $('.pyes_image').hide();
-        //     $('.pno_image').hide();
-        //     $(".ptransition"). show();
-        //   },700)
-        //   a=1;
-        // }
-        // if (($('.ptransition').is(":visible")) && (e.keyCode == 32)) {
-        //   e = 0;
-        //   _s.button();
-        // }
-      
       }
      }, 
     
@@ -321,7 +276,7 @@ function make_slides(f) {
           "item": this.stim.item,
           "feature": this.stim.feature,
           "feature_type": this.stim.feature_type,
-          "correct_answer": this.correct_answer,
+          "correct_answer": this.stim.correct_answer,
           "response" : [Date.now() - _s.trial_start, exp.keyCode]
         });
     }
@@ -329,63 +284,89 @@ function make_slides(f) {
 
   slides.beforeobject = slide({
     name : "beforeobject",
-    button : function() {
-      exp.go(); 
-    }
+    start: function() {
+
+      document.onkeydown = checkKey;
+        function checkKey(e) {
+          e = e || window.event;
+
+          if (e.keyCode == 32)
+            exp.go()
+
+      }
+    },
+    
+    // button : function() {
+    //   exp.go(); 
+    // }
   });
 
   slides.objecttrial = slide({
     name : "objecttrial",
     present : exp.all_stims,
-    start : function() {
-	     $(".keys").hide();
-       $(".transition").hide();
-    },
     present_handle : function(stim) {
-
+      
     	this.trial_start = Date.now();
-      $(".keys").hide();
-      $('.transition').hide();
+      $(".transition").hide();
   
       this.stim = stim;
-      var contextsentence = '<font size="6">'+stim.feature+'</font>';
-      var objimagehtml = '<img src="images/'+stim.label+'.png" style="height:330px;">';
+
+      var word = '<font size="6">'+stim.feature+'</font>';
+      var image = '<img src="images/'+stim.label+'.png" style="height:330px;">';
+
+      $('.word').html('<font size="6">'+stim.feature+'</font>');
+      $('.image').html('<img src="images/'+stim.label+'.png" style="height:330px;">');
+      $('.word').show();
+      $('.image').show();
+      $('.yes_image').css('border', "");
+      $('.no_image').css('border', "");
+      $('.yes_image').show();
+      $('.no_image').show();
+      
+      var a = 0;
+      exp.keyCode = "";
 
       document.onkeydown = checkKey;
-      
-      $("#contextsentence").html(contextsentence);
-      $("#objectimage").html(objimagehtml);
-      $("#contextsentence").show();
-      $("#objectimage").show()
-        
-      setTimeout(function(){
-        $("#contextsentence").hide();
-        $("#objectimage").hide()
-        $(".keys").show();
-      },1000)
-
       function checkKey(e) {
         e = e || window.event;
-        if (e.keyCode == 74){
+        
+        if (e.keyCode == 74) {
+          exp.keyCode = "yes"
           e = 0;
-          exp.keyCode = "Yes",
-          $(".keys").hide();
-          $('.transition').show();
-          //_s.button();
-        }
-        else if (e.keyCode == 70){
+        } if (e.keyCode  == 70) {
+          exp.keyCode = "no"
           e = 0;
-          exp.keyCode = "No",
-          $(".keys").hide();
-          $('.transition').show();
-          //_s.button();
         }
-        else if (($('.transition').is(":visible")) && (e.keyCode == 32)) {
-          _s.button();
-        }
-      }
-	   },
 
+        if ((a==0) && (exp.keyCode == "yes"||exp.keyCode == "no") && ($('.ptransition').is(":hidden"))){
+          e = 0;
+          if (exp.keyCode == stim.correct_answer) { // gave right answer
+            if (exp.keyCode == "yes")
+              $('.yes_image').css('border','solid 3px green'); // right answer is yes
+            if (exp.keyCode == "no")
+              $('.no_image').css('border','solid 3px green');
+          } if (exp.keyCode != stim.correct_answer) { // gave wrong answer
+            if (exp.keyCode == "yes")
+              $('.yes_image').css('border','solid 3px red'); // wrong answer is yes
+            if (exp.keyCode == "no")
+            $('.no_image').css('border','solid 3px red');
+          }
+          setTimeout(function(){
+            $(".word").hide();
+            $(".image").hide();
+            $('.yes_image').hide();
+            $('.no_image').hide();
+            $(".transition"). show();
+          },400)
+          a=1;
+        }
+        if (($('.transition').is(":visible")) && (e.keyCode == 32)) {
+          e = 0;
+          _s.button();
+        }  
+      }
+     }, 
+    
     button : function() {
         this.log_responses();
         _stream.apply(this); //use exp.go() if and only if there is no "present" data.        
@@ -393,15 +374,17 @@ function make_slides(f) {
 
     log_responses : function() {
         exp.data_trials.push({
-          "slide_number_in_experiment" : exp.phase,
-          "utterance": this.stim.item,
-          "object": this.stim.label,
+          "slide_number_in_experiment" : "experimental_trial",
+          "label": this.stim.label,
+          "item": this.stim.item,
           "feature": this.stim.feature,
-          "rt" : Date.now() - _s.trial_start,
+          "feature_type": this.stim.feature_type,
+          "correct_answer": this.stim.correct_answer,
           "response" : [Date.now() - _s.trial_start, exp.keyCode]
         });
     }
   });
+
 
   slides.subj_info =  slide({
     name : "subj_info",
@@ -445,48 +428,69 @@ function init() {
 {
 "label": "bag_paper_blue",
 "item": ["bag"],
-"feature": ["blue"]
+"feature": ["blue"],
+"feature_type": ["color"],
+"correct_answer": ["yes"]
 },
 {
 "label": "bag_plastic_original",
 "item": ["bag"],
-"feature": ["plastic"]
+"feature": ["plastic"],
+"feature_type": ["material"],
+"correct_answer": ["yes"]
 },
 {
-"label": "bag_paper_blue",
-"item": ["bag"],
-"feature": ["plastic"]
+"label": "boot_rubber_original",
+"item": ["boot"],
+"feature": ["leather"],
+"feature_type": ["material"],
+"correct_answer": ["no"]
 },
 {
-"label": "bag_plastic_original",
-"item": ["bag"],
-"feature": ["green"]
+"label": "box_cardboard_green",
+"item": ["box"],
+"feature": ["blue"],
+"feature_type": ["color"],
+"correct_answer": ["no"]
+},
+{
+"label": "cup_plastic_green",
+"item": ["cup"],
+"feature": ["green"],
+"feature_type": ["color"],
+"correct_answer": ["yes"]
+},
+{
+"label": "box_wood_original",
+"item": ["box"],
+"feature": ["metal"],
+"feature_type": ["material"],
+"correct_answer": ["no"]
+},
+{
+"label": "jacket_leather_green",
+"item": ["jacket"],
+"feature": ["denim"],
+"feature_type": ["material"],
+"correct_answer": ["no"]
+},
+{
+"label": "pitcher_metal_original",
+"item": ["pitcher"],
+"feature": ["metal"],
+"feature_type": ["material"],
+"correct_answer": ["yes"]
+},
+{
+"label": "spoon_plastic_blue",
+"item": ["spoon"],
+"feature": ["red"],
+"feature_type": ["color"],
+"correct_answer": ["no"]
 },
 ]);
 
 console.log(exp.all_stims.length);
-
-  // function makeTargetStim(i) {
-  //   console.log(items_target.length);
-  //   //get item
-  //   var item = items_target[i];
-  //   var item_id = item.item[0];
-  //   var object_label = item.label;
-  //   var object_feature = item.feature;
-      
-  //   return {
-	 //  "item": item_id,
-  //   "label": object_label,
-  //   "feature" : object_feature,
-  //   }
-  // }
-  
-  // exp.all_stims = [];
-  // for (var i=0; i<items_target.length; i++) {
-  //   exp.all_stims.push(makeTargetStim(i));
-  // }
-
-  // exp.all_stims = _.shuffle(exp.all_stims);
 
   exp.trials = [];
   exp.catch_trials = [];
@@ -500,9 +504,9 @@ console.log(exp.all_stims.length);
       screenUW: exp.width
     };
   //blocks of the experiment:
-  //exp.structure=["bot","i0", "demonstration", "demonstration2", "practicetrial", "beforeobject", "objecttrial", 'subj_info', 'thanks'];
-  exp.structure=["demonstration", "demonstration2", "practicetrial", "beforeobject", "objecttrial", 'subj_info', 'thanks'];
-  // 
+  exp.structure=["bot","i0", "demonstration", "demonstration2", "practicetrial", "beforeobject", "objecttrial", 'subj_info', 'thanks'];
+  //exp.structure=["demonstration", "demonstration2", "practicetrial", "beforeobject", "objecttrial", 'subj_info', 'thanks'];
+   
   
   exp.data_trials = [];
   //make corresponding slides:

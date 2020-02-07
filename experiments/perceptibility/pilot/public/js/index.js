@@ -258,7 +258,6 @@ function make_slides(f) {
         }
         if (($('.ptransition').is(":visible")) && (e.keyCode == 32)) {
           e = 0;
-          console.log("HERE2" + exp.keyCode);
           _s.button();
         }  
       }

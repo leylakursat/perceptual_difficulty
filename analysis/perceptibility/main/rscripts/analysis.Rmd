@@ -1,0 +1,108 @@
+---
+title: "Perceptual Difficulty - Perceptibility"
+#output: rmarkdown::github_document
+output:
+  html_document: default
+  #pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r data import, include=FALSE}
+library(tidyverse)
+theme_set(theme_bw())
+source("helpers.R")
+library(wesanderson)
+
+df = read.csv("../data/results_merged.csv", header = TRUE)
+
+df = df[ ,!(colnames(df) %in% c("utterance","rt","object"))]
+df = separate(df,response,into=c("rt","response"),sep=",")
+df$rt <- as.character(gsub("\\[","",df$rt))
+df$rt = as.numeric(df$rt)
+df$response <- as.character(gsub("\\]","",df$response))
+df$response <- as.character(gsub(" ","",df$response))
+df$correct_answer <- as.character(gsub("\\]","",df$correct_answer))
+df$correct_answer <- as.character(gsub("\\[","",df$correct_answer))
+
+df = df %>%
+  filter(slide_number_in_experiment == "experimental_trial") %>%
+  mutate(gaveRightAnswer=ifelse(response==correct_answer,1,0)) %>%
+  mutate(feature_type=fct_recode(feature_type,"color"="['color']","material"="['material']"))
+
+```
+
+**Fastest and slowest 10 responses: (exclude: rt>10000** 
+```{r exclusions, echo=FALSE}
+head(sort(df$rt),10)
+tail(sort(df$rt),10) 
+#table(df$correct_answer,df$feature_type)
+
+df = df[!(df$rt>10000),]
+```
+
+```{r collapsed, echo=FALSE}
+#color vs material RT for correct and incorrect answers
+toplot =  df %>%
+  group_by(feature_type,gaveRightAnswer) %>%
+  summarize(Median=median(rt),Mean=mean(rt),CILow=ci.low(rt),CIHigh=ci.high(rt),count=n()) %>%
+  ungroup() %>%
+  mutate(YMin=Mean-CILow,YMax=Mean+CIHigh)
+
+ggplot(toplot, aes(x=feature_type, y=Mean, fill=factor(gaveRightAnswer))) +
+  geom_bar(stat = "identity", position=position_dodge()) +
+  scale_fill_manual(values=wes_palette(("FantasticFox1"))) +
+  geom_errorbar(aes(ymin = YMin, ymax = YMax),width=.2, position=position_dodge((.9))) +
+  xlab("Feature type") +
+  ylab("Mean RT in msec") +
+  labs(fill = "gaveRightAnswer")
+
+```
+
+```{r byitem, echo=FALSE}
+#create same plot by item (collapse all materials and colors) (12 facet)
+toplot =  df %>%
+  group_by(item,feature_type, gaveRightAnswer) %>%
+  summarize(Median=median(rt),Mean=mean(rt),CILow=ci.low(rt),CIHigh=ci.high(rt),count=n()) %>%
+  ungroup() %>%
+  mutate(YMin=Mean-CILow,YMax=Mean+CIHigh)
+
+ggplot(toplot, aes(x=feature_type, y=Mean, fill=factor(gaveRightAnswer))) +
+  geom_bar(stat = "identity", position=position_dodge()) +
+  scale_fill_manual(values=wes_palette(("FantasticFox1"))) +
+  geom_errorbar(aes(ymin = YMin, ymax = YMax),width=.2, position=position_dodge((.9))) +
+  xlab("Feature type") +
+  ylab("Mean RT in msec") +
+  labs(fill = "gaveRightAnswer") +
+  facet_wrap(~item)
+
+```
+```{r byimage, echo=FALSE}
+#create same plot by unique item (in each facet, color1. color2, material1 material2)..
+toplot =  df %>%
+  group_by(label,feature_type, gaveRightAnswer) %>%
+  summarize(Median=median(rt),Mean=mean(rt),CILow=ci.low(rt),CIHigh=ci.high(rt),count=n()) %>%
+  ungroup() %>%
+  mutate(YMin=Mean-CILow,YMax=Mean+CIHigh)
+
+ggplot(toplot, aes(x=feature_type, y=Mean, fill=factor(gaveRightAnswer))) +
+  geom_bar(stat = "identity", position=position_dodge()) +
+  scale_fill_manual(values=wes_palette(("FantasticFox1"))) +
+  geom_errorbar(aes(ymin = YMin, ymax = YMax),width=.2, position=position_dodge((.9))) +
+  xlab("Feature type") +
+  ylab("Mean RT in msec") +
+  labs(fill = "gaveRightAnswer") +
+  facet_wrap(~label, ncol=6,scales="free_y")
+
+ggsave(file="../graphs/by_image.pdf",width=14,height=20)
+
+```
+
+```{r variability, echo=FALSE}
+
+```
+
+
+

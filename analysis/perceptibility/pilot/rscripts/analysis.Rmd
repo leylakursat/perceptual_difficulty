@@ -1,0 +1,99 @@
+---
+title: "Perceptual Difficulty - Perceptibility"
+#output: rmarkdown::github_document
+output:
+  html_document: default
+  #pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r data import, include=FALSE}
+library(tidyverse)
+theme_set(theme_bw())
+source("helpers.R")
+library(wesanderson)
+
+df = read.csv("../data/example-trials.csv", header = TRUE)
+
+df = separate(df,response,into=c("rt","response"),sep=",")
+df$rt <- as.character(gsub("\\[","",df$rt))
+df$response <- as.character(gsub("\\]","",df$response))
+
+```
+
+
+```{r function, include=FALSE}
+
+
+
+#color. vs material RT (collapse everything) (1 facet) —> do this for correct and incorrect answers
+#create same plot by item (collapse all materials and colors) (12 facet)
+#create same plot by unique item (in each facet, color1. color2, material1 material2)..
+
+df = df %>%
+  filter(slide_number_in_experiment == "experimental_trial") %>%
+  mutate(gaveRightAnswer)
+
+toplot =  df %>%
+  group_by(feature_type,) %>%
+
+
+ggplot(df, aes(x= y=))
+
+
+
+plot_df_subset = function(obj) {
+  
+  typ2_subset = typ2 %>%
+    filter(utterance == obj) %>%
+    distinct(object, .keep_all = TRUE)
+  
+  typ1_subset  = typ1 %>%
+    filter(utterance == obj) %>%
+    distinct(object, .keep_all = TRUE) %>%
+    mutate(id = object)
+  
+  df = merge(typ1_subset, typ2_subset, by="object")
+  df = separate(df,object,into=c("object","material","color"),sep="_")
+  df = df %>% select("id", "object","material","color","Color_typicality", "Material_typicality", "Overall_typicality")
+  df_long = gather(df,condition,value,Color_typicality, Material_typicality, Overall_typicality)
+  
+  ggplot(df_long, aes(x=condition, y=value, color=color, shape=material, group=id)) +
+    geom_point(size=3) +
+    geom_line(size=0.8) +
+    geom_text(aes(label=ifelse(condition=="Color_typicality",paste(color,material,object,sep = " "), "")), hjust=0.9, vjust=-1.6, size=2.8, fontface="bold") +
+    labs(title=obj) +
+    xlab("") +
+    ylab("rating") +
+    scale_color_manual(values=wes_palette("GrandBudapest1"))+
+    theme(plot.title = element_text(face="bold", hjust = 0.5, size=20))
+}  
+
+```
+
+```{r objects, echo=FALSE}
+plot_df_subset("bag")
+plot_df_subset("boot")
+plot_df_subset("bottle")
+plot_df_subset("bowl")
+plot_df_subset("box")
+plot_df_subset("chair")
+plot_df_subset("cup")
+plot_df_subset("jacket")
+plot_df_subset("pitcher")
+plot_df_subset("plate")
+plot_df_subset("spoon")
+plot_df_subset("table")
+```
+
+
+
+
+
+
+
+
+

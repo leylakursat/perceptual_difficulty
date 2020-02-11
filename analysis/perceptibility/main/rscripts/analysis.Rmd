@@ -15,6 +15,7 @@ library(tidyverse)
 theme_set(theme_bw())
 source("helpers.R")
 library(wesanderson)
+wp = wes_palette("FantasticFox1")
 
 df = read.csv("../data/results_merged.csv", header = TRUE)
 
@@ -30,18 +31,42 @@ df$correct_answer <- as.character(gsub("\\[","",df$correct_answer))
 df = df %>%
   filter(slide_number_in_experiment == "experimental_trial") %>%
   mutate(gaveRightAnswer=ifelse(response==correct_answer,1,0)) %>%
-  mutate(feature_type=fct_recode(feature_type,"color"="['color']","material"="['material']"))
-
+  mutate(feature_type=fct_recode(feature_type,"color"="['color']","material"="['material']")) %>%
+  mutate(id = row_number())
 ```
+**Stimuli check** 
+```{r test, echo=FALSE}
+d = df %>%
+  group_by(label,feature_type,correct_answer)%>%
+  count()
 
-**Fastest and slowest 10 responses: (exclude: rt>10000** 
-```{r exclusions, echo=FALSE}
+table(d$correct_answer,d$feature_type)
+```
+**Fastest and slowest response times** 
+```{r extremes, echo=FALSE}
 head(sort(df$rt),10)
-tail(sort(df$rt),10) 
-#table(df$correct_answer,df$feature_type)
-
-df = df[!(df$rt>10000),]
+tail(sort(df$rt),10)
 ```
+
+**Exclusions and RT distribution** 
+Response times that are 2.5SD away from the mean are excluded
+```{r exclusions, echo=FALSE}
+exclude =  df %>%
+  mutate(Mean=mean(rt),SD=sd(rt),count=n()) %>%
+  mutate(Ulimit=Mean+2.5*SD,Llimit=Mean-2.5*SD) %>%
+  mutate(slow=ifelse(rt>Ulimit,"1","0")) %>%
+  mutate(fast=ifelse(rt<Llimit,"1","0")) %>%
+  select(workerid,label,rt,slow,fast,Mean,SD,Ulimit,Llimit,id) %>%
+  filter(slow==1)
+
+exclude
+
+df = df[!(df$id %in% exclude$id),]
+
+ggplot(df, aes(x=rt)) +
+  geom_histogram(fill="lightblue")
+```
+**RTs to color and material features (everything collapsed)** 
 
 ```{r collapsed, echo=FALSE}
 #color vs material RT for correct and incorrect answers
@@ -53,25 +78,81 @@ toplot =  df %>%
 
 ggplot(toplot, aes(x=feature_type, y=Mean, fill=factor(gaveRightAnswer))) +
   geom_bar(stat = "identity", position=position_dodge()) +
-  scale_fill_manual(values=wes_palette(("FantasticFox1"))) +
+  scale_fill_manual(values=wp) +
   geom_errorbar(aes(ymin = YMin, ymax = YMax),width=.2, position=position_dodge((.9))) +
   xlab("Feature type") +
   ylab("Mean RT in msec") +
   labs(fill = "gaveRightAnswer")
-
 ```
 
-```{r byitem, echo=FALSE}
-#create same plot by item (collapse all materials and colors) (12 facet)
+**RTs to color and material features (only expected YES cases and CORRECT responses)** 
+
+```{r collapsedyescorrect, echo=FALSE}
 toplot =  df %>%
-  group_by(item,feature_type, gaveRightAnswer) %>%
+  filter(correct_answer=="'yes'") %>%
+  filter(gaveRightAnswer=="1") %>%
+  group_by(feature_type) %>%
+  summarize(Median=median(rt),Mean=mean(rt),CILow=ci.low(rt),CIHigh=ci.high(rt),count=n()) %>%
+  ungroup() %>%
+  mutate(YMin=Mean-CILow,YMax=Mean+CIHigh)
+
+ggplot(toplot, aes(x=feature_type, y=Mean)) +
+  geom_bar(stat = "identity", position=position_dodge(),fill=wp[2]) +
+  geom_errorbar(aes(ymin = YMin, ymax = YMax),width=.2, position=position_dodge((.9))) +
+  xlab("Feature type") +
+  ylab("Mean RT in msec") +
+  labs(fill = "gaveRightAnswer")
+```
+**RTs to color and material features (only expected YES cases and INCORRECT responses)** 
+
+```{r collapsedyesincorrect, echo=FALSE}
+toplot =  df %>%
+  filter(correct_answer=="'yes'") %>%
+  filter(gaveRightAnswer=="0") %>%
+  group_by(feature_type) %>%
+  summarize(Median=median(rt),Mean=mean(rt),CILow=ci.low(rt),CIHigh=ci.high(rt),count=n()) %>%
+  ungroup() %>%
+  mutate(YMin=Mean-CILow,YMax=Mean+CIHigh)
+
+ggplot(toplot, aes(x=feature_type, y=Mean)) +
+  geom_bar(stat = "identity", position=position_dodge(),fill=wp[1]) +
+  geom_errorbar(aes(ymin = YMin, ymax = YMax),width=.2, position=position_dodge((.9))) +
+  xlab("Feature type") +
+  ylab("Mean RT in msec") +
+  labs(fill = "gaveRightAnswer")
+```
+**By item** 
+
+```{r byitem, echo=FALSE}
+toplot =  df %>%
+  group_by(item,feature_type,gaveRightAnswer) %>%
   summarize(Median=median(rt),Mean=mean(rt),CILow=ci.low(rt),CIHigh=ci.high(rt),count=n()) %>%
   ungroup() %>%
   mutate(YMin=Mean-CILow,YMax=Mean+CIHigh)
 
 ggplot(toplot, aes(x=feature_type, y=Mean, fill=factor(gaveRightAnswer))) +
-  geom_bar(stat = "identity", position=position_dodge()) +
-  scale_fill_manual(values=wes_palette(("FantasticFox1"))) +
+  geom_bar(stat = "identity", position= position_dodge(.9)) +
+  geom_errorbar(aes(ymin = YMin, ymax = YMax),width=.2, position=position_dodge((.9))) +
+  scale_fill_manual(values=wp) +
+  xlab("Feature type") +
+  ylab("Mean RT in msec") +
+  labs(fill = "gaveRightAnswer") +
+  facet_wrap(~item)
+
+```
+**By item (only expected YES cases and CORRECT responses)** 
+
+```{r byitemyescorrect, echo=FALSE}
+toplot =  df %>%
+  filter(correct_answer=="'yes'") %>%
+  filter(gaveRightAnswer=="1") %>%
+  group_by(item,feature_type) %>%
+  summarize(Median=median(rt),Mean=mean(rt),CILow=ci.low(rt),CIHigh=ci.high(rt),count=n()) %>%
+  ungroup() %>%
+  mutate(YMin=Mean-CILow,YMax=Mean+CIHigh)
+
+ggplot(toplot, aes(x=feature_type, y=Mean)) +
+  geom_bar(stat = "identity", position=position_dodge(),fill=wp[2]) +
   geom_errorbar(aes(ymin = YMin, ymax = YMax),width=.2, position=position_dodge((.9))) +
   xlab("Feature type") +
   ylab("Mean RT in msec") +
@@ -79,8 +160,29 @@ ggplot(toplot, aes(x=feature_type, y=Mean, fill=factor(gaveRightAnswer))) +
   facet_wrap(~item)
 
 ```
-```{r byimage, echo=FALSE}
-#create same plot by unique item (in each facet, color1. color2, material1 material2)..
+**By item (only expected YES cases and INCORRECT responses)** 
+
+```{r byitemyesincorrect, echo=FALSE}
+toplot =  df %>%
+  filter(correct_answer=="'yes'") %>%
+  filter(gaveRightAnswer=="0") %>%
+  group_by(item,feature_type) %>%
+  summarize(Median=median(rt),Mean=mean(rt),CILow=ci.low(rt),CIHigh=ci.high(rt),count=n()) %>%
+  ungroup() %>%
+  mutate(YMin=Mean-CILow,YMax=Mean+CIHigh)
+
+ggplot(toplot, aes(x=feature_type, y=Mean)) +
+  geom_bar(stat = "identity", position=position_dodge(),fill=wp[1]) +
+  geom_errorbar(aes(ymin = YMin, ymax = YMax),width=.2, position=position_dodge((.9))) +
+  xlab("Feature type") +
+  ylab("Mean RT in msec") +
+  labs(fill = "gaveRightAnswer") +
+  facet_wrap(~item)
+
+```
+
+**By image** 
+```{r byimage, include=FALSE}
 toplot =  df %>%
   group_by(label,feature_type, gaveRightAnswer) %>%
   summarize(Median=median(rt),Mean=mean(rt),CILow=ci.low(rt),CIHigh=ci.high(rt),count=n()) %>%
@@ -99,8 +201,49 @@ ggplot(toplot, aes(x=feature_type, y=Mean, fill=factor(gaveRightAnswer))) +
 ggsave(file="../graphs/by_image.pdf",width=14,height=20)
 
 ```
+**By image (only expected YES cases and CORRECT responses)**
 
-```{r variability, echo=FALSE}
+```{r byimageyes, include=FALSE}
+toplot =  df %>%
+  filter(correct_answer=="'yes'") %>%
+  filter(gaveRightAnswer=="1") %>%
+  group_by(label,feature_type,item) %>%
+  summarize(Median=median(rt),Mean=mean(rt),CILow=ci.low(rt),CIHigh=ci.high(rt),count=n()) %>%
+  ungroup() %>%
+  mutate(YMin=Mean-CILow,YMax=Mean+CIHigh)
+
+ggplot(toplot, aes(x=feature_type, y=Mean, fill=item)) +
+  geom_bar(stat = "identity", position=position_dodge()) +
+  geom_errorbar(aes(ymin = YMin, ymax = YMax),width=.2, position=position_dodge((.9))) +
+  geom_text(aes(label=count, y = 5),position=position_dodge(width=1),vjust=0,size=3) +
+  xlab("Feature type") +
+  ylab("Mean RT in msec") +
+  labs(fill = "item") +
+  facet_wrap(~label, ncol=6)
+
+ggsave(file="../graphs/by_image_yes_correct.pdf",width=14,height=20)
+
+```
+**By image (only expected YES cases and CORRECT responses)** ** 
+```{r byimageyesincorrect, include=FALSE}
+toplot =  df %>%
+  filter(correct_answer=="'yes'") %>%
+  filter(gaveRightAnswer=="0") %>%
+  group_by(label,feature_type,item) %>%
+  summarize(Median=median(rt),Mean=mean(rt),CILow=ci.low(rt),CIHigh=ci.high(rt),count=n()) %>%
+  ungroup() %>%
+  mutate(YMin=Mean-CILow,YMax=Mean+CIHigh)
+
+ggplot(toplot, aes(x=feature_type, y=Mean, fill=item)) +
+  geom_bar(stat = "identity", position=position_dodge()) +
+  geom_errorbar(aes(ymin = YMin, ymax = YMax),width=.2, position=position_dodge((.9))) +
+  geom_text(aes(label=count, y = 5),position=position_dodge(width=1),vjust=0,size=3) +
+  xlab("Feature type") +
+  ylab("Mean RT in msec") +
+  labs(fill = "item") +
+  facet_wrap(~label, ncol=6)
+
+ggsave(file="../graphs/by_image_yes_incorrect.pdf",width=14,height=20)
 
 ```
 

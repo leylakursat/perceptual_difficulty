@@ -1,0 +1,322 @@
+---
+title: "Perceptual Difficulty - Perceptibility"
+output: rmarkdown::github_document
+#output:
+  #html_document: default
+  #pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r data import, include=FALSE}
+library(tidyverse)
+theme_set(theme_bw())
+source("helpers.R")
+library(wesanderson)
+wp = wes_palette("FantasticFox1")
+wp2 = wes_palette("IsleofDogs1")
+
+df = read.csv("../data/results_merged.csv", header = TRUE)
+
+df = df[ ,!(colnames(df) %in% c("utterance","rt","object"))]
+df = separate(df,response,into=c("rt","response"),sep=",")
+df$rt <- as.character(gsub("\\[","",df$rt))
+df$rt = as.numeric(df$rt)
+df$response <- as.character(gsub("\\]","",df$response))
+df$response <- as.character(gsub(" ","",df$response))
+df$correct_answer <- as.character(gsub("\\]","",df$correct_answer))
+df$correct_answer <- as.character(gsub("\\[","",df$correct_answer))
+
+df = df %>%
+  filter(slide_number_in_experiment == "experimental_trial") %>%
+  mutate(gaveRightAnswer=ifelse(response==correct_answer,1,0)) %>%
+  mutate(feature_type=fct_recode(feature_type,"color"="['color']","material"="['material']")) %>%
+  mutate(id = row_number())
+```
+
+**Stimuli check** 
+```{r test, echo=FALSE}
+d = df %>%
+  group_by(label,feature_type,correct_answer)%>%
+  count()
+
+table(d$correct_answer,d$feature_type)
+```
+
+**Fastest and slowest response times** 
+```{r extremes, echo=FALSE}
+head(sort(df$rt),10)
+tail(sort(df$rt),10)
+```
+
+**RT Exclusions and distribution**
+Response times that are 2SD away from the mean are excluded (25 responses)
+```{r exclusions, echo=FALSE}
+exclude =  df %>%
+  mutate(Mean=mean(rt),SD=sd(rt),count=n()) %>%
+  mutate(Ulimit=Mean+2*SD,Llimit=Mean-2.5*SD) %>%
+  mutate(slow=ifelse(rt>Ulimit,"1","0")) %>%
+  #mutate(fast=ifelse(rt<Llimit,"1","0")) %>%
+  select(workerid,label,rt,slow,Mean,SD,Ulimit,id) %>%
+  filter(slow==1)
+
+exclude
+
+df = df[!(df$id %in% exclude$id),]
+
+ggplot(df, aes(x=rt)) +
+  geom_histogram(fill="lightblue")
+```
+
+**Accuracy exclusions**
+Participants with accuracy lower than 75% are excluded (11 participants)
+```{r accexclusions, echo=FALSE}
+toplot =  df %>%
+  group_by(workerid) %>%
+  summarise(Mean=mean(gaveRightAnswer),CILow=ci.low(gaveRightAnswer),CIHigh=ci.high(gaveRightAnswer)) %>%
+  ungroup() %>%
+  mutate(YMin=Mean-CILow,YMax=Mean+CIHigh) %>%
+  mutate(lowacc=ifelse(Mean<0.75,"1","0"))
+
+h=0.85
+ggplot(toplot, aes(x=reorder(workerid,Mean), y=Mean, fill=lowacc)) +
+  geom_bar(stat="identity") +
+  geom_hline(yintercept=h) +
+  geom_text(aes(0, h, label=h, vjust=-1, hjust=-0.3)) +
+  scale_fill_manual(values=wp2)
+
+exclude = toplot %>%
+  filter(lowacc==1)
+
+exclude
+
+df = df[!(df$workerid %in% exclude$workerid),]
+```
+
+**Proportion of correct responses**
+
+```{r proportion, echo=FALSE}
+toplot =  df %>%
+  group_by(feature_type,correct_answer) %>%
+  summarise(Median=median(gaveRightAnswer),Mean=mean(gaveRightAnswer),CILow=ci.low(gaveRightAnswer),CIHigh=ci.high(gaveRightAnswer),count=n()) %>%
+  ungroup() %>%
+  mutate(YMin=Mean-CILow,YMax=Mean+CIHigh)
+
+ggplot(toplot, aes(x=feature_type, y=Mean, fill=correct_answer)) +
+  geom_bar(stat="identity", position= position_dodge(.9)) +
+  geom_errorbar(aes(ymin=YMin,ymax=YMax),width=.25, position = position_dodge(.9)) +
+  scale_fill_manual(values=wp2) +
+  xlab("Feature_type") +
+  ylab("Proportion of correct answers")
+```
+
+**By item - Proportion of correct and incorrect responses **
+
+```{r proportionitem, echo=FALSE}
+toplot =  df %>%
+  group_by(item,feature_type,correct_answer) %>%
+  summarise(Median=median(gaveRightAnswer),Mean=mean(gaveRightAnswer),CILow=ci.low(gaveRightAnswer),CIHigh=ci.high(gaveRightAnswer),count=n()) %>%
+  ungroup() %>%
+  mutate(YMin=Mean-CILow,YMax=Mean+CIHigh)
+
+ggplot(toplot, aes(x=feature_type, y=Mean, fill=correct_answer)) +
+  geom_bar(stat="identity", position= position_dodge(.9)) +
+  geom_errorbar(aes(ymin=YMin,ymax=YMax),width=.25, position = position_dodge(.9)) +
+  scale_fill_manual(values=wp2) +
+  xlab("Feature_type") +
+  ylab("Proportion of correct answers") +
+  facet_wrap(~item)
+```
+
+**RTs to color and material features (everything collapsed)** 
+
+```{r collapsed, echo=FALSE}
+#color vs material RT for correct and incorrect answers
+toplot =  df %>%
+  group_by(feature_type,gaveRightAnswer) %>%
+  summarize(Median=median(rt),Mean=mean(rt),CILow=ci.low(rt),CIHigh=ci.high(rt),count=n()) %>%
+  ungroup() %>%
+  mutate(YMin=Mean-CILow,YMax=Mean+CIHigh)
+
+ggplot(toplot, aes(x=feature_type, y=Mean, fill=factor(gaveRightAnswer))) +
+  geom_bar(stat = "identity", position=position_dodge()) +
+  scale_fill_manual(values=wp) +
+  geom_errorbar(aes(ymin = YMin, ymax = YMax),width=.2, position=position_dodge((.9))) +
+  geom_text(aes(label=count, y = 5),position=position_dodge(width=1),vjust=0,size=3) +
+  xlab("Feature type") +
+  ylab("Mean RT in msec") +
+  labs(fill = "gaveRightAnswer")
+```
+
+**RTs to color and material features (only expected YES cases and CORRECT responses)** 
+
+```{r collapsedyescorrect, echo=FALSE}
+toplot =  df %>%
+  filter(correct_answer=="'yes'") %>%
+  filter(gaveRightAnswer=="1") %>%
+  group_by(feature_type) %>%
+  summarize(Median=median(rt),Mean=mean(rt),CILow=ci.low(rt),CIHigh=ci.high(rt),count=n()) %>%
+  ungroup() %>%
+  mutate(YMin=Mean-CILow,YMax=Mean+CIHigh)
+
+ggplot(toplot, aes(x=feature_type, y=Mean)) +
+  geom_bar(stat = "identity", position=position_dodge(),fill=wp[2]) +
+  geom_errorbar(aes(ymin = YMin, ymax = YMax),width=.2, position=position_dodge((.9))) +
+  xlab("Feature type") +
+  ylab("Mean RT in msec") +
+  labs(fill = "gaveRightAnswer")
+```
+
+**RTs to color and material features (only expected YES cases and INCORRECT responses)** 
+
+```{r collapsedyesincorrect, echo=FALSE}
+toplot =  df %>%
+  filter(correct_answer=="'yes'") %>%
+  filter(gaveRightAnswer=="0") %>%
+  group_by(feature_type) %>%
+  summarize(Median=median(rt),Mean=mean(rt),CILow=ci.low(rt),CIHigh=ci.high(rt),count=n()) %>%
+  ungroup() %>%
+  mutate(YMin=Mean-CILow,YMax=Mean+CIHigh)
+
+ggplot(toplot, aes(x=feature_type, y=Mean)) +
+  geom_bar(stat = "identity", position=position_dodge(),fill=wp[1]) +
+  geom_errorbar(aes(ymin = YMin, ymax = YMax),width=.2, position=position_dodge((.9))) +
+  xlab("Feature type") +
+  ylab("Mean RT in msec") +
+  labs(fill = "gaveRightAnswer")
+```
+
+**By item** 
+
+```{r byitem, echo=FALSE}
+toplot =  df %>%
+  group_by(item,feature_type,gaveRightAnswer) %>%
+  summarize(Median=median(rt),Mean=mean(rt),CILow=ci.low(rt),CIHigh=ci.high(rt),count=n()) %>%
+  ungroup() %>%
+  mutate(YMin=Mean-CILow,YMax=Mean+CIHigh)
+
+ggplot(toplot, aes(x=feature_type, y=Mean, fill=factor(gaveRightAnswer))) +
+  geom_bar(stat = "identity", position= position_dodge(.9)) +
+  geom_errorbar(aes(ymin = YMin, ymax = YMax),width=.2, position=position_dodge((.9))) +
+  scale_fill_manual(values=wp) +
+  xlab("Feature type") +
+  ylab("Mean RT in msec") +
+  labs(fill = "gaveRightAnswer") +
+  facet_wrap(~item)
+```
+
+**By item (only expected YES cases and CORRECT responses)** 
+
+```{r byitemyescorrect, echo=FALSE}
+toplot =  df %>%
+  filter(correct_answer=="'yes'") %>%
+  filter(gaveRightAnswer=="1") %>%
+  group_by(item,feature_type) %>%
+  summarize(Median=median(rt),Mean=mean(rt),CILow=ci.low(rt),CIHigh=ci.high(rt),count=n()) %>%
+  ungroup() %>%
+  mutate(YMin=Mean-CILow,YMax=Mean+CIHigh)
+
+ggplot(toplot, aes(x=feature_type, y=Mean)) +
+  geom_bar(stat = "identity", position=position_dodge(),fill=wp[2]) +
+  geom_errorbar(aes(ymin = YMin, ymax = YMax),width=.2, position=position_dodge((.9))) +
+  xlab("Feature type") +
+  ylab("Mean RT in msec") +
+  labs(fill = "gaveRightAnswer") +
+  facet_wrap(~item)
+```
+
+**By item (only expected YES cases and INCORRECT responses)** 
+
+```{r byitemyesincorrect, echo=FALSE}
+toplot =  df %>%
+  filter(correct_answer=="'yes'") %>%
+  filter(gaveRightAnswer=="0") %>%
+  group_by(item,feature_type) %>%
+  summarize(Median=median(rt),Mean=mean(rt),CILow=ci.low(rt),CIHigh=ci.high(rt),count=n()) %>%
+  ungroup() %>%
+  mutate(YMin=Mean-CILow,YMax=Mean+CIHigh)
+
+ggplot(toplot, aes(x=feature_type, y=Mean)) +
+  geom_bar(stat = "identity", position=position_dodge(),fill=wp[1]) +
+  geom_errorbar(aes(ymin = YMin, ymax = YMax),width=.2, position=position_dodge((.9))) +
+  xlab("Feature type") +
+  ylab("Mean RT in msec") +
+  labs(fill = "gaveRightAnswer") +
+  facet_wrap(~item)
+
+```
+
+**By image** (plot in graphs/)
+
+```{r byimage, eval=FALSE, include=FALSE}
+toplot =  df %>%
+  group_by(label,feature_type, gaveRightAnswer) %>%
+  summarize(Median=median(rt),Mean=mean(rt),CILow=ci.low(rt),CIHigh=ci.high(rt),count=n()) %>%
+  ungroup() %>%
+  mutate(YMin=Mean-CILow,YMax=Mean+CIHigh)
+
+ggplot(toplot, aes(x=feature_type, y=Mean, fill=factor(gaveRightAnswer))) +
+  geom_bar(stat = "identity", position=position_dodge()) +
+  scale_fill_manual(values=wes_palette(("FantasticFox1"))) +
+  geom_errorbar(aes(ymin = YMin, ymax = YMax),width=.2, position=position_dodge((.9))) +
+  xlab("Feature type") +
+  ylab("Mean RT in msec") +
+  labs(fill = "gaveRightAnswer") +
+  facet_wrap(~label, ncol=6,scales="free_y")
+
+ggsave(file="../graphs/by_image.pdf",width=14,height=20)
+
+```
+
+**By image (only expected YES cases and CORRECT responses)** (plot in graphs/)
+
+```{r byimageyes, eval=FALSE, include=FALSE}
+toplot =  df %>%
+  filter(correct_answer=="'yes'") %>%
+  filter(gaveRightAnswer=="1") %>%
+  group_by(label,feature_type,item) %>%
+  summarize(Median=median(rt),Mean=mean(rt),CILow=ci.low(rt),CIHigh=ci.high(rt),count=n()) %>%
+  ungroup() %>%
+  mutate(YMin=Mean-CILow,YMax=Mean+CIHigh)
+
+ggplot(toplot, aes(x=feature_type, y=Mean, fill=item)) +
+  geom_bar(stat = "identity", position=position_dodge()) +
+  geom_errorbar(aes(ymin = YMin, ymax = YMax),width=.2, position=position_dodge((.9))) +
+  geom_text(aes(label=count, y = 5),position=position_dodge(width=1),vjust=0,size=3) +
+  xlab("Feature type") +
+  ylab("Mean RT in msec") +
+  labs(fill = "item") +
+  facet_wrap(~label, ncol=6)
+
+ggsave(file="../graphs/by_image_yes_correct.pdf",width=14,height=20)
+
+```
+
+**By image (only expected YES cases and INCORRECT responses)** (plot in graphs/)
+
+```{r byimageyesincorrect, eval=FALSE, include=FALSE}
+toplot =  df %>%
+  filter(correct_answer=="'yes'") %>%
+  filter(gaveRightAnswer=="0") %>%
+  group_by(label,feature_type,item) %>%
+  summarize(Median=median(rt),Mean=mean(rt),CILow=ci.low(rt),CIHigh=ci.high(rt),count=n()) %>%
+  ungroup() %>%
+  mutate(YMin=Mean-CILow,YMax=Mean+CIHigh)
+
+ggplot(toplot, aes(x=feature_type, y=Mean, fill=item)) +
+  geom_bar(stat = "identity", position=position_dodge()) +
+  geom_errorbar(aes(ymin = YMin, ymax = YMax),width=.2, position=position_dodge((.9))) +
+  geom_text(aes(label=count, y = 5),position=position_dodge(width=1),vjust=0,size=3) +
+  xlab("Feature type") +
+  ylab("Mean RT in msec") +
+  labs(fill = "item") +
+  facet_wrap(~label, ncol=6)
+
+ggsave(file="../graphs/by_image_yes_incorrect.pdf",width=14,height=20)
+
+```
+
+
+

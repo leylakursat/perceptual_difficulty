@@ -272,7 +272,7 @@ ggsave(file="../graphs/by_image.pdf",width=14,height=20)
 
 **By image (only expected YES cases and CORRECT responses)** (plot in graphs/)
 
-```{r byimageyes, eval=FALSE, include=FALSE}
+```{r byimageyes, include=FALSE}
 toplot =  df %>%
   filter(correct_answer=="'yes'") %>%
   filter(gaveRightAnswer=="1") %>%
@@ -296,7 +296,7 @@ ggsave(file="../graphs/by_image_yes_correct.pdf",width=14,height=20)
 
 **By image (only expected YES cases and INCORRECT responses)** (plot in graphs/)
 
-```{r byimageyesincorrect, eval=FALSE, include=FALSE}
+```{r byimageyesincorrect, include=FALSE}
 toplot =  df %>%
   filter(correct_answer=="'yes'") %>%
   filter(gaveRightAnswer=="0") %>%

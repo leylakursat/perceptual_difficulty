@@ -130,6 +130,28 @@ ggplot(toplot, aes(x=feature_type, y=Mean, fill=correct_answer)) +
   facet_wrap(~item)
 ```
 
+**By unique item - Proportion of correct and incorrect responses** (plot in graphs/)
+
+```{r proportionuniqueitem, include=FALSE}
+toplot =  df %>%
+  filter(correct_answer=="'yes'") %>%
+  group_by(label,item,feature_type) %>%
+  summarise(Median=median(gaveRightAnswer),Mean=mean(gaveRightAnswer),CILow=ci.low(gaveRightAnswer),CIHigh=ci.high(gaveRightAnswer),count=n()) %>%
+  ungroup() %>%
+  mutate(YMin=Mean-CILow,YMax=Mean+CIHigh)
+
+ggplot(toplot, aes(x=feature_type, y=Mean, fill=item)) +
+  geom_bar(stat="identity", position= position_dodge(.9)) +
+  geom_errorbar(aes(ymin=YMin,ymax=YMax),width=.25, position = position_dodge(.9)) +
+  #scale_fill_manual(values=wp2) +
+  xlab("Feature_type") +
+  ylab("Proportion of correct answers") +
+  facet_wrap(~label, ncol=6)
+
+ggsave(file="../graphs/by_image_proportion.pdf",width=14,height=20)
+
+```
+
 **RTs to color and material features (everything collapsed)** 
 
 ```{r collapsed, echo=FALSE}

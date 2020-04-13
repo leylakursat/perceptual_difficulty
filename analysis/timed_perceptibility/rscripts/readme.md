@@ -15,16 +15,16 @@ excluded (29 participants)
     ## # A tibble: 29 x 7
     ##    workerid  Mean  CILow CIHigh  YMin  YMax lowacc
     ##       <int> <dbl>  <dbl>  <dbl> <dbl> <dbl> <chr> 
-    ##  1        2 0.630 0.0988 0.111  0.531 0.741 1     
-    ##  2        4 0.543 0.111  0.111  0.432 0.654 1     
-    ##  3        5 0.617 0.111  0.111  0.506 0.728 1     
+    ##  1        2 0.630 0.0867 0.0988 0.543 0.728 1     
+    ##  2        4 0.543 0.123  0.111  0.420 0.654 1     
+    ##  3        5 0.617 0.0988 0.111  0.519 0.728 1     
     ##  4       11 0.519 0.111  0.111  0.407 0.630 1     
-    ##  5       12 0.444 0.0988 0.111  0.346 0.556 1     
-    ##  6       13 0.667 0.0988 0.111  0.568 0.778 1     
-    ##  7       14 0.519 0.111  0.0991 0.407 0.618 1     
-    ##  8       31 0.494 0.111  0.111  0.383 0.605 1     
+    ##  5       12 0.444 0.111  0.111  0.333 0.556 1     
+    ##  6       13 0.667 0.123  0.111  0.543 0.778 1     
+    ##  7       14 0.519 0.111  0.111  0.407 0.630 1     
+    ##  8       31 0.494 0.111  0.0991 0.383 0.593 1     
     ##  9       38 0.568 0.111  0.0988 0.457 0.667 1     
-    ## 10       39 0.395 0.0991 0.111  0.296 0.506 1     
+    ## 10       39 0.395 0.0988 0.111  0.296 0.506 1     
     ## # … with 19 more rows
 
 # By response times
@@ -34,160 +34,160 @@ excluded (29 participants)
     ## # A tibble: 15 x 7
     ##    label                   feature      Mean CILow CIHigh count group
     ##    <fct>                   <fct>       <dbl> <dbl>  <dbl> <int> <chr>
-    ##  1 bowl_metal_green        ['silver']  1239. 139.   150.     22 rt   
-    ##  2 chair_metal_purple      ['metal']   1222. 133.   131.     24 rt   
-    ##  3 pitcher_glass_blue      ['plastic'] 1190. 133.   144.     23 rt   
-    ##  4 jacket_leather_green    ['denim']   1184. 104.   105.     23 rt   
-    ##  5 chair_metal_purple      ['silver']  1183. 168.   161.     22 rt   
-    ##  6 jacket_leather_original ['rubber']  1160. 103.   114.     24 rt   
-    ##  7 pitcher_plastic_blue    ['rubber']  1158. 141.   145.     23 rt   
-    ##  8 jacket_denim_purple     ['denim']   1157. 142.   133.     23 rt   
-    ##  9 chair_metal_purple      ['plastic'] 1149. 109.   118.     24 rt   
-    ## 10 boot_leather_brown      ['rubber']  1149.  91.1   94.7    23 rt   
-    ## 11 jacket_leather_green    ['leather'] 1144. 162.   163.     19 rt   
-    ## 12 boot_leather_green      ['leather'] 1139. 106.   110.     23 rt   
-    ## 13 jacket_leather_purple   ['leather'] 1135. 141.   143.     23 rt   
-    ## 14 pitcher_metal_blue      ['metal']   1134. 134.   144.     24 rt   
-    ## 15 jacket_denim_purple     ['blue']    1132. 136.   141.     23 rt
+    ##  1 bowl_metal_green        ['silver']  1239. 139.    137.    22 rt   
+    ##  2 chair_metal_purple      ['metal']   1222. 130.    138.    24 rt   
+    ##  3 pitcher_glass_blue      ['plastic'] 1190. 148.    155.    23 rt   
+    ##  4 jacket_leather_green    ['denim']   1184. 106.    116.    23 rt   
+    ##  5 chair_metal_purple      ['silver']  1183. 155.    166.    22 rt   
+    ##  6 jacket_leather_original ['rubber']  1160. 110.    117.    24 rt   
+    ##  7 pitcher_plastic_blue    ['rubber']  1158. 136.    150.    23 rt   
+    ##  8 jacket_denim_purple     ['denim']   1157. 134.    136.    23 rt   
+    ##  9 chair_metal_purple      ['plastic'] 1149. 114.    118.    24 rt   
+    ## 10 boot_leather_brown      ['rubber']  1149.  94.8   106.    23 rt   
+    ## 11 jacket_leather_green    ['leather'] 1144. 154.    164.    19 rt   
+    ## 12 boot_leather_green      ['leather'] 1139. 117.    116.    23 rt   
+    ## 13 jacket_leather_purple   ['leather'] 1135. 156.    162.    23 rt   
+    ## 14 pitcher_metal_blue      ['metal']   1134. 131.    148.    24 rt   
+    ## 15 jacket_denim_purple     ['blue']    1132. 146.    145.    23 rt
 
     ## # A tibble: 15 x 7
     ##    label                  feature        Mean CILow CIHigh count group
     ##    <fct>                  <fct>         <dbl> <dbl>  <dbl> <int> <chr>
-    ##  1 spoon_plastic_original ['red']        878.  93.7  105.     24 rt   
-    ##  2 cup_metal_blue         ['blue']       877.  79.0   86.2    22 rt   
-    ##  3 pitcher_glass_green    ['wood']       877.  72.9   86.3    24 rt   
-    ##  4 chair_plastic_green    ['green']      874.  85.8   94.7    24 rt   
-    ##  5 table_metal_blue       ['blue']       873. 101.   108.     23 rt   
-    ##  6 plate_plastic_original ['blue']       873. 104.   115.     19 rt   
-    ##  7 pitcher_metal_green    ['green']      872.  91.1   88.3    24 rt   
-    ##  8 box_cardboard_original ['cardboard']  866.  93.1  106.     19 rt   
-    ##  9 chair_metal_original   ['paper']      863. 127.   112.     19 rt   
-    ## 10 boot_leather_green     ['green']      863.  83.3   82.9    24 rt   
-    ## 11 cup_plastic_blue       ['blue']       861.  94.1   97.3    20 rt   
-    ## 12 cup_plastic_green      ['green']      860.  94.1   98.4    22 rt   
-    ## 13 plate_plastic_green    ['green']      853   92.3  117.     24 rt   
-    ## 14 spoon_metal_original   ['pink']       829.  67.9   65.7    24 rt   
-    ## 15 spoon_plastic_blue     ['blue']       821.  64.6   65.7    24 rt
+    ##  1 spoon_plastic_original ['red']        878.  89.5   97.1    24 rt   
+    ##  2 cup_metal_blue         ['blue']       877.  81.8   83.3    22 rt   
+    ##  3 pitcher_glass_green    ['wood']       877.  77.2   85.9    24 rt   
+    ##  4 chair_plastic_green    ['green']      874.  82.5   90.8    24 rt   
+    ##  5 table_metal_blue       ['blue']       873.  91.5  104.     23 rt   
+    ##  6 plate_plastic_original ['blue']       873. 102.   111.     19 rt   
+    ##  7 pitcher_metal_green    ['green']      872.  88.4   96.0    24 rt   
+    ##  8 box_cardboard_original ['cardboard']  866.  95.3  107.     19 rt   
+    ##  9 chair_metal_original   ['paper']      863. 113.   117.     19 rt   
+    ## 10 boot_leather_green     ['green']      863.  82.7   79.0    24 rt   
+    ## 11 cup_plastic_blue       ['blue']       861.  85.7   99.0    20 rt   
+    ## 12 cup_plastic_green      ['green']      860.  95.2   91.3    22 rt   
+    ## 13 plate_plastic_green    ['green']      853   89.5  115.     24 rt   
+    ## 14 spoon_metal_original   ['pink']       829.  61.3   70.5    24 rt   
+    ## 15 spoon_plastic_blue     ['blue']       821.  61.3   66.4    24 rt
 
 **Only correct responses, regardless of feature matching**
 
     ## # A tibble: 15 x 7
     ##    label                    feature      Mean CILow CIHigh count group     
     ##    <fct>                    <fct>       <dbl> <dbl>  <dbl> <int> <chr>     
-    ##  1 bowl_metal_green         ['silver']  1246. 156.   148.      7 correct_rt
-    ##  2 bottle_plastic_blue      ['glass']   1232  157.   178.     15 correct_rt
-    ##  3 jacket_leather_green     ['denim']   1205. 105.   104.     15 correct_rt
-    ##  4 spoon_wood_green         ['plastic'] 1200. 185.   181.      9 correct_rt
-    ##  5 jacket_denim_purple      ['denim']   1196. 139.   147.     20 correct_rt
-    ##  6 chair_metal_purple       ['metal']   1185. 132.   144.     22 correct_rt
-    ##  7 jacket_leather_original  ['rubber']  1176. 115.   116.     22 correct_rt
-    ##  8 jacket_leather_purple    ['leather'] 1173. 143.   166.     18 correct_rt
-    ##  9 table_metal_blue         ['metal']   1171. 171.   156.     10 correct_rt
-    ## 10 chair_metal_purple       ['plastic'] 1169. 154.   155.     16 correct_rt
-    ## 11 bottle_glass_original    ['plastic'] 1149. 151.   163.     19 correct_rt
-    ## 12 boot_leather_green       ['leather'] 1144. 100.   124.     20 correct_rt
-    ## 13 bowl_glass_green         ['blue']    1143. 125.   130.     22 correct_rt
-    ## 14 pitcher_plastic_original ['plastic'] 1141. 165.   174.     19 correct_rt
-    ## 15 boot_leather_brown       ['rubber']  1134.  97.8   93.7    20 correct_rt
+    ##  1 bowl_metal_green         ['silver']  1246.  152.  165.      7 correct_rt
+    ##  2 bottle_plastic_blue      ['glass']   1232   172.  161.     15 correct_rt
+    ##  3 jacket_leather_green     ['denim']   1205.  108.  114.     15 correct_rt
+    ##  4 spoon_wood_green         ['plastic'] 1200.  175.  187.      9 correct_rt
+    ##  5 jacket_denim_purple      ['denim']   1196.  136.  146.     20 correct_rt
+    ##  6 chair_metal_purple       ['metal']   1185.  131.  147.     22 correct_rt
+    ##  7 jacket_leather_original  ['rubber']  1176.  106.  114.     22 correct_rt
+    ##  8 jacket_leather_purple    ['leather'] 1173.  146.  161.     18 correct_rt
+    ##  9 table_metal_blue         ['metal']   1171.  166.  176.     10 correct_rt
+    ## 10 chair_metal_purple       ['plastic'] 1169.  157.  160.     16 correct_rt
+    ## 11 bottle_glass_original    ['plastic'] 1149.  149.  168.     19 correct_rt
+    ## 12 boot_leather_green       ['leather'] 1144.  106.  113.     20 correct_rt
+    ## 13 bowl_glass_green         ['blue']    1143.  125.  119.     22 correct_rt
+    ## 14 pitcher_plastic_original ['plastic'] 1141.  180.  197.     19 correct_rt
+    ## 15 boot_leather_brown       ['rubber']  1134.  102.   95.0    20 correct_rt
 
     ## # A tibble: 15 x 7
     ##    label                  feature        Mean CILow CIHigh count group     
     ##    <fct>                  <fct>         <dbl> <dbl>  <dbl> <int> <chr>     
-    ##  1 cup_plastic_original   ['clear']      878.  77.3   77.9    23 correct_rt
-    ##  2 cup_metal_blue         ['blue']       877.  77.6   81.3    22 correct_rt
-    ##  3 pitcher_glass_green    ['wood']       877.  75.6   82.6    24 correct_rt
-    ##  4 chair_plastic_green    ['green']      874.  82     90.3    24 correct_rt
-    ##  5 table_metal_blue       ['blue']       873.  92.3   99.5    23 correct_rt
-    ##  6 pitcher_metal_green    ['green']      872.  83.9   92.2    24 correct_rt
-    ##  7 box_cardboard_original ['cardboard']  866.  93.2  106.     19 correct_rt
-    ##  8 chair_metal_original   ['paper']      863. 125.   123.     19 correct_rt
-    ##  9 boot_leather_green     ['green']      863.  84.1   79.4    24 correct_rt
-    ## 10 cup_plastic_blue       ['blue']       861.  86.7   92.0    20 correct_rt
-    ## 11 cup_plastic_green      ['green']      860.  98.6   97.6    22 correct_rt
-    ## 12 plate_plastic_green    ['green']      848.  89.8  117.     23 correct_rt
-    ## 13 plate_paper_original   ['white']      839.  71.4   72.2    21 correct_rt
-    ## 14 spoon_metal_original   ['pink']       829.  58.6   62.8    24 correct_rt
-    ## 15 spoon_plastic_blue     ['blue']       821.  65.5   67.0    24 correct_rt
+    ##  1 cup_plastic_original   ['clear']      878.  79.8   81.9    23 correct_rt
+    ##  2 cup_metal_blue         ['blue']       877.  79.1   85.7    22 correct_rt
+    ##  3 pitcher_glass_green    ['wood']       877.  76.8   83.9    24 correct_rt
+    ##  4 chair_plastic_green    ['green']      874.  82.3   94.7    24 correct_rt
+    ##  5 table_metal_blue       ['blue']       873.  97.2  105.     23 correct_rt
+    ##  6 pitcher_metal_green    ['green']      872.  93.4   89.7    24 correct_rt
+    ##  7 box_cardboard_original ['cardboard']  866.  91.7   99.9    19 correct_rt
+    ##  8 chair_metal_original   ['paper']      863. 113.   112.     19 correct_rt
+    ##  9 boot_leather_green     ['green']      863.  84.8   82.6    24 correct_rt
+    ## 10 cup_plastic_blue       ['blue']       861.  96.3   92.2    20 correct_rt
+    ## 11 cup_plastic_green      ['green']      860.  95.4   95.9    22 correct_rt
+    ## 12 plate_plastic_green    ['green']      848.  96.2  111.     23 correct_rt
+    ## 13 plate_paper_original   ['white']      839.  68.5   77.6    21 correct_rt
+    ## 14 spoon_metal_original   ['pink']       829.  65     63.8    24 correct_rt
+    ## 15 spoon_plastic_blue     ['blue']       821.  60.7   62.7    24 correct_rt
 
 **Only correct responses, only matching features**
 
     ## # A tibble: 15 x 7
     ##    label                  feature      Mean CILow CIHigh count group            
     ##    <fct>                  <fct>       <dbl> <dbl>  <dbl> <int> <chr>            
-    ##  1 jacket_denim_purple    ['denim']   1196. 129.   138.     20 correct_matching…
-    ##  2 chair_metal_purple     ['metal']   1185. 133.   131.     22 correct_matching…
-    ##  3 jacket_leather_purple  ['leather'] 1173. 146.   166.     18 correct_matching…
-    ##  4 table_metal_blue       ['metal']   1171. 165.   175.     10 correct_matching…
-    ##  5 boot_leather_green     ['leather'] 1144. 105.   121.     20 correct_matching…
-    ##  6 pitcher_plastic_origi… ['plastic'] 1141. 163.   188.     19 correct_matching…
-    ##  7 jacket_leather_green   ['leather'] 1127. 134.   140.     17 correct_matching…
-    ##  8 spoon_wood_blue        ['wood']    1126. 138.   135.     18 correct_matching…
-    ##  9 pitcher_metal_green    ['metal']   1122. 160.   158.     15 correct_matching…
-    ## 10 chair_metal_green      ['metal']   1118.  89.0   88.7    21 correct_matching…
-    ## 11 table_metal_green      ['metal']   1115. 151.   176.     16 correct_matching…
-    ## 12 boot_rubber_brown      ['rubber']  1111. 132.   140.     23 correct_matching…
-    ## 13 spoon_metal_green      ['metal']   1091. 150.   142.     19 correct_matching…
-    ## 14 chair_plastic_original ['plastic'] 1087. 133.   144.     19 correct_matching…
-    ## 15 chair_plastic_purple   ['plastic'] 1077.  75.7   85.7    20 correct_matching…
+    ##  1 jacket_denim_purple    ['denim']   1196. 144.   137.     20 correct_matching…
+    ##  2 chair_metal_purple     ['metal']   1185. 138.   135.     22 correct_matching…
+    ##  3 jacket_leather_purple  ['leather'] 1173. 137.   167.     18 correct_matching…
+    ##  4 table_metal_blue       ['metal']   1171. 159.   168.     10 correct_matching…
+    ##  5 boot_leather_green     ['leather'] 1144. 103.   110.     20 correct_matching…
+    ##  6 pitcher_plastic_origi… ['plastic'] 1141. 166.   193.     19 correct_matching…
+    ##  7 jacket_leather_green   ['leather'] 1127. 149.   149.     17 correct_matching…
+    ##  8 spoon_wood_blue        ['wood']    1126. 136.   146.     18 correct_matching…
+    ##  9 pitcher_metal_green    ['metal']   1122. 155.   169.     15 correct_matching…
+    ## 10 chair_metal_green      ['metal']   1118.  95.3   89.3    21 correct_matching…
+    ## 11 table_metal_green      ['metal']   1115. 157.   173.     16 correct_matching…
+    ## 12 boot_rubber_brown      ['rubber']  1111. 124.   145.     23 correct_matching…
+    ## 13 spoon_metal_green      ['metal']   1091. 124.   143.     19 correct_matching…
+    ## 14 chair_plastic_original ['plastic'] 1087. 127.   155.     19 correct_matching…
+    ## 15 chair_plastic_purple   ['plastic'] 1077.  80.0   75.6    20 correct_matching…
 
     ## # A tibble: 15 x 7
     ##    label                 feature       Mean CILow CIHigh count group            
     ##    <fct>                 <fct>        <dbl> <dbl>  <dbl> <int> <chr>            
-    ##  1 bottle_glass_green    ['glass']     884.  87.6   84.3    24 correct_matching…
-    ##  2 plate_plastic_origin… ['blue']      880. 107.   125.     18 correct_matching…
-    ##  3 bag_plastic_blue      ['plastic']   879. 103.   111.     16 correct_matching…
-    ##  4 cup_plastic_original  ['clear']     878.  73.8   81.1    23 correct_matching…
-    ##  5 cup_metal_blue        ['blue']      877.  82.2   85.4    22 correct_matching…
-    ##  6 chair_plastic_green   ['green']     874.  79.2   86.4    24 correct_matching…
-    ##  7 table_metal_blue      ['blue']      873.  96.8  107.     23 correct_matching…
-    ##  8 pitcher_metal_green   ['green']     872.  86.0   86      24 correct_matching…
-    ##  9 box_cardboard_origin… ['cardboard…  866.  93.8  119.     19 correct_matching…
-    ## 10 boot_leather_green    ['green']     863.  84.9   83.0    24 correct_matching…
-    ## 11 cup_plastic_blue      ['blue']      861.  80.6   92.0    20 correct_matching…
-    ## 12 cup_plastic_green     ['green']     860.  87.2   95.6    22 correct_matching…
-    ## 13 plate_plastic_green   ['green']     848.  97.0  129.     23 correct_matching…
-    ## 14 plate_paper_original  ['white']     839.  73.5   75.9    21 correct_matching…
-    ## 15 spoon_plastic_blue    ['blue']      821.  62.3   71.4    24 correct_matching…
+    ##  1 bottle_glass_green    ['glass']     884.  89.3   84.2    24 correct_matching…
+    ##  2 plate_plastic_origin… ['blue']      880. 109.   122.     18 correct_matching…
+    ##  3 bag_plastic_blue      ['plastic']   879. 102.   113.     16 correct_matching…
+    ##  4 cup_plastic_original  ['clear']     878.  73.9   85.0    23 correct_matching…
+    ##  5 cup_metal_blue        ['blue']      877.  81.5   81.6    22 correct_matching…
+    ##  6 chair_plastic_green   ['green']     874.  80.3   92.9    24 correct_matching…
+    ##  7 table_metal_blue      ['blue']      873. 105.   102.     23 correct_matching…
+    ##  8 pitcher_metal_green   ['green']     872.  86.0   92.0    24 correct_matching…
+    ##  9 box_cardboard_origin… ['cardboard…  866.  90.2  108.     19 correct_matching…
+    ## 10 boot_leather_green    ['green']     863.  83.9   82.7    24 correct_matching…
+    ## 11 cup_plastic_blue      ['blue']      861.  82.8   84.1    20 correct_matching…
+    ## 12 cup_plastic_green     ['green']     860.  86.9   99.0    22 correct_matching…
+    ## 13 plate_plastic_green   ['green']     848.  97.9  113.     23 correct_matching…
+    ## 14 plate_paper_original  ['white']     839.  69.7   76.5    21 correct_matching…
+    ## 15 spoon_plastic_blue    ['blue']      821.  61.2   67.3    24 correct_matching…
 
 **Only correct responses, only not matching features**
 
     ## # A tibble: 15 x 7
     ##    label                feature       Mean CILow CIHigh count group             
     ##    <fct>                <fct>        <dbl> <dbl>  <dbl> <int> <chr>             
-    ##  1 bowl_metal_green     ['silver']   1246. 167.   169.      7 correct_notmatchi…
-    ##  2 bottle_plastic_blue  ['glass']    1232  166.   174.     15 correct_notmatchi…
-    ##  3 jacket_leather_green ['denim']    1205. 101.   116.     15 correct_notmatchi…
-    ##  4 spoon_wood_green     ['plastic']  1200. 177.   195.      9 correct_notmatchi…
-    ##  5 jacket_leather_orig… ['rubber']   1176. 121.   121.     22 correct_notmatchi…
-    ##  6 chair_metal_purple   ['plastic']  1169. 154.   161.     16 correct_notmatchi…
-    ##  7 bottle_glass_origin… ['plastic']  1149. 160.   165.     19 correct_notmatchi…
-    ##  8 bowl_glass_green     ['blue']     1143. 123.   136.     22 correct_notmatchi…
-    ##  9 boot_leather_brown   ['rubber']   1134.  99.4   97.7    20 correct_notmatchi…
-    ## 10 spoon_wood_original  ['cardboard… 1107  116.   119.     22 correct_notmatchi…
-    ## 11 chair_plastic_origi… ['wood']     1095. 112.    99.8    18 correct_notmatchi…
-    ## 12 plate_paper_green    ['glass']    1094. 120.   144.     20 correct_notmatchi…
-    ## 13 spoon_wood_original  ['clear']    1093. 112.   119.     22 correct_notmatchi…
-    ## 14 chair_metal_purple   ['silver']   1091  144.   159.     19 correct_notmatchi…
-    ## 15 bag_plastic_blue     ['purple']   1091. 132.   137.     23 correct_notmatchi…
+    ##  1 bowl_metal_green     ['silver']   1246. 154.    158.     7 correct_notmatchi…
+    ##  2 bottle_plastic_blue  ['glass']    1232  172.    183.    15 correct_notmatchi…
+    ##  3 jacket_leather_green ['denim']    1205. 108.    107.    15 correct_notmatchi…
+    ##  4 spoon_wood_green     ['plastic']  1200. 190.    188.     9 correct_notmatchi…
+    ##  5 jacket_leather_orig… ['rubber']   1176. 114.    116.    22 correct_notmatchi…
+    ##  6 chair_metal_purple   ['plastic']  1169. 164.    172.    16 correct_notmatchi…
+    ##  7 bottle_glass_origin… ['plastic']  1149. 161.    160.    19 correct_notmatchi…
+    ##  8 bowl_glass_green     ['blue']     1143. 123.    127.    22 correct_notmatchi…
+    ##  9 boot_leather_brown   ['rubber']   1134. 107.    100.    20 correct_notmatchi…
+    ## 10 spoon_wood_original  ['cardboard… 1107  103.    123.    22 correct_notmatchi…
+    ## 11 chair_plastic_origi… ['wood']     1095. 106.    107.    18 correct_notmatchi…
+    ## 12 plate_paper_green    ['glass']    1094. 120.    130.    20 correct_notmatchi…
+    ## 13 spoon_wood_original  ['clear']    1093.  97.8   110.    22 correct_notmatchi…
+    ## 14 chair_metal_purple   ['silver']   1091  145.    154.    19 correct_notmatchi…
+    ## 15 bag_plastic_blue     ['purple']   1091. 130.    132.    23 correct_notmatchi…
 
     ## # A tibble: 15 x 7
     ##    label                feature      Mean CILow CIHigh count group              
     ##    <fct>                <fct>       <dbl> <dbl>  <dbl> <int> <chr>              
-    ##  1 box_cardboard_green  ['denim']    902.  71.9   66.3    23 correct_notmatchin…
-    ##  2 boot_rubber_brown    ['silver']   900.  82.7   83.7    22 correct_notmatchin…
-    ##  3 bowl_metal_blue      ['wood']     900. 109.   121.     24 correct_notmatchin…
-    ##  4 bottle_glass_origin… ['brown']    897.  68.3   79.9    23 correct_notmatchin…
-    ##  5 bowl_metal_original  ['wood']     895.  90.2   87.5    19 correct_notmatchin…
-    ##  6 jacket_leather_purp… ['red']      894.  73.6   91.9    22 correct_notmatchin…
-    ##  7 table_metal_green    ['paper']    891.  81.9   92.1    18 correct_notmatchin…
-    ##  8 boot_rubber_original ['red']      891.  98.6   97.2    22 correct_notmatchin…
-    ##  9 bottle_plastic_green ['cardboar…  883.  79.4   87.2    20 correct_notmatchin…
-    ## 10 boot_leather_green   ['pink']     880.  90.9  122.     19 correct_notmatchin…
-    ## 11 bag_paper_blue       ['glass']    879.  85.3   86.7    19 correct_notmatchin…
-    ## 12 spoon_plastic_origi… ['red']      878.  94.4   97.1    24 correct_notmatchin…
-    ## 13 pitcher_glass_green  ['wood']     877.  71.0   84.7    24 correct_notmatchin…
-    ## 14 chair_metal_original ['paper']    863. 132.   116.     19 correct_notmatchin…
-    ## 15 spoon_metal_original ['pink']     829.  59.9   68.7    24 correct_notmatchin…
+    ##  1 box_cardboard_green  ['denim']    902.  64.5   71.4    23 correct_notmatchin…
+    ##  2 boot_rubber_brown    ['silver']   900.  92.1   87.2    22 correct_notmatchin…
+    ##  3 bowl_metal_blue      ['wood']     900. 106.   114.     24 correct_notmatchin…
+    ##  4 bottle_glass_origin… ['brown']    897.  74.9   77.2    23 correct_notmatchin…
+    ##  5 bowl_metal_original  ['wood']     895.  94.8   96.7    19 correct_notmatchin…
+    ##  6 jacket_leather_purp… ['red']      894.  78.4   91.9    22 correct_notmatchin…
+    ##  7 table_metal_green    ['paper']    891.  78.6   85.8    18 correct_notmatchin…
+    ##  8 boot_rubber_original ['red']      891.  93.1   96.0    22 correct_notmatchin…
+    ##  9 bottle_plastic_green ['cardboar…  883.  80.1   87.2    20 correct_notmatchin…
+    ## 10 boot_leather_green   ['pink']     880.  91.6  117.     19 correct_notmatchin…
+    ## 11 bag_paper_blue       ['glass']    879.  86.8   92.8    19 correct_notmatchin…
+    ## 12 spoon_plastic_origi… ['red']      878.  87.6   93.3    24 correct_notmatchin…
+    ## 13 pitcher_glass_green  ['wood']     877.  76.2   87.5    24 correct_notmatchin…
+    ## 14 chair_metal_original ['paper']    863. 112.   116.     19 correct_notmatchin…
+    ## 15 spoon_metal_original ['pink']     829.  63.8   64.5    24 correct_notmatchin…
 
 # By error rates
 
@@ -198,16 +198,16 @@ excluded (29 participants)
     ##    <fct>                <fct>       <dbl> <dbl>  <dbl> <int> <chr>
     ##  1 boot_rubber_original ['green']   0     0      0        24 er   
     ##  2 pitcher_glass_blue   ['clear']   0     0      0        23 er   
-    ##  3 bowl_metal_green     ['silver']  0.318 0.227  0.227    22 er   
+    ##  3 bowl_metal_green     ['silver']  0.318 0.182  0.227    22 er   
     ##  4 spoon_wood_green     ['plastic'] 0.474 0.211  0.211    19 er   
     ##  5 table_metal_blue     ['metal']   0.526 0.211  0.211    19 er   
-    ##  6 pitcher_glass_blue   ['plastic'] 0.565 0.217  0.217    23 er   
-    ##  7 bottle_plastic_blue  ['glass']   0.625 0.167  0.208    24 er   
-    ##  8 pitcher_metal_blue   ['metal']   0.625 0.208  0.208    24 er   
-    ##  9 jacket_leather_green ['denim']   0.652 0.174  0.174    23 er   
-    ## 10 chair_metal_purple   ['plastic'] 0.667 0.208  0.208    24 er   
+    ##  6 pitcher_glass_blue   ['plastic'] 0.565 0.217  0.174    23 er   
+    ##  7 bottle_plastic_blue  ['glass']   0.625 0.168  0.208    24 er   
+    ##  8 pitcher_metal_blue   ['metal']   0.625 0.208  0.167    24 er   
+    ##  9 jacket_leather_green ['denim']   0.652 0.217  0.174    23 er   
+    ## 10 chair_metal_purple   ['plastic'] 0.667 0.208  0.167    24 er   
     ## 11 table_metal_green    ['metal']   0.667 0.208  0.167    24 er   
-    ## 12 pitcher_metal_green  ['metal']   0.682 0.227  0.182    22 er   
+    ## 12 pitcher_metal_green  ['metal']   0.682 0.182  0.182    22 er   
     ## 13 plate_paper_green    ['paper']   0.7   0.200  0.2      20 er   
     ## 14 spoon_metal_blue     ['metal']   0.7   0.200  0.2      20 er   
     ## 15 bottle_glass_blue    ['plastic'] 0.714 0.190  0.190    21 er
@@ -243,14 +243,14 @@ excluded (29 participants)
     ##  5 pitcher_metal_green    ['metal']   0.682 0.182  0.182    22 matching_er
     ##  6 plate_paper_green      ['paper']   0.7   0.200  0.2      20 matching_er
     ##  7 spoon_metal_blue       ['metal']   0.7   0.200  0.2      20 matching_er
-    ##  8 spoon_wood_blue        ['blue']    0.739 0.174  0.174    23 matching_er
+    ##  8 spoon_wood_blue        ['blue']    0.739 0.175  0.174    23 matching_er
     ##  9 bowl_metal_green       ['green']   0.75  0.167  0.167    24 matching_er
-    ## 10 plate_plastic_original ['plastic'] 0.75  0.167  0.167    24 matching_er
-    ## 11 bag_paper_green        ['paper']   0.783 0.174  0.174    23 matching_er
-    ## 12 jacket_leather_purple  ['leather'] 0.783 0.174  0.174    23 matching_er
+    ## 10 plate_plastic_original ['plastic'] 0.75  0.208  0.167    24 matching_er
+    ## 11 bag_paper_green        ['paper']   0.783 0.174  0.130    23 matching_er
+    ## 12 jacket_leather_purple  ['leather'] 0.783 0.174  0.132    23 matching_er
     ## 13 plate_paper_blue       ['paper']   0.783 0.174  0.130    23 matching_er
     ## 14 spoon_wood_blue        ['wood']    0.783 0.174  0.130    23 matching_er
-    ## 15 table_metal_original   ['metal']   0.783 0.174  0.130    23 matching_er
+    ## 15 table_metal_original   ['metal']   0.783 0.174  0.132    23 matching_er
 
     ## # A tibble: 15 x 7
     ##    label                    feature      Mean CILow CIHigh count group      
@@ -279,18 +279,18 @@ excluded (29 participants)
     ##  1 pitcher_glass_blue       ['clear']   0     0      0        23 notmatching_er
     ##  2 bowl_metal_green         ['silver']  0.318 0.182  0.182    22 notmatching_er
     ##  3 spoon_wood_green         ['plastic'] 0.474 0.211  0.211    19 notmatching_er
-    ##  4 pitcher_glass_blue       ['plastic'] 0.565 0.174  0.174    23 notmatching_er
-    ##  5 bottle_plastic_blue      ['glass']   0.625 0.167  0.167    24 notmatching_er
+    ##  4 pitcher_glass_blue       ['plastic'] 0.565 0.217  0.217    23 notmatching_er
+    ##  5 bottle_plastic_blue      ['glass']   0.625 0.208  0.167    24 notmatching_er
     ##  6 jacket_leather_green     ['denim']   0.652 0.217  0.174    23 notmatching_er
-    ##  7 chair_metal_purple       ['plastic'] 0.667 0.167  0.167    24 notmatching_er
+    ##  7 chair_metal_purple       ['plastic'] 0.667 0.208  0.167    24 notmatching_er
     ##  8 bottle_glass_blue        ['plastic'] 0.714 0.190  0.190    21 notmatching_er
     ##  9 table_metal_original     ['black']   0.75  0.200  0.15     20 notmatching_er
-    ## 10 jacket_denim_purple      ['blue']    0.783 0.174  0.130    23 notmatching_er
-    ## 11 pitcher_plastic_blue     ['rubber']  0.826 0.174  0.130    23 notmatching_er
+    ## 10 jacket_denim_purple      ['blue']    0.783 0.174  0.174    23 notmatching_er
+    ## 11 pitcher_plastic_blue     ['rubber']  0.826 0.130  0.130    23 notmatching_er
     ## 12 pitcher_plastic_original ['rubber']  0.826 0.174  0.130    23 notmatching_er
-    ## 13 bag_plastic_green        ['rubber']  0.85  0.151  0.15     20 notmatching_er
-    ## 14 chair_metal_green        ['clear']   0.85  0.200  0.15     20 notmatching_er
-    ## 15 bottle_glass_original    ['plastic'] 0.864 0.136  0.136    22 notmatching_er
+    ## 13 bag_plastic_green        ['rubber']  0.85  0.15   0.15     20 notmatching_er
+    ## 14 chair_metal_green        ['clear']   0.85  0.15   0.15     20 notmatching_er
+    ## 15 bottle_glass_original    ['plastic'] 0.864 0.182  0.136    22 notmatching_er
 
     ## # A tibble: 15 x 7
     ##    label                  feature      Mean CILow CIHigh count group         
@@ -329,21 +329,6 @@ excluded (29 participants)
     ## 10 bottle_plastic_blue   ['glass']       4
     ## # … with 39 more rows
 
-    ## # A tibble: 105 x 3
-    ##    label                   feature     group
-    ##    <fct>                   <fct>       <chr>
-    ##  1 bowl_metal_green        ['silver']  rt   
-    ##  2 chair_metal_purple      ['metal']   rt   
-    ##  3 pitcher_glass_blue      ['plastic'] rt   
-    ##  4 jacket_leather_green    ['denim']   rt   
-    ##  5 chair_metal_purple      ['silver']  rt   
-    ##  6 jacket_leather_original ['rubber']  rt   
-    ##  7 pitcher_plastic_blue    ['rubber']  rt   
-    ##  8 jacket_denim_purple     ['denim']   rt   
-    ##  9 chair_metal_purple      ['plastic'] rt   
-    ## 10 boot_leather_brown      ['rubber']  rt   
-    ## # … with 95 more rows
-
     ## # A tibble: 54 x 3
     ## # Groups:   label [40]
     ##    label                 feature       count
@@ -359,18 +344,3 @@ excluded (29 participants)
     ##  9 bottle_plastic_green  ['cardboard']     1
     ## 10 bowl_metal_blue       ['wood']          1
     ## # … with 44 more rows
-
-    ## # A tibble: 105 x 3
-    ##    label                  feature       group
-    ##    <fct>                  <fct>         <chr>
-    ##  1 spoon_plastic_original ['red']       rt   
-    ##  2 cup_metal_blue         ['blue']      rt   
-    ##  3 pitcher_glass_green    ['wood']      rt   
-    ##  4 chair_plastic_green    ['green']     rt   
-    ##  5 table_metal_blue       ['blue']      rt   
-    ##  6 plate_plastic_original ['blue']      rt   
-    ##  7 pitcher_metal_green    ['green']     rt   
-    ##  8 box_cardboard_original ['cardboard'] rt   
-    ##  9 chair_metal_original   ['paper']     rt   
-    ## 10 boot_leather_green     ['green']     rt   
-    ## # … with 95 more rows

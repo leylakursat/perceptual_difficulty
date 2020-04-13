@@ -210,31 +210,25 @@ ld_notmatching_er
 
 # Is there overlap?
 ```{r overlap, echo=FALSE}
-#high difficulty (7 groups) (7*15 = 105 rows)
-#hd_rt,hd_correct_rt,hd_correct_matching_rt,hd_correct_notmatching_rt,hd_er,hd_matching_er,hd_notmatching_er
-
-#low difficulty (7 groups)
-#ld_rt,ld_correct_rt,ld_correct_matching_rt,ld_correct_notmatching_rt,ld_er,ld_matching_er,ld_notmatching_er
-
-###################
+# 7 high difficulty groups with 15 rows each = 105 rows
 high_difficulty = rbind(hd_rt,hd_correct_rt,hd_correct_matching_rt,hd_correct_notmatching_rt,hd_er,hd_matching_er,hd_notmatching_er)
 
 high_difficulty = high_difficulty[c("label","feature","group")]
 
-high_difficulty %>%
+high_difficulty = high_difficulty %>%
   group_by(label, feature) %>%
-  summarise(count=n())
+  summarize(count=n())
 
-#high_difficulty
+high_difficulty
 
 ###################
 low_difficulty = rbind(ld_rt,ld_correct_rt,ld_correct_matching_rt,ld_correct_notmatching_rt,ld_er,ld_matching_er,ld_notmatching_er)
 
 low_difficulty = low_difficulty[c("label","feature","group")]
 
-low_difficulty %>%
+low_difficulty= low_difficulty %>%
   group_by(label, feature) %>%
   summarise(count=n())
 
-#low_difficulty
+low_difficulty
 ```

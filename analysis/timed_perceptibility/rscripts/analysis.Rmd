@@ -117,7 +117,7 @@ ggplot(toplot, aes(x=feature_type, y=Mean, fill=feature_matching)) +
 
 ```{r proportionuniqueitem, include=FALSE}
 toplot =  df %>%
-  filter(feature_matching=="'yes'") %>%
+  filter(feature_matching=="'no'") %>%
   group_by(label,item,feature_type) %>%
   summarise(Median=median(gaveRightAnswer),Mean=mean(gaveRightAnswer),CILow=ci.low(gaveRightAnswer),CIHigh=ci.high(gaveRightAnswer),count=n()) %>%
   ungroup() %>%
@@ -132,7 +132,7 @@ ggplot(toplot, aes(x=feature_type, y=Mean, fill=item)) +
   ylab("Proportion of correct responses") +
   facet_wrap(~label, ncol=6)
 
-ggsave(file="../graphs/by_image_proportion_matching.pdf",width=14,height=20)
+ggsave(file="../graphs/by_image_proportion_notmatching.pdf",width=14,height=20)
 
 ```
 

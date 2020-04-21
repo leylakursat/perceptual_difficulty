@@ -235,7 +235,7 @@ function make_slides(f) {
 
       setTimeout(function(){
         if (a==0) {
-          exp.presponseTime = "Late";
+          exp.presponseTime = "late";
           //console.log("Late: " + (Date.now()-exp.pstartTime))
           $(".pword").hide();
           $(".pimage").hide();
@@ -359,7 +359,7 @@ function make_slides(f) {
 
       setTimeout(function(){
         if (a==0) {
-          exp.responseTime = "Late";
+          exp.responseTime = "late";
           //console.log("Late: " + (Date.now()-exp.startTime))
           $(".word").hide();
           $(".image").hide();
@@ -476,8 +476,9 @@ function make_slides(f) {
 function init() {
   //var items_target = _.shuffle([
     exp.all_stims = _.shuffle(exp.stims);
-    
-console.log(exp.all_stims.length);
+
+    console.log(exp.all_stims);
+    console.log(exp.all_stims.length);
 
   exp.trials = [];
   exp.catch_trials = [];
@@ -493,8 +494,7 @@ console.log(exp.all_stims.length);
   //blocks of the experiment:
   exp.structure=["bot","i0", "demonstration", "demonstration2", "practicetrial", "beforeobject", "objecttrial", 'subj_info', 'thanks'];
   //exp.structure=["demonstration", "demonstration2", "practicetrial", "beforeobject", "objecttrial", 'subj_info', 'thanks'];
-   
-  
+    
   exp.data_trials = [];
   //make corresponding slides:
   exp.slides = make_slides(exp);

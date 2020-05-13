@@ -210,9 +210,13 @@ var sampleObjects = function(targetPos) {
   //console.log('randomObjectList ',randomObjectList[0]);
   var target = randomObjectList[0][targetPos]
   target.targetStatus = "target";
+  
+  //target.condition == 'high_difficulty' ? distractors = sampleDistactors(target) : console.log("something wrong")
+
+  var distractors = sampleDistractors(target); // returns three objects
+  
   console.log("**************************************************");
   console.log("target: " , target);
-  var distractors = sampleDistractors(target); // returns three objects
   console.log("distractors: " , distractors);
   
   return [target].concat(distractors);
@@ -220,43 +224,56 @@ var sampleObjects = function(targetPos) {
 
 var sampleDistractors = function(target) {
   var distractorList = _.map(require('./stimuli/distractorSet', _.clone)); 
+
   competitors = []
   not_competitors = [];
 
+  // if (target.condition == 'high_difficulty') // FIX
+  //   same_var = color
+  //   diff_var = material
+
+  // high difficulty --> yes to material
+  // low difficulty --> yes to color
+
+  var sufficient = 'color'
+  var overinformative = 'material'
+
   for (var i = 0; i < (distractorList.length); i++) {
-    if ((target.item === (distractorList[i].item)) && ((distractorList[i].color) !== target.color) && ((distractorList[i].material) === target.material)) {
-      competitors.push(distractorList[i]) // array with possible competitors to the item
+    if ((target.item === (distractorList[i].item)) && ((distractorList[i][sufficient]) !== target[sufficient]) && ((distractorList[i][overinformative]) === target[overinformative])) {
+      competitors.push(distractorList[i]) // array with possible competitors to the item (different sufficient same overinformative with target)
     }
   }  
   for (var i = 0; i < (distractorList.length); i++) {
-    if (((distractorList[i].item) === target.item) && ((distractorList[i].color) !== target.color) && ((distractorList[i].material) !== target.material)) {
-      not_competitors.push(distractorList[i]) // array with possible non competitors to the item
+    if (((distractorList[i].item) === target.item) && ((distractorList[i][sufficient]) !== target[sufficient]) && ((distractorList[i][overinformative]) !== [target.overinformative])) {
+      not_competitors.push(distractorList[i]) // array with possible non competitors to the item (same sufficient different overinformative with competitor )
     } 
   }
-  distractorColors = [];
+  console.log("competitors: ", competitors)
+  console.log("not_competitors: ", not_competitors)
+
+  distractorSufficient = [];
   for (var i = 0; i<not_competitors.length; i++) {
     for (var j = 0; j<competitors.length; j++) {
-      if (not_competitors[i].color === competitors[j].color) {
-        distractorColors.push(competitors[j].color) // array with possible distractor colors
+      if (not_competitors[i][sufficient] === competitors[j][sufficient]) {
+        distractorSufficient.push(competitors[j][sufficient]) // array with possible distractor colors
       }  
     }
   }
-  uniqueCols = distractorColors // TO DO: fix this: have only unique colors
-  distractorColor = uniqueCols[Math.floor(Math.random() * uniqueCols.length)]; // pick random color from list of colors
+
+  uniqueSuff = distractorSufficient // TO DO: fix this: have only unique colors
+  distractorSufficient = uniqueSuff[Math.floor(Math.random() * uniqueSuff.length)]; // pick random color from list of colors
   
-  //console.log("competitors " , competitors)
-  //console.log("not_competitors " , not_competitors)
-  console.log("distractorColor " , distractorColor)
+  console.log("distractorSuff" , distractorSufficient)
   
   possibleComp = []
   possibleNotComp = []
   for (var i = 0; i < (competitors.length); i++) {
-    if (competitors[i].color == distractorColor) {
-      possibleComp.push(competitors[i]) // array with possible competitors in the selected color
+    if (competitors[i][sufficient] == distractorSufficient) {
+      possibleComp.push(competitors[i]) // array with possible competitors in the selected sufficient
     }  
   }  for (var i = 0; i < (not_competitors.length); i++) {
-    if (not_competitors[i].color == distractorColor) {
-      possibleNotComp.push(not_competitors[i])  // array with possible non-competitors in the selected color
+    if (not_competitors[i][sufficient] == distractorSufficient) {
+      possibleNotComp.push(not_competitors[i])  // array with possible non-competitors in the selected sufficient
     }  
   } 
 
@@ -270,9 +287,6 @@ var sampleDistractors = function(target) {
   } else {
     possibleNotComp = possibleNotComp.slice(0,2); // 2 different non-competitor distractors
   }
-
-  //console.log("possibleComp " , possibleComp)
-  //console.log("possibleNotComp " , possibleNotComp)
 
   distractors = possibleNotComp.concat(possibleComp); // 3 distractors total 
 

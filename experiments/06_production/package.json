@@ -11,5 +11,8 @@
     "csv-parse": "~0.0.6",
     "delta-e": "~0.0.7",
     "color-convert": "~1.0.0"
-  }
+  },
+  "plugins": [
+    "transform-object-rest-spread"
+  ]
 }

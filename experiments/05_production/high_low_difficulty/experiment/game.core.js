@@ -282,7 +282,11 @@ var sampleDistractors = function(target) {
   // console.log("possibleNotComp", possibleNotComp)
   // console.log("distractors: " , distractors);
 
-  return distractors.map(value => ({...value, targetStatus : "distractor"})); // change this to loop
+  for (var i = 0; i < (distractors.length); i++) {
+    distractors[i].targetStatus = "distractor";
+  }
+   return distractors;
+  //return distractors.map(value => ({...value, targetStatus : "distractor"}));
 };
 
 // Util functions

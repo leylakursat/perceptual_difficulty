@@ -13,39 +13,39 @@ function turkGetParam( name, defaultValue ) {
     } 
 }
 
-// function UTWorkerLimitReached(ut_id, workerId, assignmentId) {
+function UTWorkerLimitReached(ut_id, workerId, assignmentId) {
     
-//     //    var sys = require("sys"),
-//     //	path = require("path"), 
-//     //	fs = require("fs");
+    //    var sys = require("sys"),
+    //	path = require("path"), 
+    //	fs = require("fs");
     
-//     var assignmentId = turkGetParam('assignmentId', '');
-//     if (assignmentId != '' && assignmentId != 'ASSIGNMENT_ID_NOT_AVAILABLE') {
-//         var workerId = turkGetParam('workerId', '');
-//         var url = '/db/'+ut_id+'/'+workerId+'/'+assignmentId;
+    var assignmentId = turkGetParam('assignmentId', '');
+    if (assignmentId != '' && assignmentId != 'ASSIGNMENT_ID_NOT_AVAILABLE') {
+        var workerId = turkGetParam('workerId', '');
+        var url = '/db/'+ut_id+'/'+workerId+'/'+assignmentId;
 	
-//         var response = turkGetParam('ut_response', '-1');
-//         if (window.XDomainRequest) {
-//             if (response == '-1') {
-//                 // Use Microsoft XDR
-//                 var xdr = new XDomainRequest();
-//                 xdr.open("get", url);
-//                 xdr.onload = function() {
-//                     response = xdr.responseText;
-//                     window.location.replace(window.location.href + "&ut_response="+response);
-//                 };
-//                 xdr.send();
-//             }
-//         } else {
-//             var request = new XMLHttpRequest();
-//             request.open('GET', url, false);
-//             request.send();
-//             response = request.responseText;
-//         }
+        var response = turkGetParam('ut_response', '-1');
+        if (window.XDomainRequest) {
+            if (response == '-1') {
+                // Use Microsoft XDR
+                var xdr = new XDomainRequest();
+                xdr.open("get", url);
+                xdr.onload = function() {
+                    response = xdr.responseText;
+                    window.location.replace(window.location.href + "&ut_response="+response);
+                };
+                xdr.send();
+            }
+        } else {
+            var request = new XMLHttpRequest();
+            request.open('GET', url, false);
+            request.send();
+            response = request.responseText;
+        }
 
-//         if (response == '0') {
-//             return true;
-//         }
-//     }
-//     return false;
-// }
+        if (response == '0') {
+            return true;
+        }
+    }
+    return false;
+}

@@ -54,17 +54,18 @@ app.get( '/*' , function( req, res ) {
   if(req.query.workerId && !valid_id(req.query.workerId)) {
     console.log("invalid id: blocking request");
     res.redirect('https://rxdhawkins.me:8889/sharedUtils/invalid.html');
-  } else if (req.query.wo0rkerId && req.query.workerId in global_player_set) { // LEYLA BUNU GERI AL!!!
+  } else if (req.query.wo0rkerId && req.query.workerId in global_player_set) { 
     console.log("duplicate id: will not block during testing");
-    
+    // delete what's below when not testing
     console.log('\t :: Express :: file requested: ' + file);
     if(req.query.workerId) {
       console.log(" by workerID " + req.query.workerId);
     }
     res.sendfile("./" + file); // give them what they want
-
-    //console.log("duplicate id: blocking request");
-    //res.redirect('https://rxdhawkins.me:8889/sharedUtils/duplicate.html');
+    console.log("file: ",file);
+    
+    // console.log("duplicate id: blocking request");
+    // res.redirect('https://rxdhawkins.me:8889/sharedUtils/duplicate.html');
   } else {
     console.log('\t :: Express :: file requested: ' + file);
     if(req.query.workerId) {

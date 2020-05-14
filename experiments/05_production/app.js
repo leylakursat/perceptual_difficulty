@@ -9,7 +9,7 @@
 
 var 
     use_https       = true,
-    gameport        = 8889,
+    gameport        = 8882, // check which ports are in use with 'ss -tulw'
     https           = require('https'),
     fs              = require('fs'),
     app             = require('express')(),

@@ -1,0 +1,15 @@
+gameid, time, roundNum, trialType, context,nameClickedObj, targetStatusClickedObj, spLocsClickedObj, lisLocsClickedObj, alt1Name, alt1TargetStatus, alt1SpLocs, alt1LisLocs, alt2Name, alt2TargetStatus, alt2SpLocs, alt2LisLocsalt3Name, alt3TargetStatus, alt3SpLocs, alt3LisLocs
+8700-4,1589433272728,1,plate,blue,paper,plate_paper_blue,target,2,1,plate_plastic_green,distractor,1,4,plate_plastic_green,distractor,4,2,plate_paper_green,distractor,3
+8700-4,1589433276720,2,chair,purple,wood,chair_wood_purple,distractor,2,2,chair_wood_purple,distractor,1,4,chair_metal_green,target,3,3,chair_metal_purple,distractor,4
+8700-4,1589433280018,3,table,blue,wood,table_wood_blue,distractor,2,1,table_wood_blue,distractor,4,3,table_metal_blue,distractor,1,2,table_metal_green,target,3
+8700-4,1589433283922,4,plate,blue,plastic,plate_plastic_blue_original,target,1,2,plate_paper_blue,distractor,2,3,plate_paper_green,distractor,3,4,plate_paper_green,distractor,4
+8700-4,1589433289142,5,cup,green,plastic,cup_plastic_green,target,2,2,cup_metal_silver_original,distractor,4,1,cup_metal_green,distractor,1,4,cup_metal_silver_original,distractor,3
+8700-4,1589433293203,6,jacket,purple,leather,jacket_leather_purple,distractor,1,2,jacket_denim_purple,target,4,1,jacket_leather_black_original,distractor,3,4,jacket_leather_black_original,distractor,2
+8700-4,1589433297129,7,pitcher,blue,metal,pitcher_metal_blue,target,2,2,pitcher_plastic_blue,distractor,1,3,pitcher_plastic_white_original,distractor,4,1,pitcher_plastic_white_original,distractor,3
+8700-4,1589433300867,8,table,green,wood,table_wood_green,distractor,1,2,table_metal_blue,target,2,4,table_wood_green,distractor,3,1,table_metal_green,distractor,4
+8700-4,1589433303891,9,boot,brown,rubber,boot_rubber_brown,distractor,2,2,boot_rubber_brown,distractor,3,4,boot_leather_green,target,4,3,boot_leather_brown,distractor,1
+8700-4,1589433307783,10,chair,purple,metal,chair_metal_purple,target,2,2,chair_wood_green,distractor,4,3,chair_metal_green,distractor,1,4,chair_wood_green,distractor,3
+8700-4,1589433312699,11,bottle,blue,plastic,bottle_plastic_blue,distractor,1,2,bottle_plastic_blue,distractor,4,1,bottle_plastic_green,distractor,2,4,bottle_glass_green,target,3
+8700-4,1589433316637,12,table,green,wood,table_wood_green,distractor,2,1,table_wood_green,distractor,1,4,table_metal_blue,target,4,2,table_wood_blue,distractor,3
+8700-4,1589433323432,13,spoon,blue,wood,spoon_wood_blue,distractor,4,3,spoon_metal_blue,distractor,3,1,spoon_wood_green,target,1,4,spoon_metal_blue,distractor,2
+8700-4,1589433328011,14,table,blue,wood,table_wood_blue,distractor,3,3,table_metal_silver_original,target,1,2,table_metal_blue,distractor,2,1,table_wood_blue,distractor,4

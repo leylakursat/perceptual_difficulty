@@ -1,2 +1,0 @@
-gameid, time, roundNum, trialType, context,nameClickedObj, targetStatusClickedObj, spLocsClickedObj, lisLocsClickedObj, alt1Name, alt1TargetStatus, alt1SpLocs, alt1LisLocs, alt2Name, alt2TargetStatus, alt2SpLocs, alt2LisLocsalt3Name, alt3TargetStatus, alt3SpLocs, alt3LisLocs
-9909-e,1589424195703,1,boot,brown,rubber,boot_rubber_brown,distractor,2,3,boot_leather_brown,distractor,4,1,boot_rubber_brown,distractor,3,2,boot_leather_green,target,1

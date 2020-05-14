@@ -1,0 +1,3 @@
+gameid, time, roundNum, trialType, context,nameClickedObj, targetStatusClickedObj, spLocsClickedObj, lisLocsClickedObj, alt1Name, alt1TargetStatus, alt1SpLocs, alt1LisLocs, alt2Name, alt2TargetStatus, alt2SpLocs, alt2LisLocsalt3Name, alt3TargetStatus, alt3SpLocs, alt3LisLocs
+1136-2,1589436340447,1,table,green,metal,table_metal_green,distractor,4,3,table_wood_green,distractor,1,2,table_wood_green,distractor,3,1,table_metal_silver_original,target,2
+1136-2,1589436362264,2,chair,green,metal,chair_metal_green,target,1,1,chair_plastic_purple,distractor,2,4,chair_plastic_purple,distractor,4,2,chair_metal_purple,distractor,3

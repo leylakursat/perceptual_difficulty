@@ -1,0 +1,5 @@
+gameid,time,roundNum,sender,contents
+6125-5,1588873514918,1,listener,"reg"
+6125-5,1588873520238,2,speaker,"regw"
+6125-5,1588873531224,3,listener,"lll"
+6125-5,1588873738151,4,listener,"ll\\\"

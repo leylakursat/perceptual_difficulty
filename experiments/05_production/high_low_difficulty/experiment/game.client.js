@@ -153,7 +153,7 @@ var client_onMessage = function(data) {
 	})[0];
 	upperLeftX = objToHighlight.speakerCoords.gridPixelX;
 	upperLeftY = objToHighlight.speakerCoords.gridPixelY;
-	strokeColor = "black";      
+	strokeColor = "blue";      
       } else {
 	objToHighlight = _.filter(game.objects, function(x){
 	  return x.targetStatus == "target";

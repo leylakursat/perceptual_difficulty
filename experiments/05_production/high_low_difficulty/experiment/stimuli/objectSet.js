@@ -12,12 +12,18 @@ var conds = [
     {label: 'jacket_denim_purple', condition: 'low_difficulty', color: 'purple', material: 'denim', item: 'jacket', url: 'stimuli/jacket_denim_purple.png', width: 300, height: 300},
     {label: 'pitcher_metal_blue', condition: 'low_difficulty', color: 'blue', material: 'metal', item: 'pitcher', url: 'stimuli/pitcher_metal_blue.png', width: 300, height: 300},
     {label: 'table_metal_blue', condition: 'low_difficulty', color: 'blue', material: 'metal', item: 'table', url: 'stimuli/table_metal_blue.png', width: 300, height: 300},
-    {label: 'bottle_glass_green', condition: 'low_difficulty', color: 'green', material: 'glass', item: 'bottle', url: 'stimuli/bottle_glass_green.png', width: 300, height: 300},
+	{label: 'bottle_glass_green', condition: 'low_difficulty', color: 'green', material: 'glass', item: 'bottle', url: 'stimuli/bottle_glass_green.png', width: 300, height: 300},
+	{label: 'bottle_plastic_green',  condition: 'low_difficulty', color: 'green', material: 'plastic', item: 'bottle', url: 'stimuli/bottle_plastic_green.png', width: 300, height: 300},
+	{label: 'plate_paper_blue',  condition: 'low_difficulty', color: 'blue', material: 'paper', item: 'plate', url: 'stimuli/plate_paper_blue.png', width: 300, height: 300},
 ]
+
 
 // missing:
 // {label: 'chair_plastic_blue_original', condition: 'low_difficulty', color: 'blue', material: 'plastic', item: 'chair', url: 'stimuli/chair_plastic_blue_original.png', width: 300, height: 300},
 // {label: 'table_wood_brown_original', condition: 'low_difficulty', color: 'brown', material: 'wood', item: 'table', url: 'stimuli/table_wood_brown_original.png', width: 300, height: 300},
+
+//{label: 'cup_plastic_clear_original', color: 'clear', material: 'plastic', item: 'cup', url: 'stimuli/cup_plastic_clear_original.png', width: 300, height: 300},
+
 
 
 var targetList = [

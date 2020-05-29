@@ -20,6 +20,7 @@
 var onMessage = function(client,message) {
   //Cut the message up into sub components
   var message_parts = message.split('.');
+  console.log("message before split: ", message);
 
   //The first is always the type of message
   var message_type = message_parts[0];
@@ -34,8 +35,8 @@ var onMessage = function(client,message) {
     
   case 'clickedObj' :
     writeData(client, "clickedObj", message_parts);
-    others[0].player.instance.send("s.feedback." + message_parts[3]);
-    target.instance.send("s.feedback." + message_parts[3]);
+    others[0].player.instance.send("s.feedback." + message_parts[4]);
+    target.instance.send("s.feedback." + message_parts[4]);
     setTimeout(function() {
       _.map(all, function(p){
         p.player.instance.emit( 'newRoundUpdate', {user: client.userid} );
@@ -57,14 +58,14 @@ var onMessage = function(client,message) {
     if(client.game.player_count == 2 && !gc.paused) {
       writeData(client, "message", message_parts);
       // Update others
-      var msg = message_parts[1].replace(/~~~/g,'.');
+      var msg = message_parts[1].replace(/~~~/g,'.');    // FIX (maybe)
       _.map(all, function(p){
 	p.player.instance.emit( 'chatMessage', {user: client.userid, msg: msg});});
     }
     break;
 
   case 'h' : // Receive message when browser focus shifts
-    target.visible = message_parts[1];
+    target.visible = message_parts[1];  // FIX (maybe)
     break;
   }
 };
@@ -76,31 +77,30 @@ var writeData = function(client, type, message_parts) {
   var id = gc.id.slice(0,6);
   switch(type) {
   case "clickedObj" :
-      var trialType = message_parts[1];
-      var clickedObjContext = message_parts[2];
-      var clickedObjName = message_parts[3];
-      var clickedObjTargetStatus = message_parts[4];
-      var clickedObjSpeakerLocs = message_parts[5];
-      var clickedObjListenerLocs = message_parts[6];
+    console.log("message_parts", message_parts)
+      var trialType = message_parts[0];         // FIX
+      var clickedObjContext = message_parts[0]; // FIX
+      var clickedObjName = message_parts[4];
+      var clickedObjTargetStatus = message_parts[5];
+      var clickedObjSpeakerLocs = message_parts[6];
+      var clickedObjListenerLocs = message_parts[7];
 
-      var alternat1Name = message_parts[7]; 
-      var alternat1TargetStatus = message_parts[8];
-      var alternat1SpeakerLocs = message_parts[9];
-      var alternat1ListenerLocs = message_parts[10];
+      var alternat1Name = message_parts[8];
+      var alternat1TargetStatus = message_parts[9];
+      var alternat1SpeakerLocs = message_parts[10];
+      var alternat1ListenerLocs = message_parts[11];
 
-      var alternat2Name = message_parts[11]; 
-      var alternat2TargetStatus = message_parts[12];
-      var alternat2SpeakerLocs = message_parts[13];
-      var alternat2ListenerLocs = message_parts[14];
+      var alternat2Name = message_parts[12]; 
+      var alternat2TargetStatus = message_parts[13];
+      var alternat2SpeakerLocs = message_parts[14];
+      var alternat2ListenerLocs = message_parts[15];
       
-      var alternat3Name = message_parts[15]; 
-      var alternat3TargetStatus = message_parts[16];
-      var alternat3SpeakerLocs = message_parts[17];
-      var alternat3ListenerLocs = message_parts[18];
-
+      var alternat3Name = message_parts[16]; 
+      var alternat3TargetStatus = message_parts[17];
+      var alternat3SpeakerLocs = message_parts[18];
+      var alternat3ListenerLocs = message_parts[19];
 
       // LEYLA: changed this to add info about the third alternative/distractor
-
       var line = (id + ',' + Date.now() + ',' + roundNum + ',' + trialType + ',' + clickedObjContext 
         + "," + clickedObjName + "," + clickedObjTargetStatus + "," + clickedObjSpeakerLocs 
         + "," + clickedObjListenerLocs 
@@ -110,13 +110,13 @@ var writeData = function(client, type, message_parts) {
         + "," + alternat2ListenerLocs 
         + "," + alternat3Name + "," + alternat3TargetStatus + "," + alternat3SpeakerLocs 
         + "," + alternat3ListenerLocs + '\n');
-      console.log(line);
+      console.log("line: ", line);
     break;
 
   case "message" :
     var msg = message_parts[1].replace('~~~','.');
     var line = (id + ',' + Date.now() + ',' + roundNum + ',' + client.role + ',"' + msg + '"\n');
-    console.log("message:" + line);
+    console.log("line:" + line);
     break;
   }
   gc.streams[type].write(line, function (err) {if(err) throw err;});

@@ -146,11 +146,23 @@ var client_onMessage = function(data) {
       var upperLeftY;
       var strokeColor;
       if (my_role === game.playerRoleNames.role1) {
-	var clickObjName = commanddata;
-	console.log("name: " + commanddata);
+  var clickObjName = commanddata;
+  
+  console.log("name: " + commanddata);                     //metal
+
+  console.log("should highlight objToHighlight: ", objToHighlight);
+  console.log("should highlight clickObjName: ", clickObjName);
+  console.log("commanddata", commanddata); // steel
+  console.log("commands[0]", commands[0]); // s
+  console.log("commands[1]", commands[1]); // feedback
+  console.log("commands[2]", commands[2]); // steel
+  console.log("commands", commands);
+  console.log("data", data);
+
 	objToHighlight = _.filter(game.objects, function(x){
-	  return x.label == clickObjName;
-	})[0];
+    return x.label == clickObjName;
+  })[0];
+
 	upperLeftX = objToHighlight.speakerCoords.gridPixelX;
 	upperLeftY = objToHighlight.speakerCoords.gridPixelY;
 	strokeColor = "blue";      

@@ -1,0 +1,15 @@
+gameid, time, roundNum, trialType, context,nameClickedObj, targetStatusClickedObj, spLocsClickedObj, lisLocsClickedObj, alt1Name, alt1TargetStatus, alt1SpLocs, alt1LisLocs, alt2Name, alt2TargetStatus, alt2SpLocs, alt2LisLocsalt3Name, alt3TargetStatus, alt3SpLocs, alt3LisLocs
+9489-a,1590743127588,1,box,brown,cardboard,box_cardboard_brown_original,distractor,2,3,door_steel_red,target,3,4,bowl_metal_green,distractor,4,2,box_cardboard_brown_original,distractor,1
+9489-a,1590743134098,2,bag,blue,paper,bag_paper_blue,distractor,2,3,bag_paper_blue,distractor,1,4,ball_metal_green,target,4,2,box_wood_brown_original,distractor,3
+9489-a,1590743138601,3,plate,green,paper,plate_paper_green,distractor,2,1,plate_plastic_blue_original,target,4,3,plate_paper_blue,distractor,1,2,plate_paper_green,distractor,3
+9489-a,1590743144630,4,cup,green,metal,cup_metal_green,distractor,3,2,cup_plastic_green,target,2,1,cup_metal_blue,distractor,4,4,cup_metal_blue,distractor,1
+9489-a,1590743151155,5,bag,brown,paper,bag_paper_brown_original,distractor,2,3,bowl_metal_silver_original,distractor,1,2,bag_paper_brown_original,distractor,4,4,box_cardboard_green,target,3
+9489-a,1590743158051,6,ruler,silver,metal,ruler_metal_silver_original,distractor,2,3,vase_glass_green,distractor,4,4,ball_metal_silver_original,target,3,2,vase_glass_green,distractor,1
+9489-a,1590743165961,7,table,green,metal,table_metal_green,distractor,2,2,table_wood_green,distractor,3,3,table_wood_green,distractor,1,4,table_metal_silver_original,target,4
+9489-a,1590743171731,8,chair,green,metal,chair_metal_green,distractor,2,2,chair_wood_green,distractor,3,4,chair_metal_purple,target,1,3,chair_wood_green,distractor,4
+9489-a,1590743181203,9,spoon,blue,wood,spoon_wood_blue,distractor,1,3,spoon_plastic_blue,distractor,3,4,spoon_wood_green,target,2,2,spoon_plastic_blue,distractor,4
+9489-a,1590743192466,10,ruler,blue,metal,ruler_metal_blue,distractor,1,2,box_wood_brown_original,distractor,4,4,bag_plastic_blue,target,2,1,box_wood_brown_original,distractor,3
+9489-a,1590743201342,11,table,blue,metal,table_metal_blue,distractor,2,4,table_wood_blue,distractor,1,3,table_metal_green,target,3,2,table_wood_blue,distractor,4
+9489-a,1590743208598,12,ruler,blue,metal,ruler_metal_blue,distractor,3,2,bag_paper_brown_original,distractor,2,1,box_wood_blue,target,4,4,bag_paper_brown_original,distractor,1
+9489-a,1590743215593,13,table,green,metal,table_metal_green,distractor,4,4,table_wood_green,distractor,1,2,table_wood_green,distractor,2,1,table_metal_blue,target,3
+9489-a,1590743222333,14,vase,blue,glass,vase_glass_blue,distractor,3,2,bowl_glass_blue,target,4,3,door_steel_yellow,distractor,2,1,door_steel_yellow,distractor,1

@@ -1,0 +1,4 @@
+gameid, time, roundNum, trialType, context,nameClickedObj, targetStatusClickedObj, spLocsClickedObj, lisLocsClickedObj, alt1Name, alt1TargetStatus, alt1SpLocs, alt1LisLocs, alt2Name, alt2TargetStatus, alt2SpLocs, alt2LisLocsalt3Name, alt3TargetStatus, alt3SpLocs, alt3LisLocs
+9745-c,1590742102105,1,plate,blue,paper,plate_paper_blue,target,1,3,plate_paper_green,distractor,2,4,plate_plastic_green,distractor,4,1,plate_plastic_green,distractor,3
+9745-c,1590742116650,2,ball,green,metal,ball_metal_green,target,4,4,vase_glass_clear_original,distractor,3,1,vase_glass_clear_original,distractor,2,2,box_cardboard_blue,distractor,1
+9745-c,1590742126856,3,box,blue,wood,box_wood_blue,target,3,2,door_steel_silver_original,distractor,2,4,door_steel_silver_original,distractor,4,1,vase_glass_blue,distractor,1

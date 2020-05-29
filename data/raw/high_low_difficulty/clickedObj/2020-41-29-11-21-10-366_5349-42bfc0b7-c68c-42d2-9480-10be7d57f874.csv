@@ -1,0 +1,2 @@
+gameid, time, roundNum, trialType, context,nameClickedObj, targetStatusClickedObj, spLocsClickedObj, lisLocsClickedObj, alt1Name, alt1TargetStatus, alt1SpLocs, alt1LisLocs, alt2Name, alt2TargetStatus, alt2SpLocs, alt2LisLocsalt3Name, alt3TargetStatus, alt3SpLocs, alt3LisLocs
+5349-4,1590776486945,1,door,silver,steel,door_steel_silver_original,distractor,1,4,bowl_metal_green,distractor,2,1,ball_plastic_blue_original,target,4,3,bowl_metal_green,distractor,3

@@ -1,0 +1,9 @@
+gameid, time, roundNum, trialType, context,nameClickedObj, targetStatusClickedObj, spLocsClickedObj, lisLocsClickedObj, alt1Name, alt1TargetStatus, alt1SpLocs, alt1LisLocs, alt2Name, alt2TargetStatus, alt2SpLocs, alt2LisLocsalt3Name, alt3TargetStatus, alt3SpLocs, alt3LisLocs
+1763-2,1590743353535,1,bowl,silver,metal,bowl_metal_silver_original,distractor,4,1,vase_glass_clear_original,distractor,1,4,vase_glass_clear_original,distractor,2,2,ball_metal_silver_original,target,3
+1763-2,1590743359451,2,table,blue,metal,table_metal_blue,distractor,3,2,table_wood_blue,distractor,4,1,table_wood_blue,distractor,2,3,table_metal_silver_original,target,1
+1763-2,1590743367191,3,box,brown,cardboard,box_cardboard_brown_original,distractor,4,1,door_wood_brown_original,target,1,3,bag_paper_blue,distractor,3,4,bag_paper_blue,distractor,2
+1763-2,1590743372852,4,chair,purple,wood,chair_wood_purple,distractor,3,2,chair_wood_purple,distractor,2,1,chair_metal_purple,distractor,1,3,chair_metal_green,target,4
+1763-2,1590743379172,5,table,green,metal,table_metal_green,distractor,1,4,table_wood_green,distractor,4,1,table_metal_blue,target,2,3,table_wood_green,distractor,3
+1763-2,1590743386170,6,pitcher,blue,glass,pitcher_glass_blue,distractor,3,2,pitcher_glass_clear_original,distractor,2,3,pitcher_metal_blue,target,1,1,pitcher_glass_clear_original,distractor,4
+1763-2,1590743392102,7,box,green,wood,box_wood_green,distractor,3,4,ruler_wood_blue,target,4,1,bag_paper_blue,distractor,2,2,bag_paper_blue,distractor,1
+1763-2,1590743398455,8,vase,green,wood,vase_wood_green,distractor,2,2,box_cardboard_blue,distractor,1,3,bag_plastic_blue,target,3,4,vase_wood_green,distractor,4

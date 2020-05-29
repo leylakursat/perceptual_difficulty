@@ -1,9 +1,0 @@
-gameid, time, roundNum, trialType, context,nameClickedObj, targetStatusClickedObj, spLocsClickedObj, lisLocsClickedObj, alt1Name, alt1TargetStatus, alt1SpLocs, alt1LisLocs, alt2Name, alt2TargetStatus, alt2SpLocs, alt2LisLocsalt3Name, alt3TargetStatus, alt3SpLocs, alt3LisLocs
-0995-c,1589432228607,1,plate,blue,plastic,plate_plastic_blue_original,target,1,3,plate_paper_blue,distractor,3,1,plate_paper_green,distractor,4,2,plate_paper_green,distractor,2
-0995-c,1589432257962,2,bottle,green,plastic,bottle_plastic_green,distractor,4,3,bottle_plastic_blue,distractor,1,2,bottle_glass_green,target,3,4,bottle_plastic_blue,distractor,2
-0995-c,1589432265519,3,table,green,wood,table_wood_green,distractor,3,3,table_wood_green,distractor,1,4,table_metal_green,distractor,2,2,table_metal_silver_original,target,4
-0995-c,1589432272955,4,chair,purple,metal,chair_metal_purple,target,4,4,chair_wood_green,distractor,3,2,chair_wood_green,distractor,2,3,chair_metal_green,distractor,1
-0995-c,1589432277812,5,jacket,black,leather,jacket_leather_black_original,distractor,1,4,jacket_leather_purple,distractor,4,1,jacket_denim_purple,target,2,3,jacket_leather_black_original,distractor,3
-0995-c,1589432283138,6,chair,green,metal,chair_metal_green,target,1,3,chair_plastic_purple,distractor,2,4,chair_plastic_purple,distractor,3,2,chair_metal_purple,distractor,4
-0995-c,1589432288709,7,table,blue,wood,table_wood_blue,distractor,2,3,table_metal_blue,distractor,4,2,table_wood_blue,distractor,3,1,table_metal_green,target,1
-0995-c,1589432293741,8,table,green,wood,table_wood_green,distractor,4,2,table_metal_green,distractor,2,4,table_wood_green,distractor,3,3,table_metal_blue,target,1

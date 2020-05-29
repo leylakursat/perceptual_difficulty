@@ -148,21 +148,24 @@ game_core.prototype.newRound = function() {
 game_core.prototype.makeTrialList = function () {
   local_this = this,
   trialList = [],
-
   targetPos = 0;
-  randomObjectList = [objectList[0]]; // LEYLA: just added
-
-  //console.log("randomObjectList[0].length: " + randomObjectList[0].length); // LEYLA: randomObjectList[0].length = 42
-  //console.log("randomObjectList[0][0].fullName: "+randomObjectList[0][0].fullName); 
+  randomObjectList = [objectList[0]];
 
   for (var i = 0; i < randomObjectList[0].length; i++) {
-    // for (var i = 0; i < 5; i++) {
-    var objList = sampleObjects(targetPos); // should return 4 objects 
-    //console.log("objList: " , objList); 
-    //console.log("targetPos", targetPos);
+    var objList = sampleObjects(targetPos); // should return 4 objects (critical trials)
     targetPos++;
     var locs = sampleStimulusLocs(objList);
     trialList.push(_.map(_.zip(objList, locs.speaker, locs.listener), function (tuple) {
+      var speakerGridCell = local_this.getPixelFromCell(tuple[1][0], tuple[1][1]);
+      var listenerGridCell = local_this.getPixelFromCell(tuple[2][0], tuple[2][1]);
+      return addCellInfoToObj(tuple, speakerGridCell, listenerGridCell);
+    }));
+  };
+
+  for (var i = 0; i < 16; i++) {    // if you change the number of filler items also change condition in fillerSet.js
+    var fillerList = sampleFillers(i); // should return 4 objects (filler trials)
+    var locs = sampleStimulusLocs(fillerList);
+    trialList.push(_.map(_.zip(fillerList, locs.speaker, locs.listener), function (tuple) {
       var speakerGridCell = local_this.getPixelFromCell(tuple[1][0], tuple[1][1]);
       var listenerGridCell = local_this.getPixelFromCell(tuple[2][0], tuple[2][1]);
       return addCellInfoToObj(tuple, speakerGridCell, listenerGridCell);
@@ -286,7 +289,46 @@ var sampleDistractors = function(target) {
     distractors[i].targetStatus = "distractor";
   }
    return distractors;
-  //return distractors.map(value => ({...value, targetStatus : "distractor"}));
+};
+
+var sampleFillers = function(index) {
+
+  var fillers = _.map(require('./stimuli/fillerSet', _.clone)); 
+
+  var target = fillers[index]
+  target.targetStatus = "target";
+
+  var possibleCompetitors = []
+  for (var i = 16; i < (fillers.length); i++) {
+    if (target.condition == "filler_color") { // competitor should be a different item in same color and different material 
+      if ((target.item !== fillers[i].item) && (target.color === fillers[i].color) && (target.material !== fillers[i].material))
+        possibleCompetitors.push(fillers[i])
+    } else if (target.condition == "filler_material") { // competitor should be a different item in same material and different color
+      if ((target.item !== fillers[i].item) && (target.color !== fillers[i].color) && (target.material === fillers[i].material))
+        possibleCompetitors.push(fillers[i])
+    } else if (target.condition == "filler_both") {  // competitor should be a different item in same color and same material
+      if ((target.item !== fillers[i].item) && (target.color === fillers[i].color) && (target.material === fillers[i].material))
+        possibleCompetitors.push(fillers[i])
+    } else {
+      if ((target.item !== fillers[i].item) && (target.color !== fillers[i].color) && (target.material !== fillers[i].material))
+        possibleCompetitors.push(fillers[i])
+    }
+  }
+  var competitor = possibleCompetitors[Math.floor(Math.random() * possibleCompetitors.length)];
+
+  var possibleDistractors = []
+  for (var i = 16; i < (fillers.length); i++) {
+    if ((competitor.item !== fillers[i].item) && (competitor.color !== fillers[i].color) && (competitor.material !== fillers[i].material))
+        possibleDistractors.push(fillers[i])
+  }
+
+  var distractor = possibleDistractors[Math.floor(Math.random() * possibleDistractors.length)];
+  var distractors = [competitor,distractor,distractor]
+
+  for (var i = 0; i < (distractors.length); i++) {
+    distractors[i].targetStatus = "distractor";
+  }  
+  return [target].concat(distractors);
 };
 
 // Util functions

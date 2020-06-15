@@ -164,6 +164,7 @@ game_core.prototype.makeTrialList = function () {
 
   for (var i = 0; i < 16; i++) {    // if you change the number of filler items also change condition in fillerSet.js
     var fillerList = sampleFillers(i); // should return 4 objects (filler trials)
+    // console.log("fillerList: ",fillerList);
     var locs = sampleStimulusLocs(fillerList);
     trialList.push(_.map(_.zip(fillerList, locs.speaker, locs.listener), function (tuple) {
       var speakerGridCell = local_this.getPixelFromCell(tuple[1][0], tuple[1][1]);
@@ -271,7 +272,16 @@ var sampleDistractors = function(target) {
   possibleComp = _.shuffle(possibleComp)
   possibleNotComp = _.shuffle(possibleNotComp)
   possibleComp = possibleComp.slice(0,1); // 1 competitor distractos
+  possibleComp.targetStatus = "competitor"; // NEW CHANGE
+
   possibleNotComp = possibleNotComp.slice(0,1); // 1 non-competitor distractor
+  possibleNotComp.targetStatus = "distractor";
+
+  // var new_distractors = [possibleComp,possibleNotComp,possibleNotComp];
+  // console.log("competitor: ", possibleComp);
+  // console.log("non_competitor: ", possibleNotComp);
+  // console.log("new_distractors" , new_distractors);
+
   possibleNotComp = possibleNotComp.concat(possibleNotComp) // 1 more non-competitor distractor (same one)
 
   distractors = possibleNotComp.concat(possibleComp); // 3 distractors total
@@ -315,27 +325,27 @@ var sampleFillers = function(index) {
     }
   }
   var competitor = possibleCompetitors[Math.floor(Math.random() * possibleCompetitors.length)];
+  competitor.targetStatus = "competitor"; // NEW
 
   var possibleDistractors = []
   for (var i = 16; i < (fillers.length); i++) {
-    if ((competitor.item !== fillers[i].item) && (competitor.color !== fillers[i].color) && (competitor.material !== fillers[i].material))
+    if ((competitor.item !== fillers[i].item) && (target.item !== fillers[i].item) && (competitor.color !== fillers[i].color) && (target.color !== fillers[i].color) && (competitor.material !== fillers[i].material) && (target.material !== fillers[i].material))
         possibleDistractors.push(fillers[i])
   }
 
   var distractor = possibleDistractors[Math.floor(Math.random() * possibleDistractors.length)];
+  distractor.targetStatus = "distractor"; // NEW
   var distractors = [competitor,distractor,distractor]
 
-  for (var i = 0; i < (distractors.length); i++) {
-    distractors[i].targetStatus = "distractor";
-  }  
+  // for (var i = 0; i < (distractors.length); i++) {
+  //   distractors[i].targetStatus = "distractor";
+  // }  
   return [target].concat(distractors);
 };
 
 // Util functions
 
 var addCellInfoToObj = function(tuple, speakerGridCell, listenerGridCell) {
-  // console.log("tuple");
-  // console.log(tuple[0]);
   var object = _.clone(tuple[0]);
   object.speakerCoords = {
     gridX : tuple[1][0],

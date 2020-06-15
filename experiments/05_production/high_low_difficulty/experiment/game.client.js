@@ -125,11 +125,12 @@ var client_onserverupdate_received = function(data){
 // The corresponding function where the server parses messages from
 // clients, look for "server_onMessage" in game.server.js.
 var client_onMessage = function(data) {
+  console.log("game.client data: ", data); // s.feedback.cup_metal_blue
 
   var commands = data.split('.');
-  var command = commands[0];
-  var subcommand = commands[1] || null;
-  var commanddata = commands[2] || null;
+  var command = commands[0]; // s
+  var subcommand = commands[1] || null; // feedback
+  var commanddata = commands[2] || null; // cup_metal_blue
 
   switch(command) {
   case 's': //server message
@@ -148,17 +149,6 @@ var client_onMessage = function(data) {
       if (my_role === game.playerRoleNames.role1) {
   var clickObjName = commanddata;
   
-  console.log("name: " + commanddata);                     //metal
-
-  console.log("should highlight objToHighlight: ", objToHighlight);
-  console.log("should highlight clickObjName: ", clickObjName);
-  console.log("commanddata", commanddata); // steel
-  console.log("commands[0]", commands[0]); // s
-  console.log("commands[1]", commands[1]); // feedback
-  console.log("commands[2]", commands[2]); // steel
-  console.log("commands", commands);
-  console.log("data", data);
-
 	objToHighlight = _.filter(game.objects, function(x){
     return x.label == clickObjName;
   })[0];
@@ -375,16 +365,11 @@ function mouseClickListener(evt) {
         var alternative1 = _.sample(_.without(game.objects, obj));
         var alternative2 = _.sample(_.without(game.objects, obj, alternative1));
         var alternative3 = _.sample(_.without(game.objects, obj, alternative1, alternative2));
-        game.socket.send("clickedObj." + obj.item + "." + obj.color + "." + obj.material + "." + obj.label + "." + obj.targetStatus 
+        game.socket.send("clickedObj." +  obj.label +  "." + obj.condition + "." + obj.targetStatus 
           + "." + obj.speakerCoords.gridX + "." + obj.listenerCoords.gridX
-          + "." + alternative1.label + "." + alternative1.targetStatus + "." + alternative1.speakerCoords.gridX 
-          + "." + alternative1.listenerCoords.gridX  
-          + "." + alternative2.label + "." + alternative2.targetStatus + "." + alternative2.speakerCoords.gridX 
-          + "." + alternative2.listenerCoords.gridX
-          + "." + alternative3.label + "." + alternative3.targetStatus + "." + alternative3.speakerCoords.gridX 
-          + "." + alternative3.listenerCoords.gridX);
-
-          // LEYLA: added 3rd alternative here
+          + "." + alternative1.label + "." + alternative1.condition + "." + alternative1.targetStatus + "." + alternative1.speakerCoords.gridX + "." + alternative1.listenerCoords.gridX  
+          + "." + alternative2.label + "." + alternative2.condition + "." + alternative2.targetStatus + "." + alternative2.speakerCoords.gridX + "." + alternative2.listenerCoords.gridX
+          + "." + alternative3.label + "." + alternative3.condition + "." + alternative3.targetStatus + "." + alternative3.speakerCoords.gridX + "." + alternative3.listenerCoords.gridX);
 
         // game.socket.send(`clickedObj.${obj.item}.${obj.color}.${obj.material}.${obj.label}.${obj.targetStatus}.${obj.speakerCoords.gridX}.${obj.listenerCoords.gridX}.${alternative1.label}.${alternative1.targetStatus}.${alternative1.speakerCoords.gridX}.${alternative1.listenerCoords.gridX}.${alternative2.label}.${alternative2.targetStatus}.${alternative2.speakerCoords.gridX}.${alternative2.listenerCoords.gridX}`);
          

@@ -80,8 +80,6 @@ app.get( '/*' , function( req, res ) {
       console.log(" by workerID " + req.query.workerId);
     }
     res.sendfile("./" + file); // give them what they want
-    console.log("SOULD BE REDIRECTED TO CONSENT.HTML");
-    console.log("FILE: ", file);
   }
 }); 
 

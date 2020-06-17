@@ -60,7 +60,7 @@ app.get( '/*' , function( req, res ) {
   if(req.query.workerId && !valid_id(req.query.workerId)) {
     console.log("invalid id: blocking request");
     // res.redirect('https://rxdhawkins.me:8889/sharedUtils/invalid.html');
-    res.redirect('https://stanford-cogsci.org:8882/high_low_difficulty/experiment/forms/consent.html');
+    res.redirect('https://stanford-cogsci.org:8882/high_low_difficulty/experiment/forms/invalid.html');
   } else if (req.query.wo0rkerId && req.query.workerId in global_player_set) { 
     console.log("duplicate id: will not block during testing");
     // delete what's below when not testing
@@ -80,6 +80,8 @@ app.get( '/*' , function( req, res ) {
       console.log(" by workerID " + req.query.workerId);
     }
     res.sendfile("./" + file); // give them what they want
+    console.log("SOULD BE REDIRECTED TO CONSENT.HTML");
+    console.log("FILE: ", file);
   }
 }); 
 

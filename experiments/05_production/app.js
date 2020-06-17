@@ -25,6 +25,7 @@ try {
   //     options     = {key: privateKey, cert: certificate, ca: intermed},
   //     server      = require('https').createServer(options,app).listen(gameport),
   //     io          = require('socket.io')(server);
+
   var privateKey  = fs.readFileSync('/etc/apache2/ssl/stanford-cogsci.org.key'),
   certificate = fs.readFileSync('/etc/apache2/ssl/stanford-cogsci.org.crt'),
   options     = {key: privateKey, cert: certificate},
@@ -58,7 +59,8 @@ app.get( '/*' , function( req, res ) {
   var file = req.params[0]; 
   if(req.query.workerId && !valid_id(req.query.workerId)) {
     console.log("invalid id: blocking request");
-    res.redirect('https://rxdhawkins.me:8889/sharedUtils/invalid.html');
+    // res.redirect('https://rxdhawkins.me:8889/sharedUtils/invalid.html');
+    res.redirect('https://stanford-cogsci.org:8882/high_low_difficulty/experiment/forms/consent.html');
   } else if (req.query.wo0rkerId && req.query.workerId in global_player_set) { 
     console.log("duplicate id: will not block during testing");
     // delete what's below when not testing
@@ -69,7 +71,8 @@ app.get( '/*' , function( req, res ) {
     res.sendfile("./" + file); // give them what they want
     console.log("file: ",file);
     
-    // console.log("duplicate id: blocking request");
+    console.log("duplicate id: blocking request");
+    res.redirect('https://stanford-cogsci.org:8882/high_low_difficulty/experiment/forms/duplicate.html');
     // res.redirect('https://rxdhawkins.me:8889/sharedUtils/duplicate.html');
   } else {
     console.log('\t :: Express :: file requested: ' + file);

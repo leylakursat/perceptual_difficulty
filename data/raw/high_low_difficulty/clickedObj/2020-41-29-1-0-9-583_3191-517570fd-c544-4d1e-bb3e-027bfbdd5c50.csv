@@ -1,8 +1,0 @@
-gameid, time, roundNum, trialType, context,nameClickedObj, targetStatusClickedObj, spLocsClickedObj, lisLocsClickedObj, alt1Name, alt1TargetStatus, alt1SpLocs, alt1LisLocs, alt2Name, alt2TargetStatus, alt2SpLocs, alt2LisLocsalt3Name, alt3TargetStatus, alt3SpLocs, alt3LisLocs
-3191-5,1590739217011,1,chair,purple,wood,chair_wood_purple,distractor,2,2,chair_metal_purple,distractor,3,4,chair_wood_purple,distractor,4,3,chair_metal_green,target,1
-3191-5,1590739221342,2,bottle,green,glass,bottle_glass_green,target,4,2,bottle_plastic_clear_original,distractor,3,4,bottle_plastic_clear_original,distractor,1,3,bottle_plastic_green,distractor,2
-3191-5,1590739225054,3,boot,brown,rubber,boot_rubber_brown,distractor,3,3,boot_leather_green,target,2,1,boot_leather_brown,distractor,4,2,boot_rubber_brown,distractor,1
-3191-5,1590739228856,4,plate,pink,plastic,plate_plastic_pink,distractor,1,3,plate_paper_blue,target,3,1,plate_plastic_pink,distractor,2,2,plate_plastic_blue_original,distractor,4
-3191-5,1590739233276,5,bottle,green,plastic,bottle_plastic_green,target,4,3,bottle_glass_green,distractor,1,4,bottle_glass_clear_original,distractor,3,1,bottle_glass_clear_original,distractor,2
-3191-5,1590739240950,6,bowl,clear,glass,bowl_glass_clear_original,distractor,3,2,box_wood_blue,target,4,4,ball_plastic_blue_original,distractor,2,3,bowl_glass_blue,distractor,1
-3191-5,1590739245146,7,bowl,green,metal,bowl_metal_green,distractor,1,3,box_wood_brown_original,target,2,4,door_wood_red,distractor,3,2,bowl_glass_green,distractor,4

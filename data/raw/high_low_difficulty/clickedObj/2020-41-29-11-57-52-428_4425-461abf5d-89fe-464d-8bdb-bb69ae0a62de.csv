@@ -1,4 +1,0 @@
-gameid, time, roundNum, trialType, context,nameClickedObj, targetStatusClickedObj, spLocsClickedObj, lisLocsClickedObj, alt1Name, alt1TargetStatus, alt1SpLocs, alt1LisLocs, alt2Name, alt2TargetStatus, alt2SpLocs, alt2LisLocsalt3Name, alt3TargetStatus, alt3SpLocs, alt3LisLocs
-4425-4,1590778678442,1,vase,clear,glass,vase_glass_clear_original,distractor,1,2,bowl_metal_blue,target,3,1,ruler_metal_blue,distractor,2,3,vase_glass_clear_original,distractor,4
-4425-4,1590779484996,2,ruler,green,wood,ruler_wood_green,distractor,2,2,vase_wood_brown_original,target,4,1,ball_metal_red,distractor,3,3,ball_metal_red,distractor,1
-4425-4,1590779492364,3,spoon,blue,metal,spoon_metal_blue,distractor,1,2,spoon_wood_green,target,3,1,spoon_wood_blue,distractor,2,4,spoon_metal_blue,distractor,4

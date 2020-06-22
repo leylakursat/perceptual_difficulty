@@ -411,6 +411,7 @@ function dropdownTip(data){
     game.data.subject_information = _.extend(game.data.subject_information,
                 {'ratePartner' : commands[1]}); break;
   case 'submit' :
+    game.data.trials = [{"foo": "bar"}]
     game.data.subject_information = _.extend(game.data.subject_information, 
 				   {'comments' : $('#comments').val(), 
 				    'role' : my_role,

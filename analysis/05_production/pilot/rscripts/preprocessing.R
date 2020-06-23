@@ -1,9 +1,15 @@
 library(tidyverse)
+library(lme4)
+library(languageR)
+library(brms)
+library(lmerTest)
+
+source("helpers.R")
 this.dir <- dirname(rstudioapi::getSourceEditorContext()$path)
 setwd(this.dir)
 theme_set(theme_bw())
 
-df = read.table(file="../data/pilot_all.csv",sep="\t", header=T, quote="")
+df = read.table(file="../data/pilot_merged.csv",sep="\t", header=T, quote="")
 
 # get trialType, color&material of target and clicked obj
 df$trialType = ifelse(df$clickedObjCondition=="high_difficulty"|df$alt1Condition=="high_difficulty"|df$alt2Condition=="high_difficulty"|df$alt3Condition=="high_difficulty","high_difficulty",ifelse(df$clickedObjCondition=="low_difficulty"|df$alt1Condition=="low_difficulty"|df$alt2Condition=="low_difficulty"|df$alt3Condition=="low_difficulty","low_difficulty","filler"))
@@ -33,35 +39,33 @@ df = df%>%
 dfrows = nrow(df)
 dfrows 
 
-#optional - for simplicity - 
-#df = df %>%
-#  select(gameid,roundNum,trialType,clickedObjName,clickedObjTargetStatus,clickedObjCondition,speakerMessages,listenerMessages)
-#df = df %>%
-#  select(gameid,roundNum,trialType,clickedObjName,clickedObjTargetStatus,alt1Name, alt1TargetStatus, alt2Name, alt2TargetStatus, alt3Name, alt3TargetStatus, clickedObjCondition,speakerMessages,listenerMessages)
-
 # COLOR
 # Was a color mentioned?
-colors = "blue|green|red|brown|black|clear|purple|pink|silver|white|yellow"
+colors = "blue|green|red|brown|black|clear|purple|pink|silver|gray|white|yellow"
 df$colorMention = ifelse(grepl(colors, df$speakerMessages, ignore.case = TRUE), 1,0)
 table(df$colorMention)
 # Was the color of the target object mentioned?
-df$targetcolorMention = ifelse(str_detect(df$speakerMessages,df$targetcolor),1,0)
-table(df$targetcolorMention)
+#df$targetcolorMention = ifelse(str_detect(df$speakerMessages,df$targetcolor),1,0)
+#table(df$targetcolorMention)
 # Was the color of the clicked object mentioned?
 #df$clickedcolorMention = ifelse(str_detect(df$speakerMessages,df$clickedcolor),1,0)
 #table(df$clickedcolorMention)
 
 # MATERIAL
 # Was a material mentinoed?
-materials = "wood|paper|metal|plastic|rubber|leather|glass|cardboard|denim";
+materials = "wood|paper|metal|plastic|rubber|leather|glass|cardboard|denim|jean";
 df$materialMention = ifelse(grepl(materials, df$speakerMessages, ignore.case = TRUE), 1, 0)
+
 table(df$materialMention)
 # Was the material of the target object mentioned?
-df$targetmaterialMention = ifelse(str_detect(df$speakerMessages,df$targetmaterial),1,0)
-table(df$targetmaterialMention)
+#df$targetmaterialMention = ifelse(str_detect(df$speakerMessages,df$targetmaterial),1,0)
+#table(df$targetmaterialMention)
 # Was the material of the clicked object mentioned?
 #df$clickedmaterialMention = ifelse(str_detect(df$speakerMessages,df$clickedmaterial),1,0)
-#table(df$clickedmaterialMention)
+#table(df$clickedmaterialMention)'
+
+# Was a color and material mentioned?
+df$colormaterialMention = ifelse(df$colorMention==1&df$materialMention==1,1,0)
 
 # Was an object name mentioned?
 names  = "bag|boot|bottle|bowl|box|chair|cup|jacket|pitcher|plate|spoon|table";
@@ -107,34 +111,55 @@ targets = df %>%filter(clickedObjTargetStatus=="target")
 nrow(targets)
 
 # Add typicality scores of targets
-typicality = read.csv("../data/typicality.csv", header=T, check.names=F)
+typicality = read.csv("../data/typicality.csv", header=T)
+typicality$X = NULL
 
 targets = targets %>%
-  select(gameid,roundNum,trialType,clickedObjName) %>%
-  merge(typicality, by.x="clickedObjName",by.y="object", all.x = TRUE)
+  merge(typicality, by.x="clickedObjName",by.y="object")
 
-# Prepare for visualizations
+# Prepare for visualizations and analysis
 targets = targets %>%
-  mutate(color_only = ifelse())
+  mutate(UtteranceType = ifelse(colorMention==1 & materialMention==1,"color and material",ifelse(colorMention==1,"color",ifelse(materialMention==1,"material","other")))) %>%
+  mutate(RedundantProperty = ifelse(trialType=="high_difficulty","material redundant", ifelse(trialType=="low_difficulty","color redundant", NA))) %>%
+  mutate(SufficientProperty = ifelse(trialType=="high_difficulty","color", ifelse(trialType=="low_difficulty","material", NA))) %>%
+  mutate(redundant = ifelse(colormaterialMention==1,1,0)) %>%
+  mutate(minimal = ifelse(colormaterialMention==0&UtteranceType!="other",1,0)) %>%
+  mutate(RedUtterance = ifelse(minimal==1,"minimal",ifelse(redundant==1,"redundant",NA))) %>%
+  select(gameid,roundNum,clickedObjName,speakerMessages,UtteranceType,RedUtterance,SufficientProperty,RedundantProperty,minimal,redundant,clickedobject,clickedcolor,clickedmaterial,clickedoriginal, Color_typicality,Material_typicality,Overall_typicality,colorMention,materialMention,objnameMention,targetobjectMention,oneMention,theMention,article_Mention)
+
+# look at how minimal is coded: is it still minimal if the wrong property is the only one mentioned?
+
+##################################################################
+# VISUALIZATIONS AND ANALYSIS 
+# low difficulty -> easy to perceive color - color is redundant
+# high difficulty -> difficulty to perceive material - material is redundant
+##################################################################
+agr = targets %>%
+  group_by(RedundantProperty) %>%
+  summarise(Mean=mean(redundant),CIhigh=ci.high(redundant),CIlow=ci.low(redundant)) %>%
+  ungroup() %>%
+  mutate(Ymin=Mean-CIlow, Ymax=Mean+CIhigh)
+
+simple = ggplot(agr, aes(x=RedundantProperty,y=Mean)) +
+  geom_bar(stat = "identity") +
+  #geom_errorbar(aes(ymin = YMin, ymax = YMax),width=.25) +
+  xlab("Trial type") +
+  ylab("Probability of redundant modifier")
+
+simple
+
+ggsave("../graphs/simple.png",width=3,height=4)
+
+# mixed effects logistic regression predicting redundant adjective use from fixed effects of redundant property, with random by-subject and by-item intercepts and slopes for redundant property
+targets$RedundantProperty = as.factor(targets$RedundantProperty)
+targets$RedUtterance = as.factor(targets$RedUtterance)
+
+#center first
 
 
+#redundant vs not redundant (minimal and underinformative)
+m = glmer(RedUtterance ~ RedundantProperty + (1|gameid) + (1|clickedobject), data=targets, family="binomial")
+summary(m)
 
-# Prepare for analysis
+#redundant vs not redundant (exclude cases when referred to other properties)
 
-######################################################
-
-#simplest plot of all times
-# low difficulty --> easy to perceive color -- color is redundant
-# high difficulty --> difficulty to perceive material -- material is redundant
-agr = df %>%
-  group_by(clickedObjCondition) %>%
-  summarise(color=mean(colormention),material=mean(materialmention)) %>%
-  gather(mentioned_feature,mean,color:material)
-
-ggplot(agr,aes(x=clickedObjCondition,y=mean,fill=mentioned_feature)) +
-  geom_bar(stat="identity",position=position_dodge()) +
-  xlab("condition") +
-  ylab("probability of mention") +
-  labs(fill = "feature")
-
-ggsave("../graphs/simple.png",width=6,height=4)

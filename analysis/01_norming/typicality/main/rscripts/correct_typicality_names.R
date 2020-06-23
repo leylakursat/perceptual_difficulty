@@ -1,4 +1,4 @@
-library(tidyverse)
+library(tidyverse) 
 this.dir <- dirname(rstudioapi::getSourceEditorContext()$path)
 setwd(this.dir)
 theme_set(theme_bw())
@@ -40,6 +40,8 @@ typ$object[typ$object== "spoon_wood_original"] = "spoon_wood_brown_original"
 typ$object[typ$object== "table_metal_original"] = "table_metal_silver_original"
 typ$object[typ$object== "table_wood_original"] = "table_wood_brown_original"
 
-write.csv(typ,"../data/typicality.csv")
+typ$X = NULL
+
+write.csv(typ,"../data/typicality.csv",)
 
           

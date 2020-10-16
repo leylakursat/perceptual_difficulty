@@ -1,9 +1,9 @@
 ---
 title: "Production Experiment"
-#output: rmarkdown::github_document
-output:
+output: rmarkdown::github_document
+#output:
   #html_document: default
-  pdf_document: default
+  #pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -240,8 +240,8 @@ agr = targets %>%
   summarise(Mean=mean(mention),CIlow=ci.low(mention),CIhigh=ci.high(mention)) %>%
   ungroup() %>%
   mutate(Ymin=Mean-CIlow, Ymax=Mean+CIhigh) %>%
-  mutate(MentionType=fct_recode(MentionType,"color and material"="colormaterialMention","only color"="onlyColorMention","only material"="onlyMaterialMention")) #%>%
-  #mutate(trialType=fct_recode(trialType,"high difficulty\nmaterial redundant"="high_difficulty","low difficulty\ncolor redundant"="low_difficulty"))
+  mutate(MentionType=fct_recode(MentionType,"color and material"="colormaterialMention","only color"="onlyColorMention","only material"="onlyMaterialMention")) %>%
+  mutate(trialType=fct_recode(trialType,"high difficulty\nmaterial redundant"="high_difficulty","low difficulty\ncolor redundant"="low_difficulty"))
 
 ggplot(agr, aes(x=trialType,y=Mean,fill=RedundantProperty)) +
   geom_bar(stat = "identity") +
@@ -317,7 +317,7 @@ table(d$trialType,d$clickTarget)
 
 Number of rows:
 ```{r fillerclicktarget, echo=FALSE}
-ftargets = f %>%filter(clickedObjTargetStatus=="target")
+ftargets = f %>% filter(clickedObjTargetStatus=="target")
 nrow(ftargets) #738
 ```
 

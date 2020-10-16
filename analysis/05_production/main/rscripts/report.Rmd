@@ -1,0 +1,43 @@
+---
+title: 'Perceptual Difficulty Technical Report'
+#output: rmarkdown::github_document
+output:
+  html_document: default
+  #pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r data import, include=FALSE}
+library(tidyverse)
+library(lme4)
+library(languageR)
+library(brms)
+library(lmerTest)
+library("writexl")
+library("readxl")
+source("helpers.R")
+require(xlsx)
+this.dir <- dirname(rstudioapi::getSourceEditorContext()$path)
+setwd(this.dir)
+theme_set(theme_bw())
+
+demo = read.csv(file="../data/subject_info_merged.csv")
+df = read.table(file="../data/data_merged.csv",sep="\t", header=T, quote="")
+```
+
+### Before Exclusions
+**Number of participants tested:**
+```{r before_exclusion, echo=FALSE}
+length(demo$workerid)
+```
+**Participants in each condition:**
+```{r before_exclusion_2, echo=FALSE}
+workers = df %>%
+  filter(slide_type == "practice_trial")
+table(workers$Answer.condition) /4
+```
+
+

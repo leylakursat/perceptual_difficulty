@@ -2,8 +2,8 @@
 title: "Perceptual Difficulty - Randomized and Timed Perceptibility2 (difficulty analysis)"
 #output: rmarkdown::github_document
 output:
-  #html_document: default
-  pdf_document: default
+  html_document: default
+  #pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -94,6 +94,9 @@ exclude = toplot %>%
 exclude
 
 df = df[!(df$workerid %in% exclude$workerid),]
+
+#write new df to csv for regression analysis
+write.csv(df, "../data/df.csv")
 ```
 
 # By response times

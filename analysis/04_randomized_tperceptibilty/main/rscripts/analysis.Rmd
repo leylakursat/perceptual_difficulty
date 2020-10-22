@@ -117,6 +117,9 @@ ggplot(toplot, aes(x=feature_type, y=Mean, fill=feature_matching)) +
   scale_fill_manual(values=wp2) +
   xlab("Feature_type") +
   ylab("Proportion of correct responses")
+
+ggsave(file="../graphs/proportion.pdf",width=6,height=3)
+
 ```
 
 **By item - Proportion of correct responses**
@@ -190,6 +193,28 @@ ggplot(toplot, aes(x=feature_type, y=Mean, fill=factor(gaveRightAnswer))) +
   xlab("Feature type") +
   ylab("Mean RT in msec") +
   labs(fill = "gaveRightAnswer")
+
+ggsave(file="../graphs/responsetime.pdf",width=6,height=3)
+
+toplot =  df %>%
+  filter(gaveRightAnswer==1) %>%
+  group_by(feature_type,feature_matching) %>%
+  summarize(Median=median(rt),Mean=mean(rt),CILow=ci.low(rt),CIHigh=ci.high(rt),count=n()) %>%
+  ungroup() %>%
+  mutate(YMin=Mean-CILow,YMax=Mean+CIHigh)
+
+ggplot(toplot, aes(x=feature_type, y=Mean, fill=feature_matching)) +
+  geom_bar(stat = "identity", position=position_dodge()) +
+  scale_fill_manual(values=wp2) +
+  geom_errorbar(aes(ymin = YMin, ymax = YMax),width=.2, position=position_dodge((.9))) +
+  #geom_text(aes(label=count, y = 5),position=position_dodge(width=1),vjust=0,size=3) #+
+  xlab("Feature type") +
+  ylab("Mean RT in msec") #+
+  #labs(fill = "gaveRightAnswer")
+
+ggsave(file="../graphs/rt_onlycorrect.pdf",width=6,height=3)
+
+
 ```
 
 **RTs to color and material features (only correct responses to matching features)** 

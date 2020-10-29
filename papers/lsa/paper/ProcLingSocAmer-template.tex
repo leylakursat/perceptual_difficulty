@@ -1,0 +1,184 @@
+% ------------ LSA-proceedings-template.tex  -- LSA proceedings template ---------------------------------------------------------------------------
+% created by Sarah E. Murray, 24 April 2017 based on the LSA's stylesheet
+% http://journals.linguisticsociety.org/proceedings/index.php/PLSA/pages/view/instructions
+%Revised by Patrick Farrell, February 1, 2019 and March 8, 2020. 
+%
+% ------------ begin preamble -----------------------------------------------------------------------------------------
+ \documentclass[12pt,letterpaper]{article}	
+% ------------ personal packages ----------------------------------------------------------------------------
+\usepackage{linguex}	%http://texdoc.net/texmf-dist/doc/latex/linguex/linguex-doc.pdf
+% ------------ LSA page layout and packages ----------------------------------------------------------------------------
+\usepackage{times}
+\usepackage{natbib}
+ 	\setcitestyle{semicolon,aysep={},yysep={,},notesep={; }}
+\usepackage{lipsum}          % this and the following package and the settings beneath them are for maintaining indentation and still having ragged-right alignmnent
+\usepackage{ragged2e}
+\setlength\RaggedRightParindent{0.3in}
+\RaggedRight
+
+\usepackage{scrextend}       % this package and the following settings are for the footnote formatting
+\deffootnote[.5em]{0em}{1em}{\textsuperscript{\thefootnotemark}\,}
+
+\newcounter{savefootnote}   % these settings allow the use of an asterisk as a footnote label (for the author line below the title.
+\newcounter{symfootnote}
+\newcommand{\symfootnote}[1]{%
+   \setcounter{savefootnote}{\value{footnote}}%
+   \setcounter{footnote}{\value{symfootnote}}%
+   \ifnum\value{footnote}>8\setcounter{footnote}{0}\fi%
+   \let\oldthefootnote=\thefootnote%
+   \renewcommand{\thefootnote}{\fnsymbol{footnote}}%
+   \footnote{#1}%
+   \let\thefootnote=\oldthefootnote%
+   \setcounter{symfootnote}{\value{footnote}}%
+   \setcounter{footnote}{\value{savefootnote}}%
+}
+
+\usepackage[labelsep=period]{caption}
+
+\usepackage[margin=1.0in]{geometry}
+\usepackage[compact]{titlesec}
+	\titleformat{\section}[runin]{\normalfont\bfseries}{\thesection.}{.5em}{}[.]
+	\titleformat{\subsection}[runin]{\normalfont\scshape}{\thesubsection.}{.5em}{}[.]
+	\titleformat{\subsubsection}[runin]{\normalfont\scshape}{\thesubsubsection.}{.5em}{}[.]
+\usepackage[usenames,dvipsnames]{color}	
+\usepackage[colorlinks,allcolors={black},urlcolor={blue}]{hyperref} 		%likes to be last package 
+% -------------- personal definitions ---------------------------------------------------------------------------------------------------------   
+% -------------- LSA definitions ---------------------------------------------------------------------------------------------------------     
+
+%-------------------------------------------------------------- format abstract environment --------------------------------------
+% Abstracts have to be 12pt, indented 1.4 inches on each side, and inline with the label
+\renewenvironment{abstract}{%
+\noindent\begin{minipage}{1\textwidth}
+\setlength{\leftskip}{0.4in}
+\setlength{\rightskip}{0.4in}
+\textbf{Abstract.}}
+{\end{minipage}}
+%-------------------------------------------------------------- format keywords environment --------------------------------------
+% Abstracts have to be 12pt, indented 1.4 inches on each side, and inline with the 
+\newenvironment{keywords}{%
+\vspace{.5em}
+\noindent\begin{minipage}{1\textwidth}
+\setlength{\leftskip}{0.4in}
+\setlength{\rightskip}{0.4in}
+\textbf{Keywords.}}
+{\end{minipage}}
+
+% ------------ end preamble ------------------------------------------------------------------------------------------------
+% 
+%
+%
+% ------------ begin main document --------------------------------------------------------------------------------------
+ 
+ 
+\begin{document} 
+
+%%If using linguex, need the following commands to get correct LSA style spacing
+%% these have to be after  \begin{document}
+\setlength{\Extopsep}{6pt}
+\setlength{\Exlabelsep}{9pt}		%effect of 0.4in indent from left text edge
+%%
+ 
+\begin{center}			%title and author lines
+\normalfont\bfseries
+Style sheet and template for the \textit{Proceedings of the Linguistic Society of America}
+\vskip .5em
+\normalfont
+{First Last, First Last \& First Last\symfootnote{Both acknowledgments and author affiliation information go in an initial footnote like this, referenced by an asterisk on the end of the last author's name on the author-name line at the top. You can say who you would like to thank here and then end the footnote as follows. Authors: Author One, University of the Atlantic (\href{mailto:author1@atlantic.edu}{author1@atlantic.edu}) \& Other Author, Pacific University (\href{mailto:author2@gmail.com}{author2@gmail.com}).}}
+\vskip .5em
+\end{center}
+
+\begin{abstract}
+The title and author name(s) paragraphs, centered at the top of the first page, and the abstract and keyword paragraphs should match what is entered for these fields in the submission procedure. These will all be included on the landing page for the article and in the metadata that accompanies it for bibliographical and search-engine indexing purposes. The editorial team will add citation information with DOI in the header area of the first page. The \textit{Semantics and Pragmatics} numbering system for PDF articles will be used for citation purposes, with each article having an ID number according to its place in the table of contents, followed by a page number range that begins with ``1'' and ends with a number not larger than ``15''. Since the article ID number will be generated by the editorial team only after your article is submitted, you should number your article starting simply with ``1'' centered at the bottom of the first page, as illustrated here.
+\end{abstract}
+
+\begin{keywords} %separated by semicolons
+language science; proceedings; templates; style sheets; formatting; LSA uniform style
+\end{keywords}
+
+
+
+\section{Introduction} %Section titles will be displayed inline
+Your article needs to have the formatting, layout, and style features displayed in this document. This is a \LaTeX template based on the \href{https://drive.google.com/file/d/1r1YkBGcX7b7obNe0hLDrbJSSUTfNrFo1/view?usp=sharing}{LSA Proceedings style sheet}. Please see the style sheet itself for full details. 
+
+Section title formatting is bold, numbered, followed by a period, and wholly contained within the first paragraph of the section that it names. These and all titles use sentence case, which is to say that only the initial ordinary word or any ordinary word after a colon has the first letter in uppercase. Naturally, words that ordinarily have the first letter in uppercase, such as proper names, should have them that way in sentence case as well.
+
+The non-initial paragraphs of body text within each section should be indented by 0.3 inches, like this one.
+ 
+ 
+ \subsection{Subsection} 
+All subsection formatting is the same as section except ``it has the number in regular font and the section title in small caps'' (\href{http://journals.linguisticsociety.org/proceedings/index.php/PLSA/pages/view/instructions}{LSA Proceedings style sheet}). Note that there is a period after each number.
+
+\subsubsection{Subsubsection}
+If you choose to use sub-subsections, they are to be formatted and labeled just like subsections, as in the case of this paragraph. Do not use further depths of subsections.
+
+
+\section{How to include language examples}
+
+The examples in this document use the linguex package 	(\href{http://texdoc.net/texmf-dist/doc/latex/linguex/linguex-doc.pdf}{http://texdoc.net/texmf-dist/doc/latex/linguex/linguex-doc.pdf}) and have been adjusted to the LSA format requirements (see source above right after \verb=\begin{document}=).\footnote{This is a numbered footnote that is meant to show how it differs from the thanks footnote and to be just long enough to show that it is ragged right and not indented.}
+
+Example (1) shows how to include a single numbered language example with interlinear glossing together with a line identifying the language and its source. Use the \href{http://www.eva.mpg.de/lingua/resources/glossing-rules.php}{Leipzig glossing rules}.
+
+\ex. language name (citation) \label{label}\\
+data\\
+gloss\\
+`translation' 
+
+Example  (2) shows how to include multiple letter-labeled examples under a single number label.
+
+\ex. \label{label2} 
+\ag. data  \\
+gloss\\
+`translation' 
+\bg. data\\
+gloss\\
+`translation' 
+
+There should be no extra space between any contiguous examples. But each whole set of such should have a 6-point space above and below. The first line may be set in italics, if you prefer.
+
+ 
+ 
+\section{Figures, drawings, and tables}
+
+Center tables, figures, and other illustrative items and include a centered caption line beneath them. Provide 6 points of vertical space above and below the entire array and between the caption and the item. Figures and tables must be referenced initially in the body text at some point before they appear. And, they should appear as close to their initial reference as is feasible.
+
+Drawings of sentence structures and the like can either be placed next to a number or included as a figure, if preferred. Table formatting should be as in Table \ref{t:table}: 
+
+\begin{table}[h]
+\centering
+	\begin{tabular}{l c c}
+	& Heading 1 & Heading 2\\
+	\hline
+	X &  Some data & Some data\\
+	Y & Some data & Some data \\
+	\hline
+	\end{tabular}
+\caption{Table showing some data about something \label{t:table}}
+\end{table}
+
+\noindent The spacing before and after this table is controlled by the \verb=\setlength\intextsep{6pt}= command in the preamble. The space between the table and the caption is also set in the preamble, by \verb=\setlength\abovecaptionskip{6pt}=.
+
+
+ 
+ \section{Supplementary materials} If you have supplementary materials that you want to make available to readers, such as video clips, data files, or large images, and they cannot be accommodated in a PDF article of this kind, you may host them on a personal or institutional external website or on such media-sharing sites as YouTube, Dropbox, or Google Drive, and provide active hyperlinks to them in the body of your article, as illustrated in this document for the LSA Proceedings stylesheet and others.
+ 
+ 
+ 
+\section{Citations and references} Use author-date notation for in-text citations, for example: ... as noted recently by Jameson (2012) and Mateus (2014), drawing on insights from various other researchers (e.g., Nelson 1986:223–28, Martin 2003, Wellington \& Johnson 2016), there have been numerous technological advances in the procedures used to publish research articles online. Include URLs or DOIs with active hyperlinks in citations. The \textit{Semantics and Pragmatics} stylesheet \href{https://raw.githubusercontent.com/semprag/tex/master/sp.bst}{sp.bst} meets the LSA formatting requirements for the list of references, and so may be used. See \href{http://info.semprag.org}{info.semprag.org}. 
+% ------------ references --------------------------------------------------------------------------------------
+\setlength{\bibsep}{0pt plus 0.3ex}
+\setlength{\bibhang}{0.3in}			% hanging indent for references must be 0.3in
+\titleformat{\section}{\normalfont\bfseries}{\thesection}{.5em}{}		% references section not supposed to be followed by a period
+
+\bibliographystyle{sp.bst}		% S\&P bibliography style
+%S\&P, an LSA publication, meets the LSA guidelines. 
+%See: http://info.semprag.org 
+%and get the bst at: https://raw.githubusercontent.com/semprag/tex/master/sp.bst 
+%If using the sp.bst, the following command turns your DOIs into links
+\newcommand{\doi}[1]{\href{http://dx.doi.org/#1}{http://dx.doi.org/#1}}	%modified from sp.cls
+\bibliography{YourBib}			% your bib file
+
+\end{document}
+ 
+ 
+ 
+ 

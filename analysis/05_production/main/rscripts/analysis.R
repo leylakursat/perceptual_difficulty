@@ -14,6 +14,37 @@ theme_set(theme_bw())
 demo = read.csv(file="../data/subject_info_merged.csv")
 df = read.table(file="../data/data_merged.csv",sep="\t", header=T, quote="")
 
+#how many unique displays
+
+df$trialType = ifelse(df$clickedObjCondition=="high_difficulty"|df$alt1Condition=="high_difficulty"|df$alt2Condition=="high_difficulty"|df$alt3Condition=="high_difficulty","high_difficulty",ifelse(df$clickedObjCondition=="low_difficulty"|df$alt1Condition=="low_difficulty"|df$alt2Condition=="low_difficulty"|df$alt3Condition=="low_difficulty","low_difficulty","filler"))
+
+df$clickedObjName= as.character(df$clickedObjName)
+df$alt1Name = as.character(df$alt1Name)
+df$alt2Name = as.character(df$alt2Name)
+df$alt3Name = as.character(df$alt3Name)
+
+unique_displays = df %>% 
+  filter(trialType != "filler") %>%
+  mutate(targetName = ifelse(clickedObjTargetStatus=="target",clickedObjName,ifelse(alt1TargetStatus=="target",alt1Name,ifelse(alt2TargetStatus=="target",alt2Name,ifelse(alt3TargetStatus=="target",alt3Name,NA))))) %>%
+  mutate(notcompetitorName = ifelse(clickedObjName==alt1Name,clickedObjName,ifelse(clickedObjName==alt2Name, clickedObjName, ifelse(clickedObjName==alt3Name, clickedObjName, ifelse(alt1Name==alt2Name, alt1Name, ifelse(alt1Name==alt3Name, alt1Name, ifelse(alt2Name==alt3Name, alt2Name, NA ))))))) %>%
+  mutate(competitorName = ifelse(clickedObjName!=targetName & clickedObjName!=notcompetitorName, clickedObjName, ifelse(alt1Name!=targetName & alt1Name!=notcompetitorName,alt1Name, ifelse(alt2Name!=targetName & alt2Name!=notcompetitorName, alt2Name, ifelse(alt3Name !=targetName & alt3Name!=notcompetitorName, alt3Name, NA))))) %>%
+  select(trialType,clickedObjName,alt1Name,alt2Name,alt3Name,targetName,competitorName,notcompetitorName,trialType) %>%
+  group_by(trialType,targetName,competitorName,notcompetitorName) %>%
+  count() #%>%
+  #mutate(targetLabel="targetLabel", competitorLabel="competitorLabel", notcompetitorLabel="notcompetitorLabel") %>%
+  #select(targetLabel,targetName,competitorLabel,competitorName,notcompetitorLabel,notcompetitorName)
+  
+write.csv(unique_displays, '../data/for_stimuli.csv')
+
+write.csv(unique_displays,'../data/unique_displays.csv')
+
+clickedObjName 
+
+  group_by(clickedObjName,alt1Name,alt2Name,alt3Name) %>%
+  count()
+
+
+
 # exclude data from 1 non-native speaker
 notnative = demo %>% filter(demo$nativeEnglish != "yes") #7754-6
 df$gameid = as.character(df$gameid)

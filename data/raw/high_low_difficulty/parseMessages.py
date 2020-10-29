@@ -3,9 +3,9 @@ import os, csv
 
 datadir = "."
 
-csv_messagenames = [o for o in os.listdir("./message/") if (o.endswith('csv') & o.startswith('2016-10'))]
+csv_messagenames = [o for o in os.listdir("./message/") if (o.endswith('csv') & o.startswith('2020-51'))]
 
-csv_trialnames =  [o for o in os.listdir("./clickedObj/") if (o.endswith('csv') & o.startswith('2016-10'))]
+csv_trialnames =  [o for o in os.listdir("./clickedObj/") if (o.endswith('csv') & o.startswith('2020-51'))]
 
 
 # helper function to get messages associated with a particular trial
@@ -49,8 +49,6 @@ print csv_trialnames
 print "Number of message files: " + str(len(csv_messagenames))
 print "Number of trial files: " + str(len(csv_trialnames))
 
-
-
 finalmessagelines = []
 finaltriallines = []
 
@@ -80,30 +78,30 @@ for k,m in enumerate(csv_messagenames):
 		print i
 		print k
 		print mess['speakermessages']
-		try:
-			triallines[i][' refExp']	= mess['speakermessages'][0]
-		except IndexError:
-			triallines[i][' refExp'] = "NA"	
-		print triallines[i]['nameClickedObj']
-		try:			
-			typ,color = triallines[i]['nameClickedObj'].split("_")
-		except ValueError:
-			dist,typ,color = triallines[i]['nameClickedObj'].split("_")
-		triallines[i]['clickedColor'] = color
-		triallines[i]['clickedType'] = typ
-		colormentioned = False	
-		typementioned = False	
+		# try:
+		# 	triallines[i][' refExp']	= mess['speakermessages'][0]
+		# except IndexError:
+		# 	triallines[i][' refExp'] = "NA"	
+		# print triallines[i]['nameClickedObj']
+		# try:			
+		# 	typ,color = triallines[i]['nameClickedObj'].split("_")
+		# except ValueError:
+		# 	dist,typ,color = triallines[i]['nameClickedObj'].split("_")
+		# triallines[i]['clickedColor'] = color
+		# triallines[i]['clickedType'] = typ
+		# colormentioned = False	
+		# typementioned = False	
 
-		try:
-			refexp = [m.lower() for m in mess['speakermessages'][0].split()]
-			if color in refexp:
-				colormentioned = True
-			if typ in refexp:
-				typementioned = True
-		except IndexError:
-			print "no message on this trial"
-		triallines[i]['colorMentioned'] = colormentioned	
-		triallines[i]['typeMentioned'] = typementioned	
+		# try:
+		# 	refexp = [m.lower() for m in mess['speakermessages'][0].split()]
+		# 	if color in refexp:
+		# 		colormentioned = True
+		# 	if typ in refexp:
+		# 		typementioned = True
+		# except IndexError:
+		# 	print "no message on this trial"
+		# triallines[i]['colorMentioned'] = colormentioned	
+		# triallines[i]['typeMentioned'] = typementioned	
 
 #	finalmessagelines = finalmessagelines + messagelines
 	finaltriallines = finaltriallines + triallines		
@@ -115,11 +113,11 @@ headers.append('numLMessages')
 headers.append('speakerMessages')
 headers.append('listenerMessages')
 headers.append('messageTimeStamps')
-headers.append(' refExp')
-headers.append('colorMentioned')
-headers.append('typeMentioned')
-headers.append('clickedType')
-headers.append('clickedColor')
+# headers.append(' refExp')
+# headers.append('colorMentioned')
+# headers.append('typeMentioned')
+# headers.append('clickedType')
+# headers.append('clickedColor')
 
 
 
@@ -128,7 +126,7 @@ headers.append('clickedColor')
 print triallines[0].keys()
 
 
-w = csv.DictWriter(open("rawdata_exp2.csv", "wb"),fieldnames=headers,restval="NA",delimiter="\t")
+w = csv.DictWriter(open("merged_data.csv", "wb"),fieldnames=headers,restval="NA",delimiter="\t")
 w.writeheader()
 w.writerows(finaltriallines)
 			

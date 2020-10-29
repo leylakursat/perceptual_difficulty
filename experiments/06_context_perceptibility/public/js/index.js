@@ -60,154 +60,31 @@ function make_slides(f) {
      }
   });
 
-  slides.demonstration = slide({
-    name : "demonstration",
-    start: function() {
-      $('.button').hide();
-      $('.instruction').hide();
-      $('.correct').hide();
-      $('.incorrect').hide();
-      $('.instruction2').hide();
-      $('.dtransition').hide();
-
-      $('.demo_word').html('<font size="6">green</font>'); 
-      $('.demo_image').html('<img src="images/ball_plastic_green.png" align="center" style="height:330px;">');
-
-      setTimeout(function(){
-        $('.instruction').show();
-      },500)
-
-      var a = 0;
-
-      document.onkeydown = checkKey;
-      function checkKey(e) {
-        e = e || window.event;
-        if ((a==0) && (e.keyCode == 74)){ // pressed J (YES) --> correct answer
-          e = 0;
-          $('.incorrect').hide();
-          $('.correct').show();
-          $('.instruction').hide();
-          $('.no_image').css('border','');
-          $('.yes_image').css('border', "solid 3px green");
-          a=1;
-          
-          setTimeout(function(){
-            $('.instruction').hide();
-            $('.correct').hide();
-            $('.incorrect').hide();
-            $('.demo_word').hide();
-            $('.demo_image').hide()
-            $('.yes_image').hide();
-            $('.no_image').hide();
-            $('.dtransition').show();
-          },1000)
-        }
-        else if ((a==0) &&  (e.keyCode == 70)){ // pressed F (NO) --> incorrect
-          e = 0;
-          $('.incorrect').show();
-          $('.yes_image').css('border','');
-          $('.no_image').css('border', "solid 3px red");
-        }
-        else if (($('.dtransition').is(":visible")) && (e.keyCode == 32)) {
-          exp.go();
-        }
-      }
-    },
-  });
-
-  slides.demonstration2 = slide({
-    name : "demonstration2",
-    start: function() {
-      $('.button').hide();
-      $('.instruction2').hide();
-      $('.correct2').hide();
-      $('.incorrect2').hide();
-      $('.instruction22').hide();
-      
-      $('.demo_word2').html('<font size="6">metal</font>');
-      $('.demo_image2').html('<img src="images/vase_wood_original.png" style="height:330px;">');
-
-      setTimeout(function(){
-        $('.instruction2').show();
-      },500)
-
-      var a = 0;
-
-      document.onkeydown = checkKey;
-      function checkKey(e) {
-        e = e || window.event;
-        if ((a==0) && (e.keyCode == 70)){  // pressed F (NO) --> correct
-          e = 0;
-          $('.incorrect2').hide();
-          $('.correct2').show();
-          $('.no_image2').css('border','solid 3px green');
-          $('.yes_image2').css('border', "");
-          $('.instruction2').hide();
-          a=1;
-        
-          setTimeout(function(){
-            $('.instruction2').hide();
-            $('.correct2').hide();
-            $('.incorrect2').hide();
-            $('.demo_word2').hide();
-            $('.demo_image2').hide()
-            $('.yes_image2').hide();
-            $('.no_image2').hide();
-            $('.instruction22').show();
-          },1000)
-        }
-        else if ((a==0) && (e.keyCode == 74)) { // pressed J (YES) --> incorrect
-          e = 0;
-          $('.incorrect2').show();
-          $('.yes_image2').css('border','solid 3px red');
-          $('.no_image2').css('border', "");
-        }
-        else if (($('.instruction22').is(":visible")) && (e.keyCode == 32)) {
-          exp.go();
-        }
-      }
-    },
-  });
-
   slides.practicetrial = slide({
     name : "practicetrial",
     present: 
     [{
-    "label": "ball_metal_original", // no to material
-    "item": ["ball"],
-    "correct_color": ["silver"],
-    "correct_material": ["metal"],
-    "feature": ["glass"],
-    "feature_type": ["material"],
-    "correct_answer": ["no"]
-    },
-    {
-    "label": "door_wood_yellow", // yes to color 
-    "item": ["door"],
-    "correct_color": ["yellow"],
-    "correct_material": ["wood"],
-    "feature": ["yellow"],
-    "feature_type": ["color"],
-    "correct_answer": ["yes"]
-    },
-    {
-    "label": "ruler_metal_blue", // no to color
-    "item": ["bag"],
-    "correct_color": ["blue"],
-    "correct_material": ["metal"],
-    "feature": ["red"],
-    "feature_type": ["color"],
-    "correct_answer": ["no"]
-    },
-    {
-    "label": "ball_plastic_red", // yes to material 
-    "item": ["ball"],
-    "correct_color": ["red"],
-    "correct_material": ["plastic"],
-    "feature": ["plastic"],
-    "feature_type": ["material"],
-    "correct_answer": ["yes"]
-    }],
+      'targetName': '',
+      'competitorName': '',
+      'notCompetitorName': '',
+      'condition': 'color_correct',
+      'featureQuestion': 'color',
+      'adjQuestion': 'blue',
+      'numQuestion': '2',
+      'correctAnsQuestion': 'yes',
+      'contextID': 'practice_1'
+  },
+  {
+      'targetName': '',
+      'competitorName': '',
+      'notCompetitorName': '',
+      'condition': 'material_incorrect',
+      'featureQuestion': 'material',
+      'adjQuestion': 'plastic',
+      'numQuestion': '4',
+      'correctAnsQuestion': 'no',
+      'contextID': 'practice_2',
+  }],
 
     present_handle : function(stim) {
       this.trial_start = Date.now();
@@ -215,11 +92,11 @@ function make_slides(f) {
   
       this.stim = stim;
 
-      var pword = '<font size="6">'+stim.feature+'</font>';
-      var pimage = '<img src="images/'+stim.label+'.png" style="height:330px;">';
+      var sentence = `<p style="font-size:25px">${stim.numQuestion} ${stim.adjQuestion} objects</p>`
+      var image = `<img src="images/${stim.contextID}.png" style="height:200px">`;
 
-      $('.pword').html('<font size="6">'+stim.feature+'</font>');
-      $('.pimage').html('<img src="images/'+stim.label+'.png" style="height:330px;">');
+      $('.pword').html(sentence);
+      $('.pimage').html(image);
       $('.pword').show();
       $('.pimage').show();
       $('.pyes_image').css('border', "");
@@ -244,12 +121,12 @@ function make_slides(f) {
 
         if ((a==0) && (exp.keyCode == "yes"||exp.keyCode == "no") && ($('.ptransition').is(":hidden"))){
           e = 0;
-          if (exp.keyCode == stim.correct_answer) { // gave right answer
+          if (exp.keyCode == stim.correctAnsQuestion) { // gave right answer
             if (exp.keyCode == "yes")
               $('.pyes_image').css('border','solid 3px green'); // right answer is yes
             if (exp.keyCode == "no")
               $('.pno_image').css('border','solid 3px green');
-          } if (exp.keyCode != stim.correct_answer) { // gave wrong answer
+          } if (exp.keyCode != stim.correctAnsQuestion) { // gave wrong answer
             if (exp.keyCode == "yes")
               $('.pyes_image').css('border','solid 3px red'); // wrong answer is yes
             if (exp.keyCode == "no")
@@ -279,13 +156,16 @@ function make_slides(f) {
     log_responses : function() {
         exp.data_trials.push({
           "slide_number_in_experiment" : "practice_trial",
-          "label": this.stim.label,
-          "item": this.stim.item,
-          "correct_color": this.stim.correct_color,
-          "correct_material": this.stim.correct_material,
-          "feature": this.stim.feature,
-          "feature_type": this.stim.feature_type,
-          "correct_answer": this.stim.correct_answer,
+          "targetName" : this.stim.targetName,
+          "competitorName": this.stim.competitorName,
+          "notCompetitorName": this.stim.notCompetitorName,
+          "condition": this.stim.condition,
+          "featureQuestion": this.stim.featureQuestion,
+          "adjQuestion": this.stim.adjQuestion,
+          "numQuestion": this.stim.numQuestion,
+          "correctAnsQuestion": this.stim.correctAnsQuestion,
+          "contextID" : this.stim.contextID,
+          "contextVar" : exp.context,
           "response" : [Date.now() - _s.trial_start, exp.keyCode]
         });
     }
@@ -319,18 +199,21 @@ function make_slides(f) {
       $(".transition").hide();
   
       this.stim = stim;
+      var random_num = Math.random() < 0.5 ? "1" : "2";
+      var random_index = Math.random() < 0.5 ? "0" : "1";
+      var num = stim.numQuestion
+      exp.context = stim.contextID+"_"+random_num
 
-      //var sentence = '<font size="6">'+stim.label+'</font>';
-      var plural =''
-      var tobe = 'is'
-      if (stim.number > 1){
-        plural = 's';
-        tobe = 'are'
-      }
+      if (num.length > 1)
+        num = stim.numQuestion[random_index]
+      
+      if (num == "1")
+        obj = "object"
+      else  
+        obj = "objects"
 
-      var sentence = "There "+tobe+" "+"<strong>"+stim.number+" "+stim.feature+ "</strong>"+" "+stim.target_object+plural+" in the display.";
-      var image = '<img src="images/'+stim.context+'.png" style="height:150px; border:solid 2px black">';
-
+      var sentence = `<p style="font-size:25px">${num} ${stim.adjQuestion} ${obj}</p>`
+      var image = '<img src="images/'+exp.context+'.png" style="height:200px">';
 
       $('.word').html(sentence);
       $('.image').html(image);
@@ -351,21 +234,19 @@ function make_slides(f) {
         if (e.keyCode == 74) {
           exp.keyCode = "yes"
           e = 0;
-          console.log("pressed yes")
         } if (e.keyCode  == 70) {
           exp.keyCode = "no"
           e = 0;
-          console.log("pressed no")
         }
 
         if ((a==0) && (exp.keyCode == "yes"||exp.keyCode == "no") && ($('.ptransition').is(":hidden"))){
           e = 0;
-          if (exp.keyCode == stim.correct_answer) { // gave right answer
+          if (exp.keyCode == stim.correctAnsQuestion) { // gave right answer
             if (exp.keyCode == "yes")
               $('.yes_image').css('border','solid 3px green'); // right answer is yes
             if (exp.keyCode == "no")
               $('.no_image').css('border','solid 3px green');
-          } if (exp.keyCode != stim.correct_answer) { // gave wrong answer
+          } if (exp.keyCode != stim.correctAnsQuestion) { // gave wrong answer
             if (exp.keyCode == "yes")
               $('.yes_image').css('border','solid 3px red'); // wrong answer is yes
             if (exp.keyCode == "no")
@@ -389,19 +270,23 @@ function make_slides(f) {
     
     button : function() {
         this.log_responses();
+        console.log(Date.now() - _s.trial_start, exp.keyCode)
         _stream.apply(this); //use exp.go() if and only if there is no "present" data.        
     }, 
 
     log_responses : function() {
         exp.data_trials.push({
-          "slide_number_in_experiment" : "experimental_trial",
-          "context": this.stim.context,
-          "target_label": this.stim.target_label,
-          "feature": this.stim.feature,
-          "number": this.stim.number,
-          "feature": this.stim.feature,
-          "feature_type": this.stim.feature_type,
-          "correct_answer": this.stim.correct_answer,
+          "slide_number_in_experiment" : exp.phase,
+          "targetName" : this.stim.targetName,
+          "competitorName": this.stim.competitorName,
+          "notCompetitorName": this.stim.notCompetitorName,
+          "condition": this.stim.condition,
+          "featureQuestion": this.stim.featureQuestion,
+          "adjQuestion": this.stim.adjQuestion,
+          "numQuestion": this.stim.numQuestion,
+          "correctAnsQuestion": this.stim.correctAnsQuestion,
+          "contextID" : this.stim.contextID,
+          "contextVar" : exp.context,
           "response" : [Date.now() - _s.trial_start, exp.keyCode]
         });
     }
@@ -447,55 +332,9 @@ function make_slides(f) {
 /// init ///
 function init() {
   //var items_target = _.shuffle([
-  exp.all_stims = _.shuffle([
-    {
-      'context' :  'cups_colorRedundant',
-      'target_label' :  'cup_green_plastic',
-      'target_object' : 'cup',
-      'target_color' :  'green',
-      'target_material' :  'plastic',
-      'feature' :  'green',
-      'number' : "2",
-      'feature_type' :  'color',
-      'correct_answer' :  'yes',
-    },
-    {
-      'context' :  'cups_colorRedundant',
-      'target_label' :  'cup_green_plastic',
-      'target_object' : 'cup',
-      'target_color' :  'green',
-      'target_material' :  'plastic',
-      'feature' :  'green',
-      'number' : "1",
-      'feature_type' :  'color',
-      'correct_answer' :  'no',
-    },
-    {
-      'context' :  'cups_colorRedundant',
-      'target_label' :  'cup_green_plastic',
-      'target_object' : 'cup',
-      'target_color' :  'green',
-      'target_material' :  'plastic',
-      'feature' :  'plastic',
-      'number' : "1",
-      'feature_type' :  'material',
-      'correct_answer' :  'yes',
-    },
-    {
-      'context' :  'cups_colorRedundant',
-      'target_label' :  'cup_green_plastic',
-      'target_object' : 'cup',
-      'target_color' :  'green',
-      'target_material' :  'plastic',
-      'feature' :  'plastic',
-      'number' : "2",
-      'feature_type' :  'material',
-      'correct_answer' :  'nio',
-    },
+  exp.all_stims = _.shuffle(exp.stims)
 
-]);
-
-console.log(exp.all_stims.length);
+  console.log(exp.all_stims.length);
 
   exp.trials = [];
   exp.catch_trials = [];
@@ -510,7 +349,7 @@ console.log(exp.all_stims.length);
     };
   //blocks of the experiment:
   //exp.structure=["bot","i0", "demonstration", "demonstration2", "practicetrial", "beforeobject", "objecttrial", 'subj_info', 'thanks'];
-  exp.structure=["objecttrial", 'subj_info', 'thanks'];
+  exp.structure=["bot","i0","practicetrial","beforeobject","objecttrial", 'subj_info', 'thanks'];
    
   
   exp.data_trials = [];

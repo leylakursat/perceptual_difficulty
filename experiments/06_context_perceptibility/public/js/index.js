@@ -87,12 +87,11 @@ function make_slides(f) {
   }],
 
     present_handle : function(stim) {
-      (new Image()).src = "images/" + stim.contextID + ".png";  
-      
       this.trial_start = Date.now();
       $(".ptransition").hide();
   
       this.stim = stim;
+      (new Image()).src = "images/" + stim.contextID + ".png"
 
       var sentence = `<p style="font-size:25px">${stim.numQuestion} ${stim.adjQuestion} objects</p>`
       var image = `<img src="images/${stim.contextID}.png" style="height:200px">`;

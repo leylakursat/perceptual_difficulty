@@ -1,0 +1,196 @@
+Received: from SA0PR02MB7450.namprd02.prod.outlook.com (2603:10b6:806:db::14)
+ by BL0PR02MB5651.namprd02.prod.outlook.com with HTTPS; Thu, 29 Oct 2020
+ 20:01:31 +0000
+Received: from BL0PR03CA0003.namprd03.prod.outlook.com (2603:10b6:208:2d::16)
+ by SA0PR02MB7450.namprd02.prod.outlook.com (2603:10b6:806:db::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3499.18; Thu, 29 Oct
+ 2020 20:01:30 +0000
+Received: from BL2NAM02FT023.eop-nam02.prod.protection.outlook.com
+ (2603:10b6:208:2d:cafe::64) by BL0PR03CA0003.outlook.office365.com
+ (2603:10b6:208:2d::16) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3499.18 via Frontend
+ Transport; Thu, 29 Oct 2020 20:01:30 +0000
+Authentication-Results: spf=softfail (sender IP is 148.163.153.235)
+ smtp.mailfrom=gmail.com; o365.stanford.edu; dkim=pass (signature was
+ verified) header.d=gmail.com;o365.stanford.edu; dmarc=pass action=none
+ header.from=gmail.com;compauth=pass reason=100
+Received-SPF: SoftFail (protection.outlook.com: domain of transitioning
+ gmail.com discourages use of 148.163.153.235 as permitted sender)
+Received: from mx0b-00000d04.pphosted.com (148.163.153.235) by
+ BL2NAM02FT023.mail.protection.outlook.com (10.152.77.72) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.3520.15 via Frontend Transport; Thu, 29 Oct 2020 20:01:30 +0000
+Received: from pps.filterd (m0102892.ppops.net [127.0.0.1])
+	by mx0a-00000d04.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id 09TK16L3021689
+	for <lkursat@o365.stanford.edu>; Thu, 29 Oct 2020 13:01:30 -0700
+Authentication-Results-Original: ppops.net;	spf=softfail
+ smtp.mailfrom=rabia.ergin@gmail.com;	dkim=pass header.s=20161025
+ header.d=gmail.com;	dmarc=pass header.from=gmail.com
+Received: from mx0a-00000d03.pphosted.com (mx0a-00000d03.pphosted.com [148.163.149.244])
+	by mx0a-00000d04.pphosted.com with ESMTP id 34cgwrk4vk-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+	for <lkursat@o365.stanford.edu>; Thu, 29 Oct 2020 13:01:29 -0700
+Received: from pps.filterd (m0190085.ppops.net [127.0.0.1])
+	by mx0a-00000d03.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id 09TK0QSh031664
+	for <lkursat@stanford.edu>; Thu, 29 Oct 2020 13:01:28 -0700
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+	by mx0a-00000d03.pphosted.com with ESMTP id 34cjvfum4k-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <lkursat@stanford.edu>; Thu, 29 Oct 2020 13:01:28 -0700
+Received: by mail-wm1-f41.google.com with SMTP id k125so1148602wmf.0
+        for <lkursat@stanford.edu>; Thu, 29 Oct 2020 13:01:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:content-transfer-encoding:mime-version:subject:date:message-id
+         :references:in-reply-to:to;
+        bh=HUStVvOgqy8Oj+No3mnKaRebUQDAxJh0tqQ9JLicvUw=;
+        b=q/h5hYSKQ64sao7kpo2fMhsuGeHC8WZwI7z/ixoYcG96v/onaZHsc6atmI90O6sdnL
+         xZ7m2gEjexRUKbnldsjF1nEjczX4yo0Q7xSls83EtODV73IRzf48WXvpnTbO9/3zEP0q
+         r57bIABkngjwpUXXv9R4hJ4u08Of2O3IfHsQdkGPzfCgGE6ISP2IsTceX0ktK4Plh974
+         luTlEP6DSFpKpPK2KY1SlJ843JzA8d8iuuVlgECwd3al4ZLvFVl0clmZS5jec+qeYtDS
+         nh+N2ZKO0NtkyJRFDpaI5jxcxUE8p5PNObFx2SuLRxopFOR/iRRxLIyxEy8l19COZd2S
+         biTg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:content-transfer-encoding:mime-version
+         :subject:date:message-id:references:in-reply-to:to;
+        bh=HUStVvOgqy8Oj+No3mnKaRebUQDAxJh0tqQ9JLicvUw=;
+        b=OEkjZ3OY/yiF7isH/8ux0TbxZBDSz5o1iiEY7cZ+LAyVtUg5CsVQpn0nMwVpih8/9t
+         NqD/jqp+jo8UCf/wXXJ4GlSQ0Q7eqJ6OR4X07lXCosHzYxhVMjmRvNwCGGnGyYGECX3x
+         LfQgWqkHG7i5C5FMdVIE9VCCUwxoEAmdqd/cwI6YuyhIpjdXWi+cKwiLNMtK+/jfrrfl
+         5Ivx02BrLnIiIWOPrFH2KO9gW1ZZucvQ8u7pJmkK3y7Jsm12X3MnZPCcZoUB9Glxhxvr
+         frotprtQcFr75EVFnCFxaONSSi7jfTIGHrASL9dNkcEfTTVP/aZVzjLxXm+jEVaXpl6A
+         4pGw==
+X-Gm-Message-State: AOAM5314flTJ8zbHCvhiZjNtLbY+jEC2wRBPPoQhn4X4PevNAAeo/nTe
+	eb3y8+NjVZGj3aXURQaYTKx2cetgfh4=
+X-Google-Smtp-Source: ABdhPJznc5EXSBV/UZF692RoDxjzhdFpQDDKyJ4RK7ZnloHAVaDg4dodXsEK/tVcSgim45LcJ8ddHA==
+X-Received: by 2002:a05:600c:28b:: with SMTP id 11mr876510wmk.47.1604001686412;
+        Thu, 29 Oct 2020 13:01:26 -0700 (PDT)
+Received: from [10.6.105.222] ([176.54.25.167])
+        by smtp.gmail.com with ESMTPSA id b5sm6841570wrs.97.2020.10.29.13.01.25
+        for <lkursat@stanford.edu>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 29 Oct 2020 13:01:25 -0700 (PDT)
+From: Rabia Ergin <rabia.ergin@gmail.com>
+X-Google-Original-From: Rabia Ergin <Rabia.Ergin@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: Modem ucreti icin banka bilgisi
+Date: Thu, 29 Oct 2020 23:01:24 +0300
+Message-Id: <210287F8-5521-4A89-94F7-498B0EFF4828@gmail.com>
+References: <2804961E-D79C-472A-8B8F-326A126B3333@stanford.edu>
+In-Reply-To: <2804961E-D79C-472A-8B8F-326A126B3333@stanford.edu>
+To: Leyla Kursat <lkursat@stanford.edu>
+X-Mailer: iPhone Mail (18A393)
+x-proofpoint-stanford-dir: inbound
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.312,18.0.737
+ definitions=2020-10-29_12:2020-10-29,2020-10-29 signatures=0
+X-CLX-Shades: MLX
+X-CLX-Response: 1TFkXGx8aEQpMehcZGxkRCllEF24FQm1QEk16YVIcEQpYWBdiUHlATlJhUHN +fREKeE4XY1Nja3sTWH4aX14RCnlMF2hfel5NTmFmHlIcEQpDSBcHGxkaEQpDWRcHEhIRCkNJFx oEGhoaEQpZTRdnZnIRCllJFxpxGhAadwYbGRpxGxMQGncGGBoGGhEKWV4XbGx5EQpJRhdZXktET
+ EVYTnVCU01DT0RPdVpYRU5fSV5DRUR1QkVZXk9OEQpDThd5ZXUbYBNGfm5raGt+cmgecksfHWxP XF56X0JEZFhafhEKWFwXHwQaBBgbHAUbGgQbGhoEHhIEGxMQGx4aHxoRCl5ZF30aZ3saEQpNXBc dGxEKTFoXaGlNa2sRCkxGF29ra2xpbhEKQk8XaH1BYENafXNHQRMRCkNaFxgaEwQSHwQbGBIEHh
+ sRCkJeFxsRCkJcFxsRCl5OFxsRCkJLF2NTY2t7E1h+Gl9eEQpCSRdjU2NrexNYfhpfXhEKQkUXY XNbc1pZTFhnAUsRCkJOF2NTY2t7E1h+Gl9eEQpCTBdiUHlATlJhUHN+fREKQmwXZQViTxt+ZxNk ZGQRCkJAF2ZdW1JzfngeYkVwEQpCWBdmQkcefGFOGlJwWxEKTV4XGxEKWlgXGBEKeUMXYxx4TmR
+ weAFQBXwRCllLFxMYGhMRCnBoF2JgUEZ+ZGRhUE0aEBkaEQpwaBdlfVpMXV9BQXJfARAZGhEKcG gXaBxQellDUGhefl8QGRoRCnBoF24YU11hXBgac0lLEBkaEQpwaBdiTGhbGHhaf2tGARAZGhEKc GwXZkhychNwTkFnR3gQGRoRCnBDF2FJcGRYbmRME1oeEBkaEQptfhcbEQpYTRdLESA=
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.312,18.0.737
+ definitions=2020-10-29_12:2020-10-29,2020-10-29 signatures=0
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0 phishscore=0
+ adultscore=0 bulkscore=0 mlxscore=0 spamscore=0 clxscore=150
+ lowpriorityscore=0 priorityscore=313 impostorscore=0 mlxlogscore=751
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2009150000 definitions=main-2010290137
+Return-Path: rabia.ergin@gmail.com
+X-MS-Exchange-Organization-ExpirationStartTime: 29 Oct 2020 20:01:30.4831
+ (UTC)
+X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
+X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
+X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
+X-MS-Exchange-Organization-Network-Message-Id:
+ 1726e8df-5c1f-4131-4324-08d87c456d83
+X-EOPAttributedMessage: 0
+X-EOPTenantAttributedMessage: 396573cb-f378-4b68-9bc8-15755c0c51f3:0
+X-MS-Exchange-Organization-MessageDirectionality: Incoming
+X-MS-PublicTrafficType: Email
+X-MS-Exchange-Organization-AuthSource:
+ BL2NAM02FT023.eop-nam02.prod.protection.outlook.com
+X-MS-Exchange-Organization-AuthAs: Anonymous
+X-MS-Office365-Filtering-Correlation-Id: 1726e8df-5c1f-4131-4324-08d87c456d83
+X-MS-TrafficTypeDiagnostic: SA0PR02MB7450:
+X-MS-Exchange-Organization-SCL: -1
+X-MS-Oob-TLC-OOBClassifiers: OLM:2803;
+X-Microsoft-Antispam: BCL:0;
+X-Forefront-Antispam-Report:
+ CIP:148.163.153.235;CTRY:US;LANG:tr;SCL:-1;SRV:;IPV:NLI;SFV:SKN;H:mx0b-00000d04.pphosted.com;PTR:mx0b-00000d04.pphosted.com;CAT:NONE;SFS:;DIR:INB;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Oct 2020 20:01:30.3732
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1726e8df-5c1f-4131-4324-08d87c456d83
+X-MS-Exchange-CrossTenant-Id: 396573cb-f378-4b68-9bc8-15755c0c51f3
+X-MS-Exchange-CrossTenant-AuthSource:
+ BL2NAM02FT023.eop-nam02.prod.protection.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA0PR02MB7450
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:01.3920472
+X-MS-Exchange-Processed-By-BccFoldering: 15.20.3477.028
+X-Microsoft-Antispam-Mailbox-Delivery:
+	ucf:0;jmr:0;auth:0;dest:I;ENG:(750128)(520011016)(944506458)(944626604);
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?eXQvd2RPTzFvMHBrZ0ZIV0d1T3M0dEh6ZThyekROazlpUldnaVR5YjE4MU1Z?=
+ =?utf-8?B?d0diWlBJZGxQNndsS0JWUk9nekdOZ3ZBZURNZGVsY29hSEZ6ZHNyQ2MyZkpL?=
+ =?utf-8?B?ajFicDNuTkVzNDE0OHUxQjQ2bVJBOXpWVk0vRlo1K2hPbEE1WFBlVHZhSU9X?=
+ =?utf-8?B?Mk0xa3ZKamg5akdXRlpCYllWNHkwUEU0bXM4T1ZtdEU2VjdCMWNWY3BQUXMr?=
+ =?utf-8?B?V1I4NjNTQnBONFQrNGdtN0hoWitXNlhHRnlLeDVMWEhZczJRdXJSYkR2NExI?=
+ =?utf-8?B?Nzd5OG55c085aFFTNHFRd1lMRTB0SW9wbkJuS3E5Y3V4Z3NoUzNZdXI1MEow?=
+ =?utf-8?B?ZGxpcm5CZWhncnhrSDY1UmgyQnA4bEhPRDZ3N00rRks1OEFYSmZrbGxLQytT?=
+ =?utf-8?B?blM1QXZadmhyTmhTYXFBU3JYeW9uRUN6cDJLVDdqQVdwUStYM1lSQzZUNGVE?=
+ =?utf-8?B?MnZ4ZGN6V3JsdUYxYy9sVVVTUHVmS1hIZXFUd2VWWG5HZ1pLVW91MWJFZmVq?=
+ =?utf-8?B?Tm1lZ3l4ZXFLZHR5cTVVY1lpUGowbUdxaGlpaFdIWW9GRkl1dUdWV0pEdEtq?=
+ =?utf-8?B?aXNIU1htL0RHTWJZNFZBbS9CUnhXMDFsaS81TEZla2hxRkJscVRid3dxc3E2?=
+ =?utf-8?B?c2FhVkxiY3FxQUg1TC9PNmx4WVgvVzU0ZSsvV0loR1N0RnBKWTFHRkZjTzVw?=
+ =?utf-8?B?bU0yaWc2Z09Ra0hpMDdPOElBMjZGTytGS3Y2ell5OER0eTJqbGlGcm9vdlN1?=
+ =?utf-8?B?cWVmUTJhMFVFVmpIN3BDMnBqWERWdVc5YVVBcFFnUnVRYXZub1UyZ3YxWVh4?=
+ =?utf-8?B?OHJMdmp4ODc1bVdpb1BiU0dIRGh1T1FOQ2lyMDc1aEZvZlpNR3RqWGZ1MzBw?=
+ =?utf-8?B?UmtpS1dVZFNTbEdJOFFzOHdxZ3RWTDRKalp1VDFBMDBkS1c3NGtYQklUL3B4?=
+ =?utf-8?B?eEcxa0pNRjVNSFJLbG40ejV5NjcrSDZOV2EvQzIyU0hmaXRYb3JoUGI4SFJR?=
+ =?utf-8?B?MUFUZHo2UDErRlNkY2VuSm1DOUJ1Z29LeVJ5TFFoY2prbkcyS3Fpc2l3Vjdv?=
+ =?utf-8?B?bWtiVUZmODUvb1BwdnpYUzhIL0lXbkJ1dE9sT1VkWFRnamFZK0N1VVRJWmh0?=
+ =?utf-8?B?WkwzeGdHeXo3Y3FoTTV6WS9oc1lBb3ZWNHZhOVppcWs1NjJwenV6VlFWYWlj?=
+ =?utf-8?B?d21XZmhZYW1Ia0paczVzbmRIZWxjT3czZmd3U05Udms0TFM5OWQxQzVwVTEy?=
+ =?utf-8?B?WmRtb3hwdHZtZEd1NWk0d3lBcGlQSmdKNFdwWHZtL2lZQlR6cjk2ZGFMMTFj?=
+ =?utf-8?B?QW5KbmxaR0JXZVJ5azJGNm9raWxyRkpaUXZiN3oyM3NkMGVFb1VkNFo5ZExu?=
+ =?utf-8?B?TWwvdVNoMnpWMGRzbEp2NmFVZlgySVRDUy9DS1NxbjkrY1FWZk9YazE4L3NR?=
+ =?utf-8?B?RUo0U2dGd3UvQXpWaEFETEtaVTh1dU5hcDgvQnRPU2tPekVwQ3k0L1c5NEIz?=
+ =?utf-8?B?SVovOHQwN0ExaW1meTVvb3V0UzVKbU5Qdm9PL1kwU01BUVR2ckNVTUVkWFhN?=
+ =?utf-8?B?dWt2bnVCbXNtckRSMWRjTllHWkRqakd0OElYc3hqNUxsYlhaRjZGYi8wQnBk?=
+ =?utf-8?B?MUIzbnhHVkRTSDRkbjF5bURlYUZoemlMbTZVYUlqUFhDaHJoVUEzMzgySmE0?=
+ =?utf-8?B?Zmt2eFVINGRLSm50bFk3WnR3ZnlCS1QxcEdvaFoyR3Q4SUd0VzN0N3h5aDFC?=
+ =?utf-8?B?MFhrZG45a05iOG4rb2FiWWY0d0M0SEpEc2lzcDNrdE9uRUNESkRKK2Q4MWZY?=
+ =?utf-8?B?U1NBSUFnZmVTS3c1c2hja0o1c3dWNGw4N0FvTVZxTUJWSHlraUdSeWRSc0pE?=
+ =?utf-8?Q?x/sdXuQmrM64F?=
+MIME-Version: 1.0
+
+Selam Leyla=E2=80=99c=C4=B1m,
+
+Gecikme hi=C3=A7 sorun de=C4=9Fil. Hangi iban numaras=C4=B1n=C4=B1 payla=C5=
+=9Fm=C4=B1=C5=9Ft=C4=B1m seninle hat=C4=B1rlam=C4=B1yorum. 02 ile bitiyorsa=
+ ING bank Be=C5=9Fikta=C5=9F =C5=9Fubesi, 57 ile bitiyorsa Yap=C4=B1 kredi =
+Ceyhan =C5=9Fubesi.=20
+
+Kendine iyi bak, g=C3=B6r=C3=BC=C5=9Fmek =C3=BCzere!
+
+RE
+
+>=20
+> On 29 Oct 2020, at 22:28, Leyla Kursat <lkursat@stanford.edu> wrote:
+>=20
+> =EF=BB=BFTekrar Merhaba Rabia Hocam,
+>=20
+> Modem ucretini hala odeyemedigimiz icin cok ozur dileriz. Lab adina banka=
+ hesabi ve kart almaya calisiyoruz aylardir, o hesap uzerinden baska harcam=
+alarla birlikte oderiz diye dusunmustum. Covid yuzunden hesap cok gecikti, =
+baska harcama da olmadi zaten. Ben bu hafta ailemden rica ettim size turkiy=
+eden gonderecekler modem ucretini, ben de Stanford=E2=80=99dan reimbusement=
+ alacagim. Paylastiginiz iban numarasi hangi bankaya ait acaba?=20
+>=20
+>=20
+> Sevgiler,
+> Leyla

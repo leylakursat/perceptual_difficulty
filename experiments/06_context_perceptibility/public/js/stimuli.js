@@ -335,7 +335,7 @@ exp.stims = [
         'notCompetitorName': 'table_wood_green',
         'condition': 'material2_correct',
         'featureQuestion': 'material',
-        'adjQuestion': 'wood',
+        'adjQuestion': 'wooden',
         'numQuestion': '3',
         'correctAnsQuestion': 'yes',
         'contextID': 'tmb_twb_twg',

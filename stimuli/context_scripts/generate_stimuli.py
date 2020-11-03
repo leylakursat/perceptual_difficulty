@@ -106,24 +106,24 @@ count = 0
 for a, context in contexts.items():
     dic[count] = copy.deepcopy(context)
     if context["group_no"] == 1:
-        dic[count]["condition"] = order1
-    if context["group_no"] == 2:
-        dic[count]["condition"] = order2
-    if context["group_no"] == 3:
-        dic[count]["condition"] = order3
-    if context["group_no"] == 4:
-        dic[count]["condition"] = order4
-    if context["group_no"] == 5:
-        dic[count]["condition"] = order5
-    if context["group_no"] == 6:
-        dic[count]["condition"] = order6
-    if context["group_no"] == 7:
-        dic[count]["condition"] = order7
-    if context["group_no"] == 8:
         dic[count]["condition"] = order8
+    if context["group_no"] == 2:
+        dic[count]["condition"] = order1
+    if context["group_no"] == 3:
+        dic[count]["condition"] = order2
+    if context["group_no"] == 4:
+        dic[count]["condition"] = order3
+    if context["group_no"] == 5:
+        dic[count]["condition"] = order4
+    if context["group_no"] == 6:
+        dic[count]["condition"] = order5
+    if context["group_no"] == 7:
+        dic[count]["condition"] = order6
+    if context["group_no"] == 8:
+        dic[count]["condition"] = order7
     count += 1 
 
-file = open("list1.txt", "a")
+file = open("list8.txt", "a")
 
 for x, item in dic.items():
     # print(item)

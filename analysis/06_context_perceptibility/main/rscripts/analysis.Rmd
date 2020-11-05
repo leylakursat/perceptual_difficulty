@@ -1,0 +1,227 @@
+---
+title: "Perception in Context"
+output: rmarkdown::github_document
+#output:
+  #html_document: default
+  #pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r import, include=FALSE}
+library(tidyverse)
+source("helpers.R")
+library(wesanderson)
+wp = wes_palette("FantasticFox1")
+wp2 = wes_palette("IsleofDogs1")
+theme_set(theme_bw())
+
+demo = read.csv(file="../data/perception-main-subject_information.csv")
+df = read.csv(file="../data/perception-main-trials.csv")
+
+df = separate(df,response,into=c("rt","response"),sep=",")
+df$rt <- as.numeric(gsub("\\[","",df$rt))
+
+df$response <- as.character(gsub("\\']","",df$response))
+df$response <- as.character(gsub("\\'","",df$response))
+df$response <- as.character(gsub(" ","",df$response))
+df = df %>% rename(number_matching=correctAnsQuestion)
+df$number_matching <- as.character(df$number_matching)
+
+df = df %>%
+  separate(targetName, c("targetobject","targetmaterial","targetcolor","targetoriginal"), sep="_")
+
+```
+
+**Number of participants tested:**
+
+```{r before_exclusions, echo=FALSE}
+length(demo$workerid)
+table(demo$proliferate.condition)
+```
+**Stimuli check:**
+
+```{r stimuli_check, echo=FALSE}
+critical = df %>%
+  filter(utterance != "bot_check") %>%
+  filter(slide_number_in_experiment != "practice_trial") %>%
+  mutate(gaveRightAnswer= ifelse(number_matching==response,1,0))
+
+table(critical$number_matching,critical$featureQuestion)
+
+check = critical %>%
+  group_by(contextID,condition) %>%
+  count()
+#check
+```
+
+**Exclusions**
+
+Remove responses from non-native speakers: 
+TODO: fix this (for now, all pt are native)
+```{r exclusions, echo=FALSE}
+#notnative = demo %>% 
+#  filter(tolower(demo$language) != "english")  #%>% 
+#  select(workerid)
+#notnative
+
+#df = df[!(df$workerid %in% notnative$workerid),]
+```
+
+Participants with accuracy lower than 75% are excluded:
+```{r accexclusions, echo=FALSE}
+toplot =  critical %>%
+  group_by(workerid) %>%
+  summarise(Mean=mean(gaveRightAnswer),CILow=ci.low(gaveRightAnswer),CIHigh=ci.high(gaveRightAnswer)) %>%
+  ungroup() %>%
+  mutate(YMin=Mean-CILow,YMax=Mean+CIHigh) %>%
+  mutate(lowacc=ifelse(Mean<0.75,"1","0"))
+
+h=0.85
+ggplot(toplot, aes(x=reorder(workerid,Mean), y=Mean, fill=lowacc)) +
+  geom_bar(stat="identity") +
+  geom_hline(yintercept=h) +
+  geom_text(aes(0, h, label=h, vjust=-1, hjust=-0.3)) +
+  scale_fill_manual(values=wp2)
+
+exclude = toplot %>%
+  filter(lowacc==1)
+exclude
+
+#df = df[!(df$workerid %in% exclude$workerid),]
+```
+
+## Critical trials
+
+### Error Rates
+**Proportion of correct responses by feature type and number match**
+
+```{r proportion, echo=FALSE}
+toplot =  critical %>%
+  group_by(featureQuestion,number_matching) %>%
+  summarise(Median=median(gaveRightAnswer),Mean=mean(gaveRightAnswer),CILow=ci.low(gaveRightAnswer),CIHigh=ci.high(gaveRightAnswer),count=n()) %>%
+  ungroup() %>%
+  mutate(YMin=Mean-CILow,YMax=Mean+CIHigh)
+
+ggplot(toplot, aes(x=featureQuestion, y=Mean, fill=number_matching)) +
+  geom_bar(stat="identity", position= position_dodge(.9)) +
+  geom_errorbar(aes(ymin=YMin,ymax=YMax),width=.25, position = position_dodge(.9)) +
+  scale_fill_manual(values=wp2) +
+  xlab("Feature_type") +
+  ylab("Proportion of correct responses")
+
+ggsave(file="../graphs/proportion.pdf",width=6,height=3)
+```
+**Proportion of correct responses (by context)**
+
+```{r propbyitem, echo=FALSE}
+toplot = critical %>%
+  group_by(contextID,featureQuestion,number_matching) %>%
+  summarise(Median=median(gaveRightAnswer),Mean=mean(gaveRightAnswer),CILow=ci.low(gaveRightAnswer),CIHigh=ci.high(gaveRightAnswer),count=n()) %>%
+  ungroup() %>%
+  mutate(YMin=Mean-CILow,YMax=Mean+CIHigh)
+
+ggplot(toplot, aes(x=featureQuestion, y=Mean, fill=number_matching)) +
+  geom_bar(stat="identity", position= position_dodge(.9)) +
+  geom_errorbar(aes(ymin=YMin,ymax=YMax),width=.25, position = position_dodge(.9)) +
+  scale_fill_manual(values=wp2) +
+  xlab("Feature_type") +
+  ylab("Proportion of correct responses") +
+  facet_wrap(~contextID)
+
+ggsave(file="../graphs/proportion_byContext.pdf",width=14,height=14)
+
+```
+
+### Response Times
+**Response time distribution**
+
+```{r rtdist, echo=FALSE}
+ggplot(critical, aes(x=rt)) +
+  geom_histogram(fill="lightblue")+
+  xlim(0,15000)
+```
+**RTs by feature type, number match and response correctness** 
+
+```{r collapsed, echo=FALSE}
+toplot =  critical %>%
+  group_by(featureQuestion,gaveRightAnswer,number_matching) %>%
+  summarize(Median=median(rt),Mean=mean(rt),CILow=ci.low(rt),CIHigh=ci.high(rt),count=n()) %>%
+  ungroup() %>%
+  mutate(YMin=Mean-CILow,YMax=Mean+CIHigh) %>%
+  mutate(number_matching_re=fct_recode(number_matching,"feature matching"="yes", "feature not matching"="no"))
+
+toplot$number_matching_re <- factor(toplot$number_matching_re, levels = c("feature matching","feature not matching"))
+
+ggplot(toplot, aes(x=featureQuestion, y=Mean, fill=factor(gaveRightAnswer))) +
+  geom_bar(stat = "identity", position=position_dodge()) +
+  scale_fill_manual(values=wp) +
+  geom_errorbar(aes(ymin = YMin, ymax = YMax),width=.2, position=position_dodge((.9))) +
+  geom_text(aes(label=count, y = 5),position=position_dodge(width=1),vjust=0,size=3) +
+  xlab("Feature type") +
+  ylab("Mean RT in msec") +
+  labs(fill = "gaveRightAnswer") +
+  facet_wrap(~number_matching_re)
+
+ggsave(file="../graphs/responsetime.pdf",width=6,height=3)
+```
+**RTs by feature type, response correctness and context** 
+
+```{r byitem, echo=FALSE}
+toplot =  critical %>%
+  group_by(contextID,featureQuestion,gaveRightAnswer) %>%
+  summarize(Median=median(rt),Mean=mean(rt),CILow=ci.low(rt),CIHigh=ci.high(rt),count=n()) %>%
+  ungroup() %>%
+  mutate(YMin=Mean-CILow,YMax=Mean+CIHigh)
+
+ggplot(toplot, aes(x=featureQuestion, y=Mean, fill=factor(gaveRightAnswer))) +
+  geom_bar(stat = "identity", position= position_dodge(.9)) +
+  geom_errorbar(aes(ymin = YMin, ymax = YMax),width=.2, position=position_dodge((.9))) +
+  scale_fill_manual(values=wp) +
+  xlab("Feature type") +
+  ylab("Mean RT in msec") +
+  labs(fill = "gaveRightAnswer") +
+  facet_wrap(~contextID) +
+  ylim(0,5000)
+
+ggsave(file="../graphs/responsetime_byContext.pdf",width=14,height=14)
+```
+
+### Grouping
+
+Proportion of correct answer(acceptance&rejections) and RT of correct answers
+```{r grouping, echo=FALSE}
+cr = critical %>%
+  select(contextID,adjQuestion,targetcolor,targetmaterial) %>%
+  unique() %>%
+  mutate(targetsFeature=ifelse((adjQuestion==targetcolor)|(adjQuestion==targetmaterial),1, 0)) %>%
+  select(contextID,adjQuestion,targetsFeature)
+
+gr_prop = critical %>%
+  #filter(number_matching=="yes") %>%
+  group_by(contextID,adjQuestion) %>%
+  summarize(MeanProp=mean(gaveRightAnswer))
+
+gr_rt = critical %>%
+  #filter(number_matching=="yes") %>%
+  filter(gaveRightAnswer=="0") %>%
+  group_by(contextID,adjQuestion,featureQuestion) %>%
+  summarize(MeanRT=mean(rt))
+
+gr = gr_prop %>%
+  left_join(gr_rt, by=c("contextID","adjQuestion")) %>%
+  left_join(cr, by=c("contextID","adjQuestion"))
+
+gr = arrange(gr, MeanRT, MeanProp)
+
+print(gr)
+```
+
+
+
+
+
+
+

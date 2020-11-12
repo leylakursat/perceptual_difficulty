@@ -1,12 +1,12 @@
 # Fdb version 3
-["bibtex perceptual_difficulty"] 1605212115 "perceptual_difficulty.aux" "perceptual_difficulty.bbl" "perceptual_difficulty" 1605212115
+["bibtex perceptual_difficulty"] 1605212197 "perceptual_difficulty.aux" "perceptual_difficulty.bbl" "perceptual_difficulty" 1605212197
   "YourBib.bib" 0 -1 0 ""
   "perceptual_difficulty.aux" 1605143042 2197 9461d932157c372f186144d77f3ea65e ""
   "sp.bst.bst" 0 -1 0 ""
   (generated)
   "perceptual_difficulty.blg"
   "perceptual_difficulty.bbl"
-["pdflatex"] 1605143041 "/Users/leylakursat/Desktop/repos/perceptual_difficulty/papers/lsa/paper/perceptual_difficulty.tex" "/Users/leylakursat/Desktop/repos/perceptual_difficulty/papers/lsa/paper/perceptual_difficulty.pdf" "perceptual_difficulty" 1605212115
+["pdflatex"] 1605143041 "/Users/leylakursat/Desktop/repos/perceptual_difficulty/papers/lsa/paper/perceptual_difficulty.tex" "/Users/leylakursat/Desktop/repos/perceptual_difficulty/papers/lsa/paper/perceptual_difficulty.pdf" "perceptual_difficulty" 1605212197
   "/Users/leylakursat/Desktop/repos/perceptual_difficulty/papers/lsa/paper/perceptual_difficulty.aux" 1605143042 2197 9461d932157c372f186144d77f3ea65e ""
   "/Users/leylakursat/Desktop/repos/perceptual_difficulty/papers/lsa/paper/perceptual_difficulty.tex" 1605212114 13003 78e1a77a91d5bc8f719498b24a43dfd5 ""
   "/usr/local/texlive/2018/texmf-dist/fonts/enc/dvips/base/8r.enc" 1480098666 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
@@ -87,9 +87,9 @@
   "perceptual_difficulty.out" 1605143042 935 b90808efb3c3e57927249c6e9afade65 ""
   "perceptual_difficulty.tex" 1605212114 13003 78e1a77a91d5bc8f719498b24a43dfd5 ""
   (generated)
+  "perceptual_difficulty.out"
   "/Users/leylakursat/Desktop/repos/perceptual_difficulty/papers/lsa/paper/perceptual_difficulty.log"
   "perceptual_difficulty.aux"
-  "/Users/leylakursat/Desktop/repos/perceptual_difficulty/papers/lsa/paper/perceptual_difficulty.pdf"
   "perceptual_difficulty.log"
   "perceptual_difficulty.pdf"
-  "perceptual_difficulty.out"
+  "/Users/leylakursat/Desktop/repos/perceptual_difficulty/papers/lsa/paper/perceptual_difficulty.pdf"

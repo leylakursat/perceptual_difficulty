@@ -46,7 +46,7 @@ Remove games with non-native speakers:
 
     ## 
     ##   0   1 
-    ##  90 668
+    ##  72 686
 
 **Was a material mentioned?**
 
@@ -108,7 +108,7 @@ Remove games with non-native speakers:
     ##   0   1 
     ##  29 729
 
-    ## [1] "percentage of trials where non-target was chosen:  3.82585751978892"
+    ## [1] "percentage of trials where non-target was selected:  3.82585751978892"
 
     ##                  
     ##                     0   1
@@ -134,7 +134,7 @@ by-item intercepts and slopes for redundant
     property**
 
     ## Warning in checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv, :
-    ## Model failed to converge with max|grad| = 0.0535335 (tol = 0.002, component 1)
+    ## Model failed to converge with max|grad| = 0.0553896 (tol = 0.002, component 1)
 
     ## Warning in checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv, : Model is nearly unidentifiable: very large eigenvalue
     ##  - Rescale variables?
@@ -146,22 +146,22 @@ by-item intercepts and slopes for redundant
     ##    Data: targets
     ## 
     ##      AIC      BIC   logLik deviance df.resid 
-    ##    514.8    532.9   -253.4    506.8      670 
+    ##    515.2    533.3   -253.6    507.2      688 
     ## 
     ## Scaled residuals: 
     ##     Min      1Q  Median      3Q     Max 
-    ## -2.8846 -0.3473 -0.1320  0.2195  5.0779 
+    ## -2.8722 -0.3427 -0.1206  0.0188  5.1311 
     ## 
     ## Random effects:
     ##  Groups        Name        Variance Std.Dev.
-    ##  gameid        (Intercept) 2.536    1.592   
-    ##  clickedobject (Intercept) 2.705    1.645   
-    ## Number of obs: 674, groups:  gameid, 51; clickedobject, 9
+    ##  gameid        (Intercept) 2.547    1.596   
+    ##  clickedobject (Intercept) 2.731    1.653   
+    ## Number of obs: 692, groups:  gameid, 51; clickedobject, 9
     ## 
     ## Fixed effects:
     ##                          Estimate Std. Error z value Pr(>|z|)    
-    ## (Intercept)             -2.775824   0.001321   -2101   <2e-16 ***
-    ## trialTypelow_difficulty  1.751708   0.001322    1326   <2e-16 ***
+    ## (Intercept)             -2.798401   0.001362   -2055   <2e-16 ***
+    ## trialTypelow_difficulty  1.775660   0.001319    1346   <2e-16 ***
     ## ---
     ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
     ## 
@@ -169,9 +169,16 @@ by-item intercepts and slopes for redundant
     ##             (Intr)
     ## trlTyplw_df 0.000 
     ## convergence code: 0
-    ## Model failed to converge with max|grad| = 0.0535335 (tol = 0.002, component 1)
+    ## Model failed to converge with max|grad| = 0.0553896 (tol = 0.002, component 1)
     ## Model is nearly unidentifiable: very large eigenvalue
     ##  - Rescale variables?
+
+**with other
+    modifiers**
+
+    ## `summarise()` regrouping output by 'RedundantProperty', 'trialType' (override with `.groups` argument)
+
+![](analysis_files/figure-gfm/targets_other-1.png)<!-- -->
 
 ## Fillers
 
@@ -192,7 +199,7 @@ target
 
     ## 
     ##   0   1 
-    ## 423 329
+    ## 416 336
 
 **Was a material mentioned?**
 
@@ -234,4 +241,50 @@ Number of
 
     ## `summarise()` regrouping output by 'clickedObjCondition' (override with `.groups` argument)
 
-![](analysis_files/figure-gfm/fillerplot-1.png)<!-- -->
+![](analysis_files/figure-gfm/fillerplot-1.png)<!-- --> **Mixed effects
+logistic regression predicting redundant adjective use from fixed
+effects of redundant property, with random by-subject and by-item
+intercepts and slopes for redundant property** going from high
+difficulty-material redundant(0) to low difficulty-color redundant(1) &
+no redundancy(0) to redundancy(1) –\> should be
+    positive
+
+    ## Warning in checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv, :
+    ## Model failed to converge with max|grad| = 0.0553896 (tol = 0.002, component 1)
+
+    ## Warning in checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv, : Model is nearly unidentifiable: very large eigenvalue
+    ##  - Rescale variables?
+
+    ## Generalized linear mixed model fit by maximum likelihood (Laplace
+    ##   Approximation) [glmerMod]
+    ##  Family: binomial  ( logit )
+    ## Formula: redundant ~ trialType + (1 | gameid) + (1 | clickedobject)
+    ##    Data: targets
+    ## 
+    ##      AIC      BIC   logLik deviance df.resid 
+    ##    515.2    533.3   -253.6    507.2      688 
+    ## 
+    ## Scaled residuals: 
+    ##     Min      1Q  Median      3Q     Max 
+    ## -2.8722 -0.3427 -0.1206  0.0188  5.1311 
+    ## 
+    ## Random effects:
+    ##  Groups        Name        Variance Std.Dev.
+    ##  gameid        (Intercept) 2.547    1.596   
+    ##  clickedobject (Intercept) 2.731    1.653   
+    ## Number of obs: 692, groups:  gameid, 51; clickedobject, 9
+    ## 
+    ## Fixed effects:
+    ##                          Estimate Std. Error z value Pr(>|z|)    
+    ## (Intercept)             -2.798401   0.001362   -2055   <2e-16 ***
+    ## trialTypelow_difficulty  1.775660   0.001319    1346   <2e-16 ***
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Correlation of Fixed Effects:
+    ##             (Intr)
+    ## trlTyplw_df 0.000 
+    ## convergence code: 0
+    ## Model failed to converge with max|grad| = 0.0553896 (tol = 0.002, component 1)
+    ## Model is nearly unidentifiable: very large eigenvalue
+    ##  - Rescale variables?

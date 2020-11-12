@@ -1,0 +1,164 @@
+% ------------ LSA-proceedings-template.tex  -- LSA proceedings template ----------------------------------------------
+% created by Sarah E. Murray, 24 April 2017 based on the LSA's stylesheet
+% http://journals.linguisticsociety.org/proceedings/index.php/PLSA/pages/view/instructions
+%Revised by Patrick Farrell, February 1, 2019 and March 8, 2020. 
+%
+% ------------ begin preamble -----------------------------------------------------------------------------------------
+ \documentclass[12pt,letterpaper]{article}	
+% ------------ personal packages ----------------------------------------------------------------------------
+\usepackage{linguex}	%http://texdoc.net/texmf-dist/doc/latex/linguex/linguex-doc.pdf
+% ------------ LSA page layout and packages ----------------------------------------------------------------------------
+\usepackage{times}
+\usepackage{natbib}
+ 	\setcitestyle{semicolon,aysep={},yysep={,},notesep={; }}
+\usepackage{lipsum} % this and the following package and the settings beneath them are for maintaining indentation and still having ragged-right alignmnent
+\usepackage{ragged2e}
+\setlength\RaggedRightParindent{0.3in}
+\RaggedRight
+
+\usepackage{scrextend}  % this package and the following settings are for the footnote formatting
+\deffootnote[.5em]{0em}{1em}{\textsuperscript{\thefootnotemark}\,}
+
+\newcounter{savefootnote}   % these settings allow the use of an asterisk as a footnote label (for the author line below the title.
+\newcounter{symfootnote}
+\newcommand{\symfootnote}[1]{%
+   \setcounter{savefootnote}{\value{footnote}}%
+   \setcounter{footnote}{\value{symfootnote}}%
+   \ifnum\value{footnote}>8\setcounter{footnote}{0}\fi%
+   \let\oldthefootnote=\thefootnote%
+   \renewcommand{\thefootnote}{\fnsymbol{footnote}}%
+   \footnote{#1}%
+   \let\thefootnote=\oldthefootnote%
+   \setcounter{symfootnote}{\value{footnote}}%
+   \setcounter{footnote}{\value{savefootnote}}%
+}
+
+\usepackage[labelsep=period]{caption}
+
+\usepackage[margin=1.0in]{geometry}
+\usepackage[compact]{titlesec}
+	\titleformat{\section}[runin]{\normalfont\bfseries}{\thesection.}{.5em}{}[.]
+	\titleformat{\subsection}[runin]{\normalfont\scshape}{\thesubsection.}{.5em}{}[.]
+	\titleformat{\subsubsection}[runin]{\normalfont\scshape}{\thesubsubsection.}{.5em}{}[.]
+\usepackage[usenames,dvipsnames]{color}	
+\usepackage[colorlinks,allcolors={black},urlcolor={blue}]{hyperref} 		%likes to be last package 
+% -------------- personal definitions ----------------------------------------------------------------------------
+\usepackage{color}
+\definecolor{Red}{RGB}{255,0,0}
+\newcommand{\red}[1]{\textcolor{Red}{#1}}
+\newcommand{\jd}[1]{\textcolor{Red}{[jd: #1]}}
+\definecolor{Blue}{RGB}{0,100,255}
+\newcommand{\blue}[1]{\textcolor{Blue}{#1}}
+\newcommand{\lk}[1]{\textcolor{Blue}{[lk: #1]}}
+% -------------- LSA definitions ---------------------------------------------------------------------------------
+
+%-------------------------------------------------------------- format abstract environment ------------------------
+% Abstracts have to be 12pt, indented 1.4 inches on each side, and inline with the label
+\renewenvironment{abstract}{%
+\noindent\begin{minipage}{1\textwidth}
+\setlength{\leftskip}{0.4in}
+\setlength{\rightskip}{0.4in}
+\textbf{Abstract.}}
+{\end{minipage}}
+%-------------------------------------------------------------- format keywords environment ----------------------
+% Abstracts have to be 12pt, indented 1.4 inches on each side, and inline with the 
+\newenvironment{keywords}{%
+\vspace{.5em}
+\noindent\begin{minipage}{1\textwidth}
+\setlength{\leftskip}{0.4in}
+\setlength{\rightskip}{0.4in}
+\textbf{Keywords.}}
+{\end{minipage}}
+
+% ------------ end preamble -----------------------------------------------------------------------------------
+% 
+%
+%
+% ------------ begin main document ---------------------------------------------------------------------------
+ 
+\begin{document} 
+
+%%If using linguex, need the following commands to get correct LSA style spacing
+%% these have to be after  \begin{document}
+\setlength{\Extopsep}{6pt}
+\setlength{\Exlabelsep}{9pt}		%effect of 0.4in indent from left text edge
+%%
+ 
+\begin{center}			%title and author lines
+\normalfont\bfseries
+Perceptual Difficulty Differences Predict Asymmetry in Overmodification with Color and Material Adjectives
+\vskip .5em
+\normalfont
+{Leyla Kursat \& Judith Degen \symfootnote{Authors: Leyla Kursat, Stanford University (\href{mailto:lkursat@stanford.edu}{lkursat@stanford.edu}) \& Judith Degen, Stanford University (\href{mailto:jdegen@stanford.edu}{jdegen@stanford.edu}).}}
+\vskip .5em
+\end{center}
+
+\begin{abstract}
+\lk {last thing to change: this is taken from the abstract}. When referring to objects, speakers are often more specific than they need to be for establishing unique reference (e.g., “the green plastic bottle” instead of “the plastic bottle” in Fig. 1). Adjectival overspecification patterns are not random, but structured: color adjectives are produced redundantly more often than size or material adjectives [1-5]; color adjectives are more likely to be produced redundantly with increasing scene variation [5-7]; and adjectives are more likely to be produced redundantly, the more atypical the property denoted by the adjective is for the object under discussion 5;8-9]. The only current computational model of referring expression production that accounts jointly for all of these patterns is couched within the Rational Speech Act framework [9] and assumes that adjectives differ in how noisy, and consequently, how useful they are for the purpose of establishing reference [5]. One hypothesis about the nature of this noise is that it reflects the perceptual difficulty of establishing whether the property denoted by the adjective holds of the contextually relevant objects. Here, we take a first step towards testing the prediction that systematic differences in the overmodification patterns observed for color and material adjectives can be explained by a difference in perceptual difficulty of establishing whether objects are of a particular color or material. In Exp.1, we norm the perceptual difficulty associated with establishing whether an object exhibits a color or material and select objects with highest and lowest perceptual difficulty for testing in Exp. 2. In Exp. 2, we test in a reference game wheter adjectives that denote more perceptually difficult properties indeed are less frequently produced redundantly.
+\end{abstract}
+
+\begin{keywords} %separated by semicolons
+reference; perception; overinformativeness; experimental pragmatics
+\end{keywords}
+
+\section{Introduction} %Section titles will be displayed inline
+\lk {what are overinformative referring expressions, the systematicities with which redundant adjectives are produced}
+
+\lk {degen et al.'s computational model of referring expression production}
+
+\lk {different hypothesis about the source of the adjectival noise}
+
+\lk {overview of this study}
+
+\section{Experiment 1: Measuring perceptual difficulty} First, we need to norm the perceptual difficulty associated with establishing whether an object exhibits a color or material. Through a timed forced choice task we collected norms for color and material properties of 81 images.
+
+\subsection{Participants} We recruited 120 participants through Amazon Mechanical Turk. We excluded participants who were self-reported non-native English speakers (n=4) and participants with accuracy lower than 75\% (n=11).
+
+\subsection{Procedure} Participants saw images of objects with color or material adjectives and were asked to indicate whether the object had the property denoted by the adjective or not. Their task was to indicate "yes" or "no" by pressing the F or J key as quickly as possible. If participants did not respond within 4 seconds, the trial timed out. When participants responded correctly, a green border appeared around their selection, and when they responded incorrectly a red border appeared.
+
+We collected perceptual difficulty norms for 12 objects, that each occurred in two or three different materials and in three different colors. All resulting 81 images were separately normed for object nameability, feature nameability, object typicality and feature typicality. Every participant saw each image once and we collected 30 judgements for each image with correct and incorrect color and material adjectives. Incorrect color and material adjectives were randomly generated online for each participant and were selected from adjectives denoting properties of other images in the experiment.
+
+\subsection{Results} Material words resulted in higher error rates ($\beta$= 0.40, $SE$=0.09, $p$$<$.0001) and greater response times ($\beta$=5.46, $SE$=4.73, t=11.55, $p$$<$.0001) than color words. We grouped the 8 image-material adjective pairs with the highest error rate and response times into a \textit{high difficulty} group, and the 8 image-color adjective pairs with the lowest error rate and response times into a \textit{low difficulty group}. \lk {more about grouping and selection of items, limitations of the task?}
+
+  
+\section{Experiment 2: Production of referring expressions} The goal of Exp. 2 was to elicit production probabilities of redundantly mentioning color and material adjectives for the high- and low-difficulty items normed in Exp. 1. In a free production interactive reference game we tested whether adjectives that denote more perceptually difficult properties are less frequently produced redundantly.\footnote{Procedure, materials, analysis and exclusions were preregistered at \href {https://osf.io/57c6u}{https://osf.io/57c6u}.}
+
+
+\subsection{Participants} We recruited 100 participants through Amazon Mechanical Turk and randomly paired them into speaker-listener dyads to play a real time communication game (50 pairs) \lk {reference to Hawkins 205?}. We excluded games where participants reported a native language different from English.
+
+\subsection{Procedure} On each trial, participants saw a display with 4 images and chat box. Both the speaker and listener saw the same images in different positions. One of the images was designated as the target image, and marked by a green border in the speaker's display. The speaker's task was to describe this target image to the listener using the chat box to send messages. The listener's task was to guess the target image by clicking. After the listener made a selection, both participants received feedback about whether the target image was selected and advance to the next trial. 
+
+Participants completed 32 trials. Of these, half were critical trials and half were filler trials. On critical trials \lk {add figure+ reference}, the 4 images were of the same object and either \textit{color} or \textit{material} was redundant for distinguishing the target. On 8 high-difficulty trials, mentioning the material was redundant; on 8 low-difficulty trials, color was redundant. On filler trials, the 4 images were of different objects and both color and material mention were redundant for unique reference. 
+
+We classified the produced utterances as 'color-and-material' (redundant), 'only-color' or 'only-material'.
+
+\subsection{Results}
+
+\lk {replicate the asymmetry?, given the norms - support for hypothesis, manipulate perceptual difficulty within property type..}
+
+\section{Experiment 3: Perceptual difficulty in context}
+\subsection{Participants}
+\subsection{Procedure}
+\subsection{Results}
+ 
+\section{General discussion} 
+ 
+\section{Citations and references} Use author-date notation for in-text citations, for example: ... as noted recently by Jameson (2012) and Mateus (2014), drawing on insights from various other researchers (e.g., Nelson 1986:223–28, Martin 2003, Wellington \& Johnson 2016), there have been numerous technological advances in the procedures used to publish research articles online. Include URLs or DOIs with active hyperlinks in citations. The \textit{Semantics and Pragmatics} stylesheet \href{https://raw.githubusercontent.com/semprag/tex/master/sp.bst}{sp.bst} meets the LSA formatting requirements for the list of references, and so may be used. See \href{http://info.semprag.org}{info.semprag.org}. 
+% ------------ references --------------------------------------------------------------------------------------
+\setlength{\bibsep}{0pt plus 0.3ex}
+\setlength{\bibhang}{0.3in}			% hanging indent for references must be 0.3in
+\titleformat{\section}{\normalfont\bfseries}{\thesection}{.5em}{}		% references section not supposed to be followed by a period
+
+\bibliographystyle{sp.bst}		% S\&P bibliography style
+%S\&P, an LSA publication, meets the LSA guidelines. 
+%See: http://info.semprag.org 
+%and get the bst at: https://raw.githubusercontent.com/semprag/tex/master/sp.bst 
+%If using the sp.bst, the following command turns your DOIs into links
+\newcommand{\doi}[1]{\href{http://dx.doi.org/#1}{http://dx.doi.org/#1}}	%modified from sp.cls
+\bibliography{YourBib}			% your bib file
+
+\end{document}
+ 
+ 
+ 
+ 

@@ -3,26 +3,28 @@ Perception in Context
 
 **Number of participants tested:**
 
-    ## [1] 395
+    ## [1] 408
 
     ## 
     ## list1 list2 list3 list4 list5 list6 list7 list8 
-    ##    50    50    35    51    56    53    50    50
+    ##    50    50    48    51    56    53    50    50
 
 **Stimuli check:**
 
     ##      
     ##            color material
-    ##   no     0  3094     3055
-    ##   yes    0  3049     3047
+    ##   no     0  3185     3159
+    ##   yes    0  3153     3151
+
+**Proportion of correct responses by list**
 
 **Exclusions**
 
-Remove responses from non-native speakers: TODO: fix this (for now, all
-pt are native)
+Remove responses from non-native speakers: 0 participants TODO: fix this
+(for now, all pt are native)
 
-Participants with accuracy lower than 75% are
-    excluded:
+Participants with accuracy lower than 75% are excluded: 24
+    participants
 
     ## `summarise()` ungrouping output (override with `.groups` argument)
 
@@ -31,19 +33,28 @@ Participants with accuracy lower than 75% are
     ## # A tibble: 24 x 7
     ##    workerid  Mean CILow CIHigh  YMin  YMax lowacc
     ##       <int> <dbl> <dbl>  <dbl> <dbl> <dbl> <chr> 
-    ##  1     1122 0.581 0.161  0.161 0.419 0.742 1     
+    ##  1     1122 0.581 0.194  0.161 0.387 0.742 1     
     ##  2     1124 0.548 0.161  0.161 0.387 0.710 1     
-    ##  3     1171 0.742 0.161  0.129 0.581 0.871 1     
+    ##  3     1171 0.742 0.161  0.161 0.581 0.903 1     
     ##  4     1182 0.484 0.161  0.161 0.323 0.645 1     
     ##  5     1211 0.742 0.161  0.129 0.581 0.871 1     
     ##  6     1234 0.742 0.161  0.129 0.581 0.871 1     
-    ##  7     1242 0.645 0.161  0.161 0.484 0.806 1     
+    ##  7     1242 0.645 0.161  0.162 0.484 0.807 1     
     ##  8     1326 0.710 0.161  0.161 0.548 0.871 1     
-    ##  9     1330 0.581 0.161  0.161 0.419 0.742 1     
-    ## 10     1334 0.548 0.194  0.161 0.355 0.710 1     
+    ##  9     1330 0.581 0.161  0.194 0.419 0.774 1     
+    ## 10     1334 0.548 0.161  0.161 0.387 0.710 1     
     ## # … with 14 more rows
 
-## Critical trials
+Responses with RT 2.5SD away from the mean are excluded: 217 responses
+
+    ## [1] 271
+
+**Response time
+    distribution**
+
+    ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+
+![](analysis_files/figure-gfm/rtdist-1.png)<!-- -->
 
 ### Error Rates
 
@@ -62,17 +73,7 @@ correct responses (by
 
 ### Response Times
 
-**Response time
-    distribution**
-
-    ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
-
-    ## Warning: Removed 32 rows containing non-finite values (stat_bin).
-
-    ## Warning: Removed 2 rows containing missing values (geom_bar).
-
-![](analysis_files/figure-gfm/rtdist-1.png)<!-- --> **RTs by feature
-type, number match and response
+**RTs by feature type, number match and response
     correctness**
 
     ## `summarise()` regrouping output by 'featureQuestion', 'gaveRightAnswer' (override with `.groups` argument)
@@ -83,11 +84,7 @@ type, response correctness and
 
     ## `summarise()` regrouping output by 'contextID', 'featureQuestion' (override with `.groups` argument)
 
-    ## Warning: Removed 2 rows containing missing values (geom_bar).
-
 ![](analysis_files/figure-gfm/byitem-1.png)<!-- -->
-
-    ## Warning: Removed 2 rows containing missing values (geom_bar).
 
 ### Grouping
 
@@ -102,14 +99,14 @@ answers
     ## # Groups:   contextID [31]
     ##    contextID     adjQuestion MeanProp featureQuestion MeanRT targetsFeature
     ##    <fct>         <fct>          <dbl> <fct>            <dbl>          <dbl>
-    ##  1 cmg_cmp_cwp   green          0.955 color            1803.              1
-    ##  2 tmso_tmb_twb  blue           0.906 color            1858.              0
-    ##  3 tmb_twb_twg   blue           0.937 color            1939.              1
-    ##  4 tmg_tmb_twb   green          0.963 color            1979               1
-    ##  5 bgg_bpg_bpco  green          0.952 color            1990               1
-    ##  6 ppbo_ppb_ppg  blue           0.955 color            2000.              1
-    ##  7 tmb_twb_twbo  brown          0.955 color            2117               0
-    ##  8 cmg_cmp_cwp   purple         0.943 color            2119.              0
-    ##  9 blg_blb_brb   brown          0.981 color            2179               0
-    ## 10 blg_blbo_brbo green          0.932 color            2227.              1
+    ##  1 swg_swb_spb   green          0.986 color            1243               1
+    ##  2 cmp_cmg_cwg   purple         0.988 color            1960               1
+    ##  3 blg_blbo_brbo green          0.944 color            2077.              1
+    ##  4 ppb_ppbo_ppp  blue           0.987 color            2136               1
+    ##  5 cpg_cmg_cmso  green          0.962 color            2152               1
+    ##  6 tmb_twb_twg   green          0.963 color            2158.              0
+    ##  7 swg_swb_smb   green          0.980 color            2171               1
+    ##  8 tmg_tmb_twb   green          0.987 color            2176               1
+    ##  9 tmb_twb_twg   blue           0.944 color            2202.              1
+    ## 10 pmb_pgb_pgg   blue           0.963 color            2238.              1
     ## # … with 114 more rows

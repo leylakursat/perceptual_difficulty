@@ -233,7 +233,10 @@ targets = correct %>%
   mutate(RedExp3Cat = ifelse(UtteranceType=="color and material","redundant",ifelse((SufficientProperty=="color"&UtteranceType=="only color"),"minimal",ifelse((SufficientProperty=="material"&UtteranceType=="only material"),"minimal","underinformative")))) %>%
   mutate(RedExp2Cat = ifelse(RedExp3Cat=="redundant","redundant","not_redundant")) %>%
   mutate(redundant = ifelse(RedExp2Cat=="redundant",1,0)) %>%
-  select(rowNum,gameid,roundNum,trialType,clickedObjName,speakerMessages,UtteranceType,SufficientProperty,RedundantProperty,RedExp3Cat,RedExp2Cat,redundant,clickedobject,clickedcolor,clickedmaterial,clickedoriginal,onlyColorMention,onlyMaterialMention,colormaterialMention,objnameMention,oneMention,theMention,article_Mention)
+  mutate(targetName = ifelse(clickedObjTargetStatus=="target",clickedObjName,ifelse(alt1TargetStatus=="target",alt1Name,ifelse(alt2TargetStatus=="target",alt2Name,ifelse(alt3TargetStatus=="target",alt3Name,NA))))) %>%
+  mutate(notCompetitorName = ifelse(clickedObjName==alt1Name,clickedObjName,ifelse(clickedObjName==alt2Name, clickedObjName, ifelse(clickedObjName==alt3Name, clickedObjName, ifelse(alt1Name==alt2Name, alt1Name, ifelse(alt1Name==alt3Name, alt1Name, ifelse(alt2Name==alt3Name, alt2Name, NA ))))))) %>%
+  mutate(competitorName = ifelse(clickedObjName!=targetName & clickedObjName!=notCompetitorName, clickedObjName, ifelse(alt1Name!=targetName & alt1Name!=notCompetitorName,alt1Name, ifelse(alt2Name!=targetName & alt2Name!=notCompetitorName, alt2Name, ifelse(alt3Name !=targetName & alt3Name!=notCompetitorName, alt3Name, NA))))) %>%
+  select(rowNum,gameid,roundNum,trialType,targetName,competitorName,notCompetitorName,speakerMessages,UtteranceType,SufficientProperty,RedundantProperty,RedExp3Cat,RedExp2Cat,redundant,clickedobject,clickedcolor,clickedmaterial,clickedoriginal,onlyColorMention,onlyMaterialMention,colormaterialMention,objnameMention,oneMention,theMention,article_Mention)
 ```
 
 **Proportion of utterance by utterance type and trial type**
@@ -397,6 +400,42 @@ ggplot(agr, aes(x=reorder(utterance, -Mean), y=Mean, fill=utterance)) +
 ggsave("../graphs/fillers.pdf", width=9, height=4)
 
 ```
+**Mixed effects logistic regression predicting redundant adjective use from fixed effects of redundant property, with random by-subject and by-item intercepts and slopes for redundant property**
+
+going from high difficulty-material redundant(0) to low difficulty-color redundant(1) & no redundancy(0) to redundancy(1) --> should be positive
+```{r model1, echo=FALSE}
+m = glmer(redundant ~ trialType + (1|gameid) + (1|clickedobject), data=targets, family="binomial")
+summary(m)
+```
+
+```{r model2, eval=FALSE, include=FALSE}
+#Mixed effects linear regression predicting logRT from fixed effects of redundant property
+#Mixed effects logistic regression predicting redundant adjective use from logRT to redundant property
+
+pd = read.csv(file="../data/pd_by_rt.csv")
+
+pd_tomerge = pd %>%
+  mutate(redundantAdj = adjQuestion) %>%
+  mutate(targetName = targetname) %>%
+  select(targetName,competitorName,notCompetitorName,redundantAdj,MeanRT)
+
+tomodel = targets %>%
+  mutate(redundantAdj = ifelse(trialType=="high_difficulty",clickedmaterial,clickedcolor)) %>%
+  left_join(pd_tomerge, by=c("targetName","competitorName","notCompetitorName","redundantAdj")) %>%
+  mutate(logRT = log(MeanRT))
+
+# for stimuli check:
+  #select(targetName,competitorName,notCompetitorName,redundantAdj) %>%
+  #unique()
+  
+m = glmer(redundant ~ MeanRT + (1|gameid) + (1|clickedobject), data=tomodel, family="binomial")
+summary(m)
+
+m2 = lmer(logRT ~ Answer.condition*cresponder_type*ckey + (1|workerid), data=critical_cresponder)
+summary(m4)
+```
+
+
 
 
 

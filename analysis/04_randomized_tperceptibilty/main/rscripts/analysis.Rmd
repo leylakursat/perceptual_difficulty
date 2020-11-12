@@ -213,8 +213,6 @@ ggplot(toplot, aes(x=feature_type, y=Mean, fill=feature_matching)) +
   #labs(fill = "gaveRightAnswer")
 
 ggsave(file="../graphs/rt_onlycorrect.pdf",width=6,height=3)
-
-
 ```
 
 **RTs to color and material features (only correct responses to matching features)** 

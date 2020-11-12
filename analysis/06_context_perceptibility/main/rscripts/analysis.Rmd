@@ -18,8 +18,8 @@ wp = wes_palette("FantasticFox1")
 wp2 = wes_palette("IsleofDogs1")
 theme_set(theme_bw())
 
-demo = read.csv(file="../data/perception-main-subject_information.csv")
-df = read.csv(file="../data/perception-main-trials.csv")
+demo = read.csv(file="../data/subject-info-merged.csv")
+df = read.csv(file="../data/trials-merged.csv")
 
 df = separate(df,response,into=c("rt","response"),sep=",")
 df$rt <- as.numeric(gsub("\\[","",df$rt))
@@ -31,6 +31,7 @@ df = df %>% rename(number_matching=correctAnsQuestion)
 df$number_matching <- as.character(df$number_matching)
 
 df = df %>%
+  mutate(targetname = targetName) %>%
   separate(targetName, c("targetobject","targetmaterial","targetcolor","targetoriginal"), sep="_")
 
 ```
@@ -57,9 +58,30 @@ check = critical %>%
 #check
 ```
 
+**Proportion of correct responses by list**
+
+```{r proportion_list, eval=FALSE, include=FALSE}
+toplot =  critical %>%
+  group_by(proliferate.condition,featureQuestion) %>%
+  summarise(Median=median(gaveRightAnswer),Mean=mean(gaveRightAnswer),CILow=ci.low(gaveRightAnswer),CIHigh=ci.high(gaveRightAnswer),count=n()) %>%
+  ungroup() %>%
+  mutate(YMin=Mean-CILow,YMax=Mean+CIHigh)
+
+ggplot(toplot, aes(x=proliferate.condition, y=Mean, fill=featureQuestion)) +
+  geom_bar(stat="identity", position= position_dodge(.9)) +
+  geom_errorbar(aes(ymin=YMin,ymax=YMax),width=.25, position = position_dodge(.9)) +
+  geom_text(aes(label=count, y=0),position=position_dodge(width=1),vjust=0,size=3) +  
+  scale_fill_manual(values=wp2) +
+  xlab("Feature_type") +
+  ylab("Proportion of correct responses")
+
+#ggsave(file="../graphs/proportion_by_list.pdf",width=6,height=3)
+```
+
+
 **Exclusions**
 
-Remove responses from non-native speakers: 
+Remove responses from non-native speakers: 0 participants
 TODO: fix this (for now, all pt are native)
 ```{r exclusions, echo=FALSE}
 #notnative = demo %>% 
@@ -70,7 +92,7 @@ TODO: fix this (for now, all pt are native)
 #df = df[!(df$workerid %in% notnative$workerid),]
 ```
 
-Participants with accuracy lower than 75% are excluded:
+Participants with accuracy lower than 75% are excluded: 24 participants
 ```{r accexclusions, echo=FALSE}
 toplot =  critical %>%
   group_by(workerid) %>%
@@ -90,12 +112,32 @@ exclude = toplot %>%
   filter(lowacc==1)
 exclude
 
-#df = df[!(df$workerid %in% exclude$workerid),]
+critical = critical[!(critical$workerid %in% exclude$workerid),]
 ```
 
-## Critical trials
+Responses with RT 2.5SD away from the mean are excluded: 217 responses
+```{r rtexclusions, echo=FALSE}
+rt_exclude =  critical %>%
+  mutate(Mean=mean(rt),SD=sd(rt),count=n()) %>%
+  mutate(Ulimit=Mean+2*SD,Llimit=Mean-2.5*SD) %>%
+  mutate(slow=ifelse(rt>Ulimit,"1","0")) %>%
+  mutate(fast=ifelse(rt<Llimit,"1","0")) %>%
+  select(workerid,adjQuestion,condition,rt,slow,Mean,SD,Ulimit) %>%
+  filter(slow==1)
+
+length(rt_exclude$workerid)
+
+critical = critical[!(critical$workerid %in% rt_exclude$workerid),]
+```
+**Response time distribution**
+
+```{r rtdist, echo=FALSE}
+ggplot(critical, aes(x=rt)) +
+  geom_histogram(fill="lightblue")
+```
 
 ### Error Rates
+
 **Proportion of correct responses by feature type and number match**
 
 ```{r proportion, echo=FALSE}
@@ -112,7 +154,7 @@ ggplot(toplot, aes(x=featureQuestion, y=Mean, fill=number_matching)) +
   xlab("Feature_type") +
   ylab("Proportion of correct responses")
 
-ggsave(file="../graphs/proportion.pdf",width=6,height=3)
+#ggsave(file="../graphs/proportion.pdf",width=6,height=3)
 ```
 **Proportion of correct responses (by context)**
 
@@ -136,13 +178,7 @@ ggsave(file="../graphs/proportion_byContext.pdf",width=14,height=14)
 ```
 
 ### Response Times
-**Response time distribution**
 
-```{r rtdist, echo=FALSE}
-ggplot(critical, aes(x=rt)) +
-  geom_histogram(fill="lightblue")+
-  xlim(0,15000)
-```
 **RTs by feature type, number match and response correctness** 
 
 ```{r collapsed, echo=FALSE}
@@ -165,7 +201,7 @@ ggplot(toplot, aes(x=featureQuestion, y=Mean, fill=factor(gaveRightAnswer))) +
   labs(fill = "gaveRightAnswer") +
   facet_wrap(~number_matching_re)
 
-ggsave(file="../graphs/responsetime.pdf",width=6,height=3)
+#ggsave(file="../graphs/responsetime.pdf",width=6,height=3)
 ```
 **RTs by feature type, response correctness and context** 
 
@@ -194,10 +230,10 @@ ggsave(file="../graphs/responsetime_byContext.pdf",width=14,height=14)
 Proportion of correct answer(acceptance&rejections) and RT of correct answers
 ```{r grouping, echo=FALSE}
 cr = critical %>%
-  select(contextID,adjQuestion,targetcolor,targetmaterial) %>%
+  select(contextID,targetname,competitorName,notCompetitorName,adjQuestion,targetcolor,targetmaterial) %>%
   unique() %>%
   mutate(targetsFeature=ifelse((adjQuestion==targetcolor)|(adjQuestion==targetmaterial),1, 0)) %>%
-  select(contextID,adjQuestion,targetsFeature)
+  select(contextID,targetname,competitorName,notCompetitorName,adjQuestion,targetsFeature)
 
 gr_prop = critical %>%
   #filter(number_matching=="yes") %>%
@@ -205,10 +241,15 @@ gr_prop = critical %>%
   summarize(MeanProp=mean(gaveRightAnswer))
 
 gr_rt = critical %>%
+  mutate(targetmaterial = ifelse(targetmaterial=="wood","wooden",targetmaterial)) %>%
+  mutate(targetsFeature=ifelse((adjQuestion==targetcolor)|(adjQuestion==targetmaterial),1, 0)) %>%
   #filter(number_matching=="yes") %>%
-  filter(gaveRightAnswer=="0") %>%
-  group_by(contextID,adjQuestion,featureQuestion) %>%
-  summarize(MeanRT=mean(rt))
+  filter(gaveRightAnswer=="1") %>%
+  group_by(contextID,targetname,competitorName,notCompetitorName,adjQuestion,featureQuestion,targetsFeature) %>%
+  summarize(MeanRT=mean(rt)) %>%
+  filter(targetsFeature==1)
+
+write.csv(gr_rt,"../data/pd_by_rt.csv")
 
 gr = gr_prop %>%
   left_join(gr_rt, by=c("contextID","adjQuestion")) %>%

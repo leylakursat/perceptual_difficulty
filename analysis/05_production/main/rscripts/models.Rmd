@@ -1,0 +1,107 @@
+---
+title: "Models for Perceptual Difficulty Paper"
+output:
+  #html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r import, include=FALSE}
+library(tidyverse)
+library(lme4)
+library(languageR)
+library(brms)
+library(lmerTest)
+
+targets = read.csv("../data/targets.csv") #target selections in the production experiment
+pd = read.csv(file="../data/pd_by_rt.csv") #response times to target's features in the perceptual difficulty experiment (in context)
+```
+
+# Exp.2
+**Mixed effects logistic regression predicting redundant adjective use from fixed effects of redundant property, with random by-subject and by-item intercepts**
+
+going from high difficulty-material redundant(0) to low difficulty-color redundant(1) & no redundancy(0) to redundancy(1) --> should be positive
+```{r model1, echo=FALSE}
+table(targets$trialType)
+
+#centering trialType (not necessary)
+targets = targets %>%
+  mutate(trialType = as.factor(trialType)) %>%
+  mutate(ctrialType = as.numeric(trialType) - mean(as.numeric(trialType)))
+
+m = glmer(redundant ~ trialType + (1|gameid) + (1|clickedobject), data=targets, family="binomial")
+summary(m)
+```
+
+
+# Exp.2 & Exp.3
+**Mixed effects linear regression predicting logRT to redundant adjective from fixed effects of redundant property --> to replicate the effect from Exp1**
+
+going from high difficulty(0) to low difficulty = material to color adjectives --> logRT decreases = should be negative
+
+```{r model2, echo=FALSE}
+pd_tomerge = pd %>% 
+  mutate(redundantAdj = as.character(adjQuestion)) %>%
+  mutate(targetName = targetname) %>%
+  select(targetName,competitorName,notCompetitorName,redundantAdj,MeanRT) #62 rows (for each context we have RT for both color and material adj)
+
+tomodel = targets %>%
+  mutate(redundantAdj = ifelse(trialType=="high_difficulty",as.character(clickedmaterial),as.character(clickedcolor))) %>%
+  mutate(redundantAdj = ifelse(redundantAdj == "wood", "wooden", redundantAdj)) %>%
+  left_join(pd_tomerge, by=c("targetName","competitorName","notCompetitorName","redundantAdj")) %>%
+  mutate(logRT = log(MeanRT)) #%>%
+  #select(targetName,competitorName,notCompetitorName,redundantAdj,sufficientAdj) %>% #for stimuli check: 31 unique rows 
+  #unique()
+
+m1 = lmer(logRT ~ trialType + (1|gameid), data=tomodel,REML=F)
+summary(m1)
+```
+
+**Mixed effects logistic regression predicting redundant adjective use from redundant property (color or material), RT to redundant adjective in context and their interaction**
+
+bigger RT = more perceptually difficulty = less redundant adjective use
+```{r model3, echo=FALSE}
+m2 = glmer(redundant ~ trialType*MeanRT + (1|gameid) + (1|clickedobject), data=tomodel, family="binomial")
+summary(m2)
+```
+
+**Same model with logRT as predictor**
+```{r model4, echo=FALSE}
+m3 = glmer(redundant ~ trialType*logRT + (1|gameid) + (1|clickedobject), data=tomodel, family="binomial")
+summary(m3)
+```
+
+**Model comparison btw models with RT and logRT**
+```{r model_comp2, echo=FALSE}
+anova(m2,m3)
+```
+
+**Same model with perceptual difficulty difference score for each context (difference between RTs to target's sufficient and redundant feature)**
+```{r model5, echo=FALSE}
+pd_wide = pd %>% 
+  mutate(targetName = targetname) %>%
+  select(targetName,competitorName,notCompetitorName,featureQuestion,MeanRT) %>%
+  spread(featureQuestion,MeanRT) %>%
+  rename(color_RT = color) %>%
+  rename(material_RT = material)
+
+tomodel = targets %>%
+  mutate(redundantAdj = ifelse(trialType=="high_difficulty",as.character(clickedmaterial),as.character(clickedcolor))) %>%
+  mutate(redundantAdj = ifelse(redundantAdj == "wood", "wooden", redundantAdj)) %>% 
+  mutate(sufficientAdj = ifelse(trialType=="high_difficulty",as.character(clickedcolor),as.character(clickedmaterial))) %>%
+  mutate(sufficientAdj = ifelse(sufficientAdj == "wood", "wooden", sufficientAdj)) %>% 
+  left_join(pd_wide, by=c("targetName","competitorName","notCompetitorName")) %>%
+  mutate(diffPd = ifelse(trialType=="high_difficulty",color_RT-material_RT,material_RT-color_RT))
+
+m4 = glmer(redundant ~ diffPd + (1|gameid) + (1|clickedobject), data=tomodel, family="binomial")
+summary(m4)
+```
+
+**Model comparison btw models with logRT and perceptual difference score**
+```{r model_comp1, echo=FALSE}
+anova(m3,m4)
+```
+

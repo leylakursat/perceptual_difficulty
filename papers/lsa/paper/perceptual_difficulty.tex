@@ -43,6 +43,8 @@
 \usepackage[usenames,dvipsnames]{color}	
 \usepackage[colorlinks,allcolors={black},urlcolor={blue}]{hyperref} 		%likes to be last package 
 % -------------- personal definitions ----------------------------------------------------------------------------
+\usepackage{graphicx}  
+\usepackage{subcaption}
 \usepackage{color}
 \definecolor{Red}{RGB}{255,0,0}
 \newcommand{\red}[1]{\textcolor{Red}{#1}}
@@ -50,6 +52,9 @@
 \definecolor{Blue}{RGB}{0,100,255}
 \newcommand{\blue}[1]{\textcolor{Blue}{#1}}
 \newcommand{\lk}[1]{\textcolor{Blue}{[lk: #1]}}
+
+\newcommand{\citeA}{\textbf}
+
 % -------------- LSA definitions ---------------------------------------------------------------------------------
 
 %-------------------------------------------------------------- format abstract environment ------------------------
@@ -89,57 +94,143 @@
 Perceptual Difficulty Differences Predict Asymmetry in Overmodification with Color and Material Adjectives
 \vskip .5em
 \normalfont
-{Leyla Kursat \& Judith Degen \symfootnote{Authors: Leyla Kursat, Stanford University (\href{mailto:lkursat@stanford.edu}{lkursat@stanford.edu}) \& Judith Degen, Stanford University (\href{mailto:jdegen@stanford.edu}{jdegen@stanford.edu}).}}
+{Leyla Kursat \& Judith Degen\symfootnote{Authors: Leyla Kursat, Stanford University (\href{mailto:lkursat@stanford.edu}{lkursat@stanford.edu}) \& Judith Degen, Stanford University (\href{mailto:jdegen@stanford.edu}{jdegen@stanford.edu}).}}
 \vskip .5em
 \end{center}
 
 \begin{abstract}
-\lk {last thing to change: this is taken from the abstract}. When referring to objects, speakers are often more specific than they need to be for establishing unique reference (e.g., “the green plastic bottle” instead of “the plastic bottle” in Fig. 1). Adjectival overspecification patterns are not random, but structured: color adjectives are produced redundantly more often than size or material adjectives [1-5]; color adjectives are more likely to be produced redundantly with increasing scene variation [5-7]; and adjectives are more likely to be produced redundantly, the more atypical the property denoted by the adjective is for the object under discussion 5;8-9]. The only current computational model of referring expression production that accounts jointly for all of these patterns is couched within the Rational Speech Act framework [9] and assumes that adjectives differ in how noisy, and consequently, how useful they are for the purpose of establishing reference [5]. One hypothesis about the nature of this noise is that it reflects the perceptual difficulty of establishing whether the property denoted by the adjective holds of the contextually relevant objects. Here, we take a first step towards testing the prediction that systematic differences in the overmodification patterns observed for color and material adjectives can be explained by a difference in perceptual difficulty of establishing whether objects are of a particular color or material. In Exp.1, we norm the perceptual difficulty associated with establishing whether an object exhibits a color or material and select objects with highest and lowest perceptual difficulty for testing in Exp. 2. In Exp. 2, we test in a reference game wheter adjectives that denote more perceptually difficult properties indeed are less frequently produced redundantly.
+\lk{this is taken from the abstract - write about exp3}. When referring to objects, speakers are often more specific than they need to be for establishing unique reference. Adjectival overspecification patterns are not random, but structured: color adjectives are produced redundantly more often than size or material adjectives; color adjectives are more likely to be produced redundantly with increasing scene variation; and adjectives are more likely to be produced redundantly, the more atypical the property denoted by the adjective is for the object under discussion. The only current computational model of referring expression production that accounts jointly for all of these patterns is couched within the Rational Speech Act framework and assumes that adjectives differ in how noisy, and consequently, how useful they are for the purpose of establishing reference. One hypothesis about the nature of this noise is that it reflects the perceptual difficulty of establishing whether the property denoted by the adjective holds of the contextually relevant objects. Here, we take a first step towards testing the prediction that systematic differences in the overmodification patterns observed for color and material adjectives can be explained by a difference in perceptual difficulty of establishing whether objects are of a particular color or material. In Exp.1, we norm the perceptual difficulty associated with establishing whether an object exhibits a color or material and select objects with highest and lowest perceptual difficulty for testing in Exp. 2. In Exp. 2, we test in a reference game whether adjectives that denote more perceptually difficult properties indeed are less frequently produced redundantly. 
 \end{abstract}
 
 \begin{keywords} %separated by semicolons
 reference; perception; overinformativeness; experimental pragmatics
 \end{keywords}
 
-\section{Introduction} %Section titles will be displayed inline
-\lk {what are overinformative referring expressions, the systematicities with which redundant adjectives are produced}
+\section{Introduction} 
+When referring to objects, speakers aim to be sufficiently informative in choosing which features of the object to include in their utterances. However, they are often more specific than they need to be for establishing unique reference. Recent research has identified systematic differences in these adjectival overspecification patterns, but the question remains open why such patterns emerge.
 
-\lk {degen et al.'s computational model of referring expression production}
+One way in which we observe structure in the production of overinformative referring expression is through the asymmetry in the redundant use of color, size and material adjectives. When size or material is the sufficient property to single out the intended reference, participants routinely include color adjectives in their utterances. However, in contexts where color is sufficient for unique reference, speaker's don't tend to mention size or material redundantly (\citeA{Pechmann1989, Sedivy2003, GattEtAl2011, RubioFernandez2017, DegenEtAl2020}). Moreover, speaker's knowledge of the typicality of the properties of objects and the features of the context interact with these asymmetries. Color adjectives are more likely to be produced redundantly with increasing scene variation (\citeA{DegenEtAl2020, DaviesKatsos2013, KoolenEtAl2013}) and adjectives are more likely the be produced redundantly, the more atypical the property denoted by the adjective is for the object under discussion (\citeA{DegenEtAl2020, WesterbeekEtAl2015, Mitchell2013}).
 
-\lk {different hypothesis about the source of the adjectival noise}
+The computational model of referring expression production developed by \citeA{DegenEtAl2020} accounts jointly for all of these patterns and proposes a unified quantitative account for their emergence. Couched within the Rational Speech Act framework (\citeA{GoodmanFrank2016}), this model treats speakers and listeners as agents recursively reasoning about each other's mental states to communicate. The simple RSA model assumes that objects have deterministic lexical meanings and that speakers choose utterances that maximize informativeness with respect to those meanings. This model doesn't generate overinformative referring expressions mainly because it calculates the informativeness (and cost) of mentioning the redundant property to be equal to the informativeness of mentioning the alternative (only mentioning the sufficient property). \citeA{DegenEtAl2020} extend this model by focusing on the calculation of informativeness and relaxing the Boolean semantics to non-deterministic continuous semantics that return real values between 0 and 1. By allowing utterances to be informative about objects to varying degrees, this continuos semantics assumes that adjectives differ in how noisy, and consequently, how useful they are for the purpose of establishing reference. 
 
-\lk {overview of this study}
+This assumption raises an important question regarding the nature of the adjectival noise. Many explanations are offered in the literature for the source of the overinformative patterns including lexical, visual, communicative and semantic ones and \lk{need to say something about how they could also account for the noise?}. 
 
-\section{Experiment 1: Measuring perceptual difficulty} First, we need to norm the perceptual difficulty associated with establishing whether an object exhibits a color or material. Through a timed forced choice task we collected norms for color and material properties of 81 images.
+\lk{connect these accounts in one cohesive paragraph!!!}
 
-\subsection{Participants} We recruited 120 participants through Amazon Mechanical Turk. We excluded participants who were self-reported non-native English speakers (n=4) and participants with accuracy lower than 75\% (n=11).
+- \citeA{Sedivy2003} proposes a pragmatic account that is based on listeners' expectations of informativity. According to her, highly predictable properties of objects are not encoded as part of their "default descriptions" and therefore, their use triggers a contrastive inference and provides referential disambiguation. Although this account explains the typicality effects that have been shown to modulate overmodification patterns, it fails to account for the role of contextual information in referential communication.
 
-\subsection{Procedure} Participants saw images of objects with color or material adjectives and were asked to indicate whether the object had the property denoted by the adjective or not. Their task was to indicate "yes" or "no" by pressing the F or J key as quickly as possible. If participants did not respond within 4 seconds, the trial timed out. When participants responded correctly, a green border appeared around their selection, and when they responded incorrectly a red border appeared.
+- Recent work by \citeA{ViethenEtAl2017} highlights the context-dependency of overmodification patterns by showing that a decrease in the color contrast between the objects in the context reduces the use of color adjectives in referring expressions.
 
-We collected perceptual difficulty norms for 12 objects, that each occurred in two or three different materials and in three different colors. All resulting 81 images were separately normed for object nameability, feature nameability, object typicality and feature typicality. Every participant saw each image once and we collected 30 judgements for each image with correct and incorrect color and material adjectives. Incorrect color and material adjectives were randomly generated online for each participant and were selected from adjectives denoting properties of other images in the experiment.
+- The semantic account for the asymmetry between redundant use of different adjectives attributes these patterns to the inherent relativity of the adjective types the adjectives belong to (\citeA{AparicioEtAl2016, Aparicio2018}). Because the meaning of scalar adjectives are dependent to a comparison class, they are thought to be more context-dependent than color adjectives and therefore less informative in general. The asymmetry between overmodification with color and material adjectives shows that this is not true. 
 
-\subsection{Results} Material words resulted in higher error rates ($\beta$= 0.40, $SE$=0.09, $p$$<$.0001) and greater response times ($\beta$=5.46, $SE$=4.73, t=11.55, $p$$<$.0001) than color words. We grouped the 8 image-material adjective pairs with the highest error rate and response times into a \textit{high difficulty} group, and the 8 image-color adjective pairs with the lowest error rate and response times into a \textit{low difficulty group}. \lk {more about grouping and selection of items, limitations of the task?}
+- Visual/perceptual factors..
 
-  
-\section{Experiment 2: Production of referring expressions} The goal of Exp. 2 was to elicit production probabilities of redundantly mentioning color and material adjectives for the high- and low-difficulty items normed in Exp. 1. In a free production interactive reference game we tested whether adjectives that denote more perceptually difficult properties are less frequently produced redundantly.\footnote{Procedure, materials, analysis and exclusions were preregistered at \href {https://osf.io/57c6u}{https://osf.io/57c6u}.}
+\lk{overview of this study}
 
+\lk{redundant vs useful, efficient vs informative, speaker oriented vs listener oriented - can also discuss these in general discussion}
 
-\subsection{Participants} We recruited 100 participants through Amazon Mechanical Turk and randomly paired them into speaker-listener dyads to play a real time communication game (50 pairs) \lk {reference to Hawkins 205?}. We excluded games where participants reported a native language different from English.
+\section{Experiment 1: Measuring perceptual difficulty} 
 
-\subsection{Procedure} On each trial, participants saw a display with 4 images and chat box. Both the speaker and listener saw the same images in different positions. One of the images was designated as the target image, and marked by a green border in the speaker's display. The speaker's task was to describe this target image to the listener using the chat box to send messages. The listener's task was to guess the target image by clicking. After the listener made a selection, both participants received feedback about whether the target image was selected and advance to the next trial. 
+First, we need to norm the perceptual difficulty associated with establishing whether an object exhibits a color or material. Through a timed forced choice task we collected norms for color and material properties of 81 images.
 
-Participants completed 32 trials. Of these, half were critical trials and half were filler trials. On critical trials \lk {add figure+ reference}, the 4 images were of the same object and either \textit{color} or \textit{material} was redundant for distinguishing the target. On 8 high-difficulty trials, mentioning the material was redundant; on 8 low-difficulty trials, color was redundant. On filler trials, the 4 images were of different objects and both color and material mention were redundant for unique reference. 
+\subsection{Participants} 
 
-We classified the produced utterances as 'color-and-material' (redundant), 'only-color' or 'only-material'.
+We recruited 120 participants through Amazon Mechanical Turk. We excluded participants who were self-reported non-native English speakers (n=4) and participants with accuracy lower than 75\% (n=11).
+
+\subsection{Procedure} 
+
+Participants saw images of objects with color or material adjectives and were asked to indicate whether the object had the property denoted by the adjective or not. Their task was to indicate "yes" or "no" by pressing the F or J key as quickly as possible. If participants did not respond within 4 seconds, the trial timed out. When participants responded correctly, a green border appeared around their selection, and when they responded incorrectly a red border appeared.
+
+We collected perceptual difficulty norms for 12 objects that each occurred in two or three different materials and in three different colors. All resulting 81 images were separately normed for object nameability, feature nameability, object typicality and feature typicality. Every participant saw each image once and we collected 30 judgements for each image with matching and not-matching color and material adjectives. Color and material adjectives that didn't match the images were randomly generated online for each participant from a pool of adjectives denoting properties of other images in the experiment.
+
+\subsection{Results} 
+
+Figure~\ref{fig:exp1} shows the proportion and response times of correct responses to color and material adjectives. Overall, material adjectives resulted in higher error rates ($\beta$= 0.40, $SE$=0.09, $p$$<$.0001) and greater response times ($\beta$=5.46, $SE$=4.73, t=11.55, $p$$<$.0001) than color adjectives. We grouped the more perceptually difficult image-material pairs into a \textit{high difficulty} group and less perceptually difficult image-color adjectives into a \textit{low difficulty group} for testing in Exp. 2.
+
+\begin{figure}[ht]
+   \begin{subfigure}{.5\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{plots/exp1_proportion.png}
+   \caption{Proportion of correct responses}
+   \label{fig:exp1_a}
+   \end{subfigure}
+   \begin{subfigure}{.5\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{plots/exp1_rt.png}
+   \caption{Response times of correct responses}
+   \label{fig:exp1_b}
+   \end{subfigure}
+   \caption{Responses to color and material adjectives (matching and not-matching images) \lk{replace with better formatted plots}}
+   \label{fig:exp1}
+   \end{figure}   
+
+In order to categorize the image-word pairs in this way, we first grouped them in multiple different ways, always grouping the top 15 image-word combinations in the high-difficulty group and the bottom 15 image-word combinations in the low-difficulty group. First, we grouped pairs by response times, regardless of response correctness and match between the adjective and image. Then we grouped the pairs by response times of correct responses, and then by response times of correct responses to matching features and by response times of correct responses to not-matching features. We also grouped pairs by error rates in three different ways. Finally, we looked at the overlap between these groups and grouped the 8 image-material adjective pairs with the highest error rate and response times into a \textit{high difficulty} group, and the 8 image-color adjective pairs with the lowest error rate and response times into a \textit{low difficulty group}. \lk {way too wordy!!}
+
+\section{Experiment 2: Production of referring expressions} 
+
+The goal of Exp. 2 was to elicit production probabilities of redundantly mentioning color and material adjectives for the high- and low-difficulty items normed in Exp. 1. In a free production interactive reference game we tested whether adjectives that denote more perceptually difficult properties are less frequently produced redundantly.\footnote{Procedure, materials, analysis and exclusions were preregistered at \href {https://osf.io/57c6u}{https://osf.io/57c6u}.}
+
+\subsection{Participants} 
+
+We recruited 100 participants through Amazon Mechanical Turk and randomly paired them into speaker-listener dyads to play a real time communication game (50 pairs) (\citeA{Hawkins2015}). We excluded games where participants reported a native language different from English.
+
+\subsection{Procedure} 
+
+On each trial, participants saw a display with 4 images and chat box. Both the speaker and listener saw the same images in different positions. One of the images was designated as the target image, and marked by a green border in the speaker's display. The speaker's task was to describe this target image to the listener using the chat box to send messages. The listener's task was to guess the target image by clicking. After the listener made a selection, both participants received feedback about whether the target image was selected and advanced to the next trial. 
+
+\begin{figure}[ht]
+   \centering
+   \begin{minipage}{0.48\columnwidth}
+   \centering
+   \includegraphics[width=\textwidth]{img/exp2_trial.png}
+   \captionof{figure}{Example display from Exp. 2: speaker's perspective on a \textit{low-difficulty (color redundant)} trial}
+   \label{fig:exp2_trial}
+   \end{minipage}%
+   \hfill
+   \begin{minipage}{0.48\columnwidth}
+   \centering
+   \includegraphics[width=\textwidth]{img/exp3_trial.png}
+   \captionof{figure}{Example display from Exp. 3: correct color trial}
+   \label{fig:exp3_trial}
+   \end{minipage}
+\end{figure}
+
+Participants completed 32 trials. Of these, half were critical trials and half were filler trials. On critical trials (Figure~\ref{fig:exp2_trial}), the 4 images were of the same object and either \textit{color} or \textit{material} was redundant for distinguishing the target. One of the images, the competitor, always shared the redundant feature with the target and the two distractors shared the sufficient feature with the competitor. On 8 high-difficulty trials, mentioning the material was redundant; on 8 low-difficulty trials, color was redundant. On filler trials, the 4 images were of different objects and both color and material mention were redundant for unique reference. Filler items were of 4 different types: the competitor either shared the color, material, both or none of the features with the target. 
 
 \subsection{Results}
 
-\lk {replicate the asymmetry?, given the norms - support for hypothesis, manipulate perceptual difficulty within property type..}
+We first classified the produced utterances as 'color-and-material' (redundant), 'only-color' or 'only-material'. Proportion of redundant "color and material" utterances and non-redundant utterances are shown in Figure~\ref{fig:exp2_proportion}. We conducted a mixed effects logistic regression predicting redundant adjective use from fixed effects of redundant property, with random by-subject and by-item intercepts and slopes for redundant property. There was a main effect of redundant property, such that speakers were more likely to redundantly mention color than material ($\beta$= 2.11, $SE$=0.62, $p$$<$.0001), replicating the previously observed asymmetry between overmodification with color and material adjectives on a new set of items. Our analysis of the responses to filler trials showed that the preference to mention color transferred to trials in which neither color nor material mention was required for unique reference \lk{add figure if there is space}. 
 
-\section{Experiment 3: Perceptual difficulty in context}
-\subsection{Participants}
-\subsection{Procedure}
-\subsection{Results}
+In a second step, we manually checked for the use of modifiers other than the color and material adjectives. We found that on 39\% of all utterances, participants used a different kind of modifier to reference the target. These modifiers included shape (rectangular table), size (long table), shade (darker green plate) and \lk{?} (solo cup) modifiers. The full data pattern with color, material and other modifiers revealed that when material is the redundant feature, participants tend to only mention color, and when color is the redundant feature, they either produce color-and-material utterances or overmodify with color and use another modifier. \lk{fix this sentence}
+
+Given the norms from Exp. 1, these results suggest that the more difficult it is to judge whether an object has a feature, the less likely speakers are to redundantly mention that feature, providing initial support for the perceptual difficulty hypothesis. 
+\lk{talk about limitations of this study - motivation for testing perceptual difficulty in context}
+\lk{do not want to assume that color modifiers have inherently higher semantic values than size modifiers - more nuanced semantics}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=.7\textwidth]{plots/exp2_proportion.png}
+\caption{Proportion of redundant "color and material" utterances vs non-redundant utterances in high and low difficulty trials}
+\label{fig:exp2_proportion}
+\end{figure}
+
+\section{Experiment 3: Perceptual difficulty in context} 
+
+To get a more fine grained measure of perceptual difficulty that takes the contextual factors into account, we ran a third experiment. 
+
+\subsection{Participants} 
+
+We recruited 400 participants through Prolific. We excluded participants with accuracy was lower than 75\% (n=24) and responses that were too slow (2.5 standard deviations away from the mean response time) (217 responses).
+
+\subsection{Procedure} 
+
+Exp. 3 was identical to Exp. 1 but instead of seeing the images in isolation, participants saw the displays from the production experiment. These displays appeared with short descriptions that were of the form "X [adjective] objects" and either included a color or material adjective.
+
+\subsection{Results} 
+
+Overall, participants responded to material adjectives with higher error rates (\lk{add}) and in greater response times (\lk{add}) than color adjectives, replicating the results of Exp. 1. \lk{OR We ran a mixed effects linear regression model predicting log-transformed response time from fixed effects of redundant property with random by-participant intercepts. We observed a main effect of redundant property such that responses to material adjectives were slower than the responses to color adjectives (\lk{add}).}
+
+To address the more theoretically interesting question of interest, we formalized the notion of perceptual difficulty in context. We computed a perceptual difficulty difference score for the target item in each context by subtracting the mean response time for the sufficient property from the mean response time for the redundant property. Higher difficulty scores indicate that the redundant property of the target object is less perceptually difficulty than its sufficient property. \lk{which model to discuss?}
  
 \section{General discussion} 
  
@@ -147,15 +238,18 @@ We classified the produced utterances as 'color-and-material' (redundant), 'only
 % ------------ references --------------------------------------------------------------------------------------
 \setlength{\bibsep}{0pt plus 0.3ex}
 \setlength{\bibhang}{0.3in}			% hanging indent for references must be 0.3in
-\titleformat{\section}{\normalfont\bfseries}{\thesection}{.5em}{}		% references section not supposed to be followed by a period
+\titleformat{\section}{\normalfont\bfseries}{\thesection}{.5em}{}		
+% references section not supposed to be followed by a period
 
-\bibliographystyle{sp.bst}		% S\&P bibliography style
-%S\&P, an LSA publication, meets the LSA guidelines. 
-%See: http://info.semprag.org 
-%and get the bst at: https://raw.githubusercontent.com/semprag/tex/master/sp.bst 
-%If using the sp.bst, the following command turns your DOIs into links
+\bibliographystyle{sp.bst}		
+% S\&P bibliography style
+% S\&P, an LSA publication, meets the LSA guidelines. 
+% See: http://info.semprag.org 
+% and get the bst at: https://raw.githubusercontent.com/semprag/tex/master/sp.bst 
+% If using the sp.bst, the following command turns your DOIs into links
 \newcommand{\doi}[1]{\href{http://dx.doi.org/#1}{http://dx.doi.org/#1}}	%modified from sp.cls
-\bibliography{YourBib}			% your bib file
+
+\bibliography{pd}			% your bib file
 
 \end{document}
  

@@ -42,14 +42,10 @@
 	\titleformat{\subsubsection}[runin]{\normalfont\scshape}{\thesubsubsection.}{.5em}{}[.]
 \usepackage[usenames,dvipsnames]{color}	
 \usepackage[colorlinks,allcolors={black},urlcolor={blue}]{hyperref} 		%likes to be last package 
-
-
 % -------------- personal definitions ----------------------------------------------------------------------------
 \usepackage{graphicx}  
 \usepackage{subcaption}
 \usepackage{color}
-\usepackage[export]{adjustbox}
-
 \definecolor{Red}{RGB}{255,0,0}
 \newcommand{\red}[1]{\textcolor{Red}{#1}}
 \newcommand{\jd}[1]{\textcolor{Red}{[jd: #1]}}
@@ -58,8 +54,6 @@
 \newcommand{\lk}[1]{\textcolor{Blue}{[lk: #1]}}
 
 \newcommand{\citeA}{\textbf}
-
-
 
 % -------------- LSA definitions ---------------------------------------------------------------------------------
 
@@ -105,7 +99,7 @@ Perceptual Difficulty Differences Predict Asymmetry in Overmodification with Col
 \end{center}
 
 \begin{abstract}
-\lk{this is taken from the abstract - shorten and add exp3}. When referring to objects, speakers are often more specific than they need to be for establishing unique reference. Adjectival overspecification patterns are not random, but structured: color adjectives are produced redundantly more often than size or material adjectives; color adjectives are more likely to be produced redundantly with increasing scene variation; and adjectives are more likely to be produced redundantly, the more atypical the property denoted by the adjective is for the object under discussion. The only current computational model of referring expression production that accounts jointly for all of these patterns is couched within the Rational Speech Act framework and assumes that adjectives differ in how noisy, and consequently, how useful they are for the purpose of establishing reference. One hypothesis about the nature of this noise is that it reflects the perceptual difficulty of establishing whether the property denoted by the adjective holds of the contextually relevant objects. Here, we take a first step towards testing the prediction that systematic differences in the overmodification patterns observed for color and material adjectives can be explained by a difference in perceptual difficulty of establishing whether objects are of a particular color or material. In Exp.1, we norm the perceptual difficulty associated with establishing whether an object exhibits a color or material and select objects with highest and lowest perceptual difficulty for testing in Exp. 2. In Exp. 2, we test in a reference game whether adjectives that denote more perceptually difficult properties indeed are less frequently produced redundantly. 
+\lk{this is taken from the abstract - write about exp3}. When referring to objects, speakers are often more specific than they need to be for establishing unique reference. Adjectival overspecification patterns are not random, but structured: color adjectives are produced redundantly more often than size or material adjectives; color adjectives are more likely to be produced redundantly with increasing scene variation; and adjectives are more likely to be produced redundantly, the more atypical the property denoted by the adjective is for the object under discussion. The only current computational model of referring expression production that accounts jointly for all of these patterns is couched within the Rational Speech Act framework and assumes that adjectives differ in how noisy, and consequently, how useful they are for the purpose of establishing reference. One hypothesis about the nature of this noise is that it reflects the perceptual difficulty of establishing whether the property denoted by the adjective holds of the contextually relevant objects. Here, we take a first step towards testing the prediction that systematic differences in the overmodification patterns observed for color and material adjectives can be explained by a difference in perceptual difficulty of establishing whether objects are of a particular color or material. In Exp.1, we norm the perceptual difficulty associated with establishing whether an object exhibits a color or material and select objects with highest and lowest perceptual difficulty for testing in Exp. 2. In Exp. 2, we test in a reference game whether adjectives that denote more perceptually difficult properties indeed are less frequently produced redundantly. 
 \end{abstract}
 
 \begin{keywords} %separated by semicolons
@@ -117,13 +111,15 @@ When referring to objects, speakers aim to be sufficiently informative in choosi
 
 One way in which we observe structure in the production of overinformative referring expression is through the asymmetry in the redundant use of color, size and material adjectives. When size or material is the sufficient property to single out the intended reference, participants routinely include color adjectives in their utterances. However, in contexts where color is sufficient for unique reference, speaker's don't tend to mention size or material redundantly (\citeA{Pechmann1989, Sedivy2003, GattEtAl2011, RubioFernandez2016, DegenEtAl2020}). Moreover, speaker's knowledge of the typicality of the properties of objects and the features of the context interact with these asymmetries. Color adjectives are more likely to be produced redundantly with increasing scene variation (\citeA{DegenEtAl2020, DaviesKatsos2013, KoolenEtAl2013}) and adjectives are more likely the be produced redundantly, the more atypical the property denoted by the adjective is for the object under discussion (\citeA{DegenEtAl2020, WesterbeekEtAl2015, Mitchell2013}).
 
-Many explanations are offered in the literature for the source of overinformative referring expressions including pragmatic, semantic, lexical and visual ones. The pragmatic account, proposed by \citeA{Sedivy2003}, takes into account the contrastive function of mentioning the color of objects that occur in predictable colors. According to this account, highly predictable properties of objects are not encoded as part of their "default descriptions" and therefore, their use triggers a contrastive inference and provides referential disambiguation. \lk{add? Although this account explains the typicality effects that have been shown to modulate overmodification patterns, it fails to account for the role of contextual information in referential communication.} In addition to listeners' expectations of informativity, production of overinformative referring expressions have been shown to depend on the lexical category of the noun (\citeA{RubioFernandez2016}) and the semantics of the adjective involved (\citeA{RubioEtAl2019, Sedivy2003}). Based on their comparison of the looking patterns with color and scalar adjectives, \citeA{AparicioEtAl2016, Aparicio2018} report that asymmetries could be attributed to the different semantics of the adjectives, more specifically, the inherent relativity of scalar adjectives. \lk{add? The case of color and material adjectives shows that semantic explanations alone cannot account for all observed asymmetries with redundant adjective use.} Recent work by \citeA{ViethenEtAl2017} highlights the context-dependency of overmodification patterns by showing that a decrease in the color contrast between the objects in the context reduces the use of color adjectives in referring expressions. Accounts that focus on the role of perceptual factors take into consideration such contextual effects and argue that redundant adjective use is sensitive to relative visual salience of properties adjectives denote (\citeA{RubioEtAl2019}). 
+Many explanations are offered in the literature for the source of overinformative referring expressions including pragmatic, semantic, lexical and visual ones. The pragmatic account, proposed by \citeA{Sedivy2003}, takes into account the contrastive function of mentioning the color of objects that occur in predictable colors. According to this account, highly predictable properties of objects are not encoded as part of their "default descriptions" and therefore, their use triggers a contrastive inference and provides referential disambiguation. \lk{add? Although this account explains the typicality effects that have been shown to modulate overmodification patterns, it fails to account for the role of contextual information in referential communication.} In addition to listeners' expectations of informativity, production of overinformative referring expressions have been shown to depend on the lexical category of the noun (\citeA{RubioFernandez2016}) and the semantics of the adjective involved (\citeA{RubioEtAl2019, Sedivy2003}). Based on their comparison of the looking patterns with color and scalar adjectives, \citeA{AparicioEtAl2016, Aparicio2018} report that asymmetries could be attributed to the different semantics of the adjectives, more specifically, the inherent relativity of scalar adjectives. \lk{The case of color and material adjectives shows that semantic explanations alone cannot account for all observed asymmetries with redundant adjective use.} Recent work by \citeA{ViethenEtAl2017} highlights the context-dependency of overmodification patterns by showing that a decrease in the color contrast between the objects in the context reduces the use of color adjectives in referring expressions. Accounts that focus on the role of perceptual factors take into consideration such contextual effects and argue that redundant adjective use is sensitive to relative visual salience of properties adjectives denote (\citeA{RubioEtAl2019}). 
 
-\lk{fix?} In this paper, we investigate the role of perceptual difficulty in the production of overinformative referring expressions. We show that perceptual difficulty associated with establishing whether an object exhibits a property could be a contributing factor to the noise term assumed by the computational model of referring expression production developed by \citeA{DegenEtAl2020}. In doing so, we provide an pragmatic explanation for how systematically related perceptual factors are to informativity calculations.
+\lk{not sure if this makes sense before talking about the specifics of the model - before explaining what the noise term is}
+
+In this paper, we investigate the role of perceptual difficulty in the production of overinformative referring expressions. We show that perceptual difficulty associated with establishing whether an object exhibits a property could be a contributing factor to the noise term assumed by the computational model of referring expression production developed by \citeA{DegenEtAl2020}. In doing so, we provide an pragmatic explanation for how systematically related perceptual factors are to informativity calculations.
 
 The computational model of referring expression production developed by \citeA{DegenEtAl2020} accounts jointly for a variety of overmodification phenomena and proposes a unified quantitative account for their emergence. Couched within the Rational Speech Act (RSA) framework (\citeA{Goodman2016}), this model treats speakers and listeners as agents recursively reasoning about each other's mental states to communicate. The simple RSA model assumes that objects have deterministic lexical meanings and that speakers choose utterances that maximize informativeness with respect to those meanings. This model doesn't generate overinformative referring expressions mainly because it calculates the informativeness (and cost) of mentioning the redundant property to be equal to the informativeness of mentioning the alternative (only mentioning the sufficient property). \citeA{DegenEtAl2020} extend this model by focusing on the calculation of informativeness and relaxing the Boolean semantics to non-deterministic continuous semantics that return real values between 0 and 1. By allowing utterances to be informative about objects to varying degrees, this continuos semantics assumes that adjectives differ in how noisy, and consequently, how useful they are for the purpose of establishing reference. This assumption raises an important question regarding the nature of the adjectival noise. 
 
-Here, we take the first step in testing the hypothesis that the noise term reflects the perceptual difficulty of establishing whether the property denoted by the adjective holds of the contextually relevant objects. We test this in the domain of color and material adjectives and predict that systematic differences in the overmodification patterns observed for color and material adjectives can be explained by a difference in perceptual difficulty of establishing whether objects are of a particular color or material. In Exp.1, we norm the perceptual difficulty associated with establishing whether an object exhibits a color or material and select objects with highest and lowest perceptual difficulty for testing in Exp. 2. In Exp. 2, we test in a reference game whether adjectives that denote more perceptually difficult properties indeed are less frequently produced redundantly. Finally, in Exp. 3, we investigate the role of perceptual difficulty beyond the property type. 
+Here, we take the first step in testing the hypothesis that the noise term reflects the perceptual difficulty of establishing whether the property denoted by the adjective holds of the contextually relevant objects. We test this in the domain of color and material adjectives and predict that systematic differences in the overmodification patterns observed for color and material adjectives can be explained by a difference in perceptual difficulty of establishing whether objects are of a particular color or material. In Exp.1, we norm the perceptual difficulty associated with establishing whether an object exhibits a color or material and select objects with highest and lowest perceptual difficulty for testing in Exp. 2. In Exp. 2, we test in a reference game whether adjectives that denote more perceptually difficult properties indeed are less frequently produced redundantly. Finally, through Exp. 3, we investigate the role of perceptual difficulty beyond just the property type. \lk{fix this}
 
 \section{Experiment 1: Measuring perceptual difficulty} 
 
@@ -149,19 +145,19 @@ Figure~\ref{fig:exp1} shows the proportion and response times of correct respons
 \centering
 \includegraphics[width=\textwidth]{plots/exp1_proportion.png}
 \caption{Proportion of correct responses}
-\label{fig:exp1_a}
-\end{subfigure} \hspace{9mm}
-\begin{subfigure}{.4 \textwidth}
-\centering
-\includegraphics[width=\textwidth]{plots/exp1_rt.png}
-\caption{Response times of correct responses}
-\label{fig:exp1_b}
-\end{subfigure}
-\caption{Response patterns to color and material adjectives in the norming experiment}
-\label{fig:exp1}
+ \label{fig:exp1_a}
+   \end{subfigure} \hspace{9mm}
+   \begin{subfigure}{.4 \textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{plots/exp1_rt.png}
+   \caption{Response times of correct responses}
+   \label{fig:exp1_b}
+   \end{subfigure}
+   \caption{Response patterns to color and material adjectives in the norming experiment}
+   \label{fig:exp1}
 \end{figure}   
 
-In order to categorize the image-word pairs in this way, we first grouped them in multiple different ways, always grouping the top 15 image-word combinations in the high-difficulty group and the bottom 15 image-word combinations in the low-difficulty group. First, we grouped pairs by response times, regardless of response correctness and match between the adjective and image. Then we grouped the pairs by response times of correct responses, and then by response times of correct responses to matching features and by response times of correct responses to not-matching features. We also grouped pairs by error rates in three different ways. Finally, we looked at the overlap between these groups and grouped the 8 image-material adjective pairs with the highest error rate and response times into a \textit{high difficulty} group, and the 8 image-color adjective pairs with the lowest error rate and response times into a \textit{low difficulty group}. \lk {too wordy}
+In order to categorize the image-word pairs in this way, we first grouped them in multiple different ways, always grouping the top 15 image-word combinations in the high-difficulty group and the bottom 15 image-word combinations in the low-difficulty group. First, we grouped pairs by response times, regardless of response correctness and match between the adjective and image. Then we grouped the pairs by response times of correct responses, and then by response times of correct responses to matching features and by response times of correct responses to not-matching features. We also grouped pairs by error rates in three different ways. Finally, we looked at the overlap between these groups and grouped the 8 image-material adjective pairs with the highest error rate and response times into a \textit{high difficulty} group, and the 8 image-color adjective pairs with the lowest error rate and response times into a \textit{low difficulty group}. \lk {way too wordy!!}
 
 \section{Experiment 2: Production of referring expressions} 
 
@@ -177,16 +173,17 @@ On each trial, participants saw a display with 4 images and chat box. Both the s
 
 \begin{figure}[ht]
    \centering
-   \begin{minipage}[t]{0.48\linewidth}
+   \begin{minipage}{0.48\columnwidth}
    \centering
-   \includegraphics[width=\textwidth, frame]{img/exp2_trial.png}
+   \includegraphics[width=\textwidth]{img/exp2_trial.png}
    \captionof{figure}{Example display from Exp. 2: speaker's perspective on a \textit{low-difficulty (color redundant)} trial}
    \label{fig:exp2_trial}
-   \end{minipage}\hfill%
-   \begin{minipage}[t]{0.48\linewidth}
+   \end{minipage}%
+   \hfill
+   \begin{minipage}{0.48\columnwidth}
    \centering
-   \includegraphics[width=\textwidth, frame]{img/exp3_trial.png}
-   \captionof{figure}{Example display from Exp. 3: color trial with correct number}
+   \includegraphics[width=\textwidth]{img/exp3_trial.png}
+   \captionof{figure}{Example display from Exp. 3: correct color trial}
    \label{fig:exp3_trial}
    \end{minipage}
 \end{figure}
@@ -195,7 +192,7 @@ Participants completed 32 trials. Of these, half were critical trials and half w
 
 \subsection{Results}
 
-We first classified the produced utterances as 'color-and-material' (redundant), 'only-color' or 'only-material'. Proportion of redundant "color and material" utterances and non-redundant utterances are shown in Figure~\ref{fig:exp2_proportion}. We conducted a mixed effects logistic regression predicting redundant adjective use from fixed effects of redundant property, with random by-subject and by-item intercepts and slopes for redundant property. There was a main effect of redundant property, such that speakers were more likely to redundantly mention color than material ($\beta$= 2.32, $SE$=0.64, $p$$<$.0001), replicating the previously observed asymmetry between overmodification with color and material adjectives on a new set of items. Our analysis of the responses to filler trials showed that the preference to mention color transferred to trials in which neither color nor material mention was required for unique reference. 
+We first classified the produced utterances as 'color-and-material' (redundant), 'only-color' or 'only-material'. Proportion of redundant "color and material" utterances and non-redundant utterances are shown in Figure~\ref{fig:exp2_proportion}. We conducted a mixed effects logistic regression predicting redundant adjective use from fixed effects of redundant property, with random by-subject and by-item intercepts and slopes for redundant property. There was a main effect of redundant property, such that speakers were more likely to redundantly mention color than material ($\beta$= 2.11, $SE$=0.62, $p$$<$.0001), replicating the previously observed asymmetry between overmodification with color and material adjectives on a new set of items. Our analysis of the responses to filler trials showed that the preference to mention color transferred to trials in which neither color nor material mention was required for unique reference. 
 
 In a second step, we manually checked for the use of modifiers other than the color and material adjectives. We found that on 39\% of all utterances, participants used a different kind of modifier to reference the target. These modifiers included shape (\textit{rectangular table}), size (\textit{long table}), shade (\textit{dark blue plate}) and type \lk{?} (\textit{solo cup}) modifiers. The full data pattern with color, material and other modifiers revealed that when material was the redundant feature, participants mentioned only the color, and when color was the redundant feature, they either produced color-and-material utterances or overmodified with color and used a modifier denoting a property other than color or material. 
 
@@ -203,7 +200,7 @@ Given the norms from Exp. 1, these results suggest that the more difficult it is
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=.8\textwidth]{plots/exp2_proportion.png}
+\includegraphics[width=.7\textwidth]{plots/exp2_proportion.png}
 \caption{Proportion of redundant "color and material" utterances vs non-redundant utterances in high and low difficulty trials}
 \label{fig:exp2_proportion}
 \end{figure}
@@ -213,37 +210,32 @@ Given the norms from Exp. 1, these results suggest that the more difficult it is
 The goal of Exp. 3 was to get a more nuanced measure of perceptual difficulty that takes contextual factors into account.
 \subsection{Participants} 
 
-We recruited 400 participants through Prolific. We excluded participants with accuracy lower than 75\% (n=24) and responses that were too slow (2.5 standard deviations away from the mean response time) (217 responses).
+We recruited 400 participants through Prolific. We excluded participants with accuracy was lower than 75\% (n=24) and responses that were too slow (2.5 standard deviations away from the mean response time) (217 responses).
 
 \subsection{Procedure} 
 
-Exp. 3 was identical to Exp. 1 but instead of seeing the images in isolation, participants saw the displays from the production experiment. These displays appeared with short descriptions that were of the form "X [adjective] objects" and included a number and either a color or material adjective (see Fig.~\ref{fig:exp3_trial}). On half of the trials, the statement was correct and on the other half, it was incorrect. The use of color and material adjectives was also balanced. We collected 100 judgements for each feature in the display, for all the different displays. \lk{no time pressure}
+Exp. 3 was identical to Exp. 1 but instead of seeing the images in isolation, participants saw the displays from the production experiment. These displays appeared with short descriptions that were of the form "X [adjective] objects" and included a number and either a color or material adjective (see Fig.~\ref{fig:exp3_trial}). On half of the trials, the statement was correct and on the other half, it was incorrect. The use of color and material adjectives was also balanced. We collected 100 judgements for each feature in the display, for all the different displays.
 
 \subsection{Results} 
 
-First, we analyzed the response times to the two property types to address the first question of interest, are properties denoted by material adjectives more perceptually difficult than ones denoted by color adjectives? To this end, we ran a mixed effects linear regression model predicting log-transformed response time from fixed effects of redundant property with random by-participant intercepts. We found that responses to material adjectives were slower than the responses to color adjectives (($\beta$= -0.3, $SE$=0.004, t=-59.62, $p$$<$.0001)), replicating the results of experiment 1. 
+First, we analyzed the response times to the two property types to address the first question of interest, are properties denoted by material adjectives more perceptually difficult than ones denoted by color adjectives? To this end, we ran a mixed effects linear regression model predicting log-transformed response time from fixed effects of redundant property with random by-participant intercepts. We observed a main effect of redundant property such that responses to material adjectives were slower than the responses to color adjectives (\lk{add}), replicating the results of experiment 1. 
 
-To address the more theoretically interesting question of interest, we analyzed the response times to redundant and sufficient properties of target items of Exp. 2. We conducted a mixed effects logistic regression predicting redundant adjective use from fixed effects of redundant property, log-transformed response time to redundant adjective in context, and their interaction. We observed a main effect of redundant property such that \lk{add?}
+To address the more theoretically interesting question of interest, we analyzed the response times to redundant and sufficient properties of target items of Exp. 2. We conducted a mixed effects logistic regression predicting redundant adjective use from fixed effects of redundant property, log-transformed response time to redundant adjective in context, and their interaction. \lk{model results}
 
-\begin{figure}[ht]
-\centering
-\includegraphics[width=.6\textwidth]{plots/exp3_density_logRT.png}
-\caption{Density plot of log-transformed response times to color and material adjectives}
-\label{fig:exp3_density}
-\end{figure}
+These results 
 
 \section{General discussion} 
 
-We tested whether the adjectival overmodification patterns with color and material adjectives can be predicted by the perceptual difficulty of establishing the color and material sproperties of objects. 
+We tested whether the adjectival overmodification patterns with color and material adjectives can be predicted by the perceptual difficulty of establishing the color and properties of objects. 
 
-\lk{showed that there is a direct link between perceptual difficulty and redundant adjective use, noisy semantics: show how informativity and perceptual factors go together}
+showed that there is a direct link between perceptual difficulty and redundant adjective use.
 
-\lk{remain netural about speaker vs listener oriented}
+noisy semantics: show how informativity and perceptual factors interact
 
-\lk{overinformative vs redundantly useful}
+We choose to remain neutral about speaker vs listener oriented. Our experiments do not allow
 
-\lk{next step: computation model with measure of perceptual difficulty}
-
+\lk{redundant vs useful, efficient vs informative, speaker oriented vs listener oriented - can also discuss these in general discussion}
+ 
 % \section{Citations and references} Use author-date notation for in-text citations, for example: ... as noted recently by Jameson (2012) and Mateus (2014), drawing on insights from various other researchers (e.g., Nelson 1986:223–28, Martin 2003, Wellington \& Johnson 2016), there have been numerous technological advances in the procedures used to publish research articles online. Include URLs or DOIs with active hyperlinks in citations. The \textit{Semantics and Pragmatics} stylesheet \href{https://raw.githubusercontent.com/semprag/tex/master/sp.bst}{sp.bst} meets the LSA formatting requirements for the list of references, and so may be used. See \href{http://info.semprag.org}{info.semprag.org}. 
 % ------------ references --------------------------------------------------------------------------------------
 \setlength{\bibsep}{0pt plus 0.3ex}

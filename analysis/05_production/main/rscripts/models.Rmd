@@ -26,13 +26,17 @@ pd = read.csv(file="../data/pd_by_rt.csv") #response times to target's features 
 going from high difficulty-material redundant(0) to low difficulty-color redundant(1) & no redundancy(0) to redundancy(1) --> should be positive
 ```{r model1, echo=FALSE}
 table(targets$trialType)
+table(targets$redundant)
+#table(targets$gameid)
+table(targets$targetName) # some targets appear in both high-difficulty and low-difficulty trials
+table(targets$clickedobject) # multiple targets have the same object types 
 
-#centering trialType (not necessary)
+#centering trialType (not necessary - not used)
 targets = targets %>%
   mutate(trialType = as.factor(trialType)) %>%
   mutate(ctrialType = as.numeric(trialType) - mean(as.numeric(trialType)))
 
-m = glmer(redundant ~ trialType + (1|gameid) + (1|clickedobject), data=targets, family="binomial")
+m = glmer(redundant ~ trialType + (1|gameid) + (1|targetName), data=targets, family="binomial")
 summary(m)
 ```
 
@@ -52,11 +56,9 @@ tomodel = targets %>%
   mutate(redundantAdj = ifelse(trialType=="high_difficulty",as.character(clickedmaterial),as.character(clickedcolor))) %>%
   mutate(redundantAdj = ifelse(redundantAdj == "wood", "wooden", redundantAdj)) %>%
   left_join(pd_tomerge, by=c("targetName","competitorName","notCompetitorName","redundantAdj")) %>%
-  mutate(logRT = log(MeanRT)) #%>%
-  #select(targetName,competitorName,notCompetitorName,redundantAdj,sufficientAdj) %>% #for stimuli check: 31 unique rows 
-  #unique()
+  mutate(logRT = log(MeanRT))
 
-m1 = lmer(logRT ~ trialType + (1|gameid), data=tomodel,REML=F)
+m1 = lmer(logRT ~ trialType + (1+trialType) + (1|gameid) + (1|targetName), data=tomodel,REML=F) 
 summary(m1)
 ```
 
@@ -64,19 +66,14 @@ summary(m1)
 
 bigger RT = more perceptually difficulty = less redundant adjective use
 ```{r model3, echo=FALSE}
-m2 = glmer(redundant ~ trialType*MeanRT + (1|gameid) + (1|clickedobject), data=tomodel, family="binomial")
+m2 = glmer(redundant ~ trialType*MeanRT + (1+trialType) + (1|gameid) + (1|targetName), data=tomodel, family="binomial")
 summary(m2)
 ```
 
 **Same model with logRT as predictor**
 ```{r model4, echo=FALSE}
-m3 = glmer(redundant ~ trialType*logRT + (1|gameid) + (1|clickedobject), data=tomodel, family="binomial")
+m3 = glmer(redundant ~ trialType*logRT + (1+trialType) + (1|gameid) +  (1|targetName), data=tomodel, family="binomial")
 summary(m3)
-```
-
-**Model comparison btw models with RT and logRT**
-```{r model_comp2, echo=FALSE}
-anova(m2,m3)
 ```
 
 **Same model with perceptual difficulty difference score for each context (difference between RTs to target's sufficient and redundant feature)**
@@ -96,12 +93,6 @@ tomodel = targets %>%
   left_join(pd_wide, by=c("targetName","competitorName","notCompetitorName")) %>%
   mutate(diffPd = ifelse(trialType=="high_difficulty",color_RT-material_RT,material_RT-color_RT))
 
-m4 = glmer(redundant ~ diffPd + (1|gameid) + (1|clickedobject), data=tomodel, family="binomial")
+m4 = glmer(redundant ~ diffPd + (1+trialType) + (1|gameid) + (1|targetName), data=tomodel, family="binomial")
 summary(m4)
 ```
-
-**Model comparison btw models with logRT and perceptual difference score**
-```{r model_comp1, echo=FALSE}
-anova(m3,m4)
-```
-

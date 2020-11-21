@@ -101,24 +101,24 @@ exclude
 
 df = df[!(df$workerid %in% exclude$workerid),]
 ```
-
 **Proportion of correct responses**
 
 ```{r proportion, echo=FALSE}
 toplot =  df %>%
-  group_by(feature_type,feature_matching) %>%
+  group_by(feature_type) %>%
   summarise(Median=median(gaveRightAnswer),Mean=mean(gaveRightAnswer),CILow=ci.low(gaveRightAnswer),CIHigh=ci.high(gaveRightAnswer),count=n()) %>%
   ungroup() %>%
   mutate(YMin=Mean-CILow,YMax=Mean+CIHigh)
 
-ggplot(toplot, aes(x=feature_type, y=Mean, fill=feature_matching)) +
+ggplot(toplot, aes(x=feature_type, y=Mean, fill=feature_type)) +
   geom_bar(stat="identity", position= position_dodge(.9)) +
   geom_errorbar(aes(ymin=YMin,ymax=YMax),width=.25, position = position_dodge(.9)) +
-  scale_fill_manual(values=wp2) +
-  xlab("Feature_type") +
-  ylab("Proportion of correct responses")
+  scale_fill_manual(values=c("#FFC20A","#0C7BDC")) +
+  xlab("Feature type") +
+  ylab("Proportion of correct responses") +
+  theme(legend.position="none")
 
-ggsave(file="../graphs/proportion.pdf",width=6,height=3)
+ggsave(file="../graphs/proportion_for_paper.png",width=3,height=3)
 
 ```
 
@@ -214,6 +214,26 @@ ggplot(toplot, aes(x=feature_type, y=Mean, fill=feature_matching)) +
 
 ggsave(file="../graphs/rt_onlycorrect.pdf",width=6,height=3)
 ```
+**Density plot**
+
+```{r density, echo=FALSE}
+toplot =  df %>%
+  filter(gaveRightAnswer=="1") %>%
+  mutate(logRT=log(rt))
+  
+means <- ddply(toplot,"feature_type",summarise,grp.mean=mean(rt))
+
+ggplot(toplot, aes(x=rt, fill=feature_type)) +
+  geom_density(alpha=0.6) +
+  geom_vline(data=means,aes(xintercept=grp.mean, color=feature_type), linetype="dashed", show.legend = F) +
+  scale_fill_manual(values=c("#FFC20A","#0C7BDC")) +
+  scale_color_manual(values=c("#FFC20A","#0C7BDC")) +
+  xlab("Response time (ms)") +
+  labs(fill="Feature type")
+  
+ggsave(file="../graphs/density_rt_for_paper.png",width=4,height=2.5)
+```
+
 
 **RTs to color and material features (only correct responses to matching features)** 
 
@@ -226,12 +246,15 @@ toplot =  df %>%
   ungroup() %>%
   mutate(YMin=Mean-CILow,YMax=Mean+CIHigh)
 
-ggplot(toplot, aes(x=feature_type, y=Mean)) +
-  geom_bar(stat = "identity", position=position_dodge(),fill=wp[2]) +
+ggplot(toplot, aes(x=feature_type, y=Mean, fill=feature_type)) +
+  geom_bar(stat = "identity", position=position_dodge()) +
   geom_errorbar(aes(ymin = YMin, ymax = YMax),width=.2, position=position_dodge((.9))) +
   xlab("Feature type") +
-  ylab("Mean RT in msec") +
-  labs(fill = "gaveRightAnswer")
+  ylab("Mean response time (ms)") +
+  scale_fill_manual(values=c("#FFC20A","#0C7BDC")) +
+  theme(legend.position="none")
+
+ggsave(file="../graphs/rt_for_paper.png",width=3,height=3)
 ```
 
 **RTs to color and material features (only incorrect responses to matching features)** 

@@ -12,6 +12,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r import, include=FALSE}
 library(tidyverse)
+library(plyr)
 source("helpers.R")
 library(wesanderson)
 wp = wes_palette("FantasticFox1")
@@ -260,7 +261,25 @@ gr = arrange(gr, MeanRT, MeanProp)
 print(gr)
 ```
 
+Histogram of response times to color and material adjectives 
+```{r density, echo=FALSE}
+toplot =  critical %>%
+  filter(gaveRightAnswer == "1") %>%
+  mutate(logRT=log(rt))
 
+means <- ddply(toplot,"featureQuestion",summarise,grp.mean=mean(rt))
+  
+ggplot(toplot, aes(x=logRT, fill=featureQuestion)) +
+  geom_density(alpha=0.6) +
+  geom_vline(data=means,aes(xintercept=log(grp.mean), color=featureQuestion), linetype="dashed", show.legend = F) +
+  scale_fill_manual(values=c("#FFC20A","#0C7BDC")) +
+  scale_color_manual(values=c("#FFC20A","#0C7BDC")) +
+  xlab("Log-transformed response time") +
+  labs(fill="Feature type")
+
+ggsave(file="../graphs/exp3_density_logRT.png",width=4,height=2.5)
+
+```
 
 
 

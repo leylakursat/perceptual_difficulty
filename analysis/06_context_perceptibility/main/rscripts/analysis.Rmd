@@ -28,7 +28,7 @@ df$rt <- as.numeric(gsub("\\[","",df$rt))
 df$response <- as.character(gsub("\\']","",df$response))
 df$response <- as.character(gsub("\\'","",df$response))
 df$response <- as.character(gsub(" ","",df$response))
-df = df %>% rename(number_matching=correctAnsQuestion)
+df = df %>% mutate(number_matching=correctAnsQuestion)
 df$number_matching <- as.character(df$number_matching)
 
 df = df %>%
@@ -56,7 +56,8 @@ table(critical$number_matching,critical$featureQuestion)
 check = critical %>%
   group_by(contextID,condition) %>%
   count()
-#check
+
+write.csv(critical,"../data/exp3_all_pd.csv") 
 ```
 
 **Proportion of correct responses by list**

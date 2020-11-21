@@ -16,11 +16,11 @@ library(languageR)
 library(brms)
 library(lmerTest)
 library(performance)
-
 source("allFit.R")
 
 targets = read.csv("../data/targets.csv") #target selections in the production experiment
-pd = read.csv(file="../data/pd_by_rt.csv") #response times to target's features in the perceptual difficulty experiment (in context)
+pd = read.csv(file="../data/exp3_agr_pd.csv") #response times to target's features in the perceptual difficulty experiment (in context)
+pd_all = read.csv(file="../data/exp3_all_pd.csv")
 ```
 
 # Exp.2
@@ -45,12 +45,34 @@ summary(m)
 ```
 
 
-# Exp.2 & Exp.3
+# Exp.3
 **Mixed effects linear regression predicting logRT to redundant adjective from fixed effects of redundant property --> to replicate the effect from Exp1**
 
 going from high difficulty(0) to low difficulty = material to color adjectives --> logRT decreases = should be negative
 
 ```{r model2, echo=FALSE}
+# JD: this analysis should be done in exp 3, not here. here you've just imported mean RTs by item. to do this analysis properly you need to do it on the RTs you got from exp 3 directly. part of the reason this won't converge is that there isn't any logRT variability by gameid (because nobody in exp 2 took the experiment that estimated RT, so you're just getting the exact same RT for each object regardless of gameid)
+#m1 = lmer(logRT ~ ctrialType +  (1+ctrialType|gameid) + (1|targetName), data=tomodel,REML=F) 
+#summary(m1)
+
+# LK: should be fixed, pd_all has all raw RTs of exp2 (with exclusions)
+table(pd_all$featureQuestion)
+
+pd_all = pd_all %>%
+  mutate(featureQuestion = as.factor(featureQuestion)) %>%
+  mutate(cFeatureQuestion = as.numeric(featureQuestion) - mean(as.numeric(featureQuestion))) %>%
+  mutate(logRT = log(rt), rt_sec = rt/1000)
+
+m1 = lmer(logRT ~ cFeatureQuestion +  (1+cFeatureQuestion|targetname), data=pd_all,REML=F) 
+summary(m1)
+```
+
+# Exp.2 & Exp. 3
+
+**Mixed effects logistic regression predicting redundant adjective use from redundant property (color or material), RT to redundant adjective in context and their interaction**
+
+bigger RT = more perceptually difficulty = less redundant adjective use
+```{r model3, echo=FALSE}
 pd_tomerge = pd %>% 
   mutate(redundantAdj = as.character(adjQuestion)) %>%
   mutate(targetName = targetname) %>%
@@ -61,18 +83,7 @@ tomodel = targets %>%
   mutate(redundantAdj = ifelse(trialType=="high_difficulty",as.character(clickedmaterial),as.character(clickedcolor))) %>%
   mutate(redundantAdj = ifelse(redundantAdj == "wood", "wooden", redundantAdj)) %>%
   left_join(pd_tomerge, by=c("targetName","competitorName","notCompetitorName","redundantAdj")) %>%
-  mutate(logRT = log(MeanRT),MeanRT = MeanRT/1000) # JD: get log RT and code raw RTs in seconds instead of ms
-
-# JD: this analysis should be done in exp 3, not here. here you've just imported mean RTs by item. to do this analysis properly you need to do it on the RTs you got from exp 3 directly. part of the reason this won't converge is that there isn't any logRT variability by gameid (because nobody in exp 2 took the experiment that estimated RT, so you're just getting the exact same RT for each object regardless of gameid)
-m1 = lmer(logRT ~ ctrialType +  (1+ctrialType|gameid) + (1|targetName), data=tomodel,REML=F) 
-summary(m1)
-```
-
-**Mixed effects logistic regression predicting redundant adjective use from redundant property (color or material), RT to redundant adjective in context and their interaction**
-
-bigger RT = more perceptually difficulty = less redundant adjective use
-```{r model3, echo=FALSE}
-tomodel = tomodel %>% 
+  mutate(logRT = log(MeanRT),MeanRT = MeanRT/1000) %>% # JD: get log RT and code raw RTs in seconds instead of ms
   mutate(cMeanRT = MeanRT-mean(MeanRT), clogRT = logRT-mean(logRT))
 
 m2 = glmer(redundant ~ ctrialType*cMeanRT + (1+ctrialType|gameid) + (1|targetName), data=tomodel, family="binomial") # JD: i fixed the slopes. you had written "(1+trialType) + (1|gameid)", which doesn't mean anything, and i changed it to "(1+trialType|gameid)", which means "for each gameid add random intercept adjustments and random adjustments to the trialType effect. but i also used centered trial type, since that reduces collinearity".

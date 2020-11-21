@@ -15,6 +15,9 @@ library(lme4)
 library(languageR)
 library(brms)
 library(lmerTest)
+library(performance)
+
+source("allFit.R")
 
 targets = read.csv("../data/targets.csv") #target selections in the production experiment
 pd = read.csv(file="../data/pd_by_rt.csv") #response times to target's features in the perceptual difficulty experiment (in context)
@@ -27,16 +30,17 @@ going from high difficulty-material redundant(0) to low difficulty-color redunda
 ```{r model1, echo=FALSE}
 table(targets$trialType)
 table(targets$redundant)
-#table(targets$gameid)
+table(targets$trialType,targets$redundant)
+# table(targets$gameid)
 table(targets$targetName) # some targets appear in both high-difficulty and low-difficulty trials
 table(targets$clickedobject) # multiple targets have the same object types 
 
-#centering trialType (not necessary - not used)
+#centering trialType 
 targets = targets %>%
   mutate(trialType = as.factor(trialType)) %>%
   mutate(ctrialType = as.numeric(trialType) - mean(as.numeric(trialType)))
 
-m = glmer(redundant ~ trialType + (1|gameid) + (1|targetName), data=targets, family="binomial")
+m = glmer(redundant ~ ctrialType + (1+ctrialType|gameid) + (1|targetName), data=targets, family="binomial")
 summary(m)
 ```
 
@@ -53,12 +57,14 @@ pd_tomerge = pd %>%
   select(targetName,competitorName,notCompetitorName,redundantAdj,MeanRT) #62 rows (for each context we have RT for both color and material adj)
 
 tomodel = targets %>%
+  mutate(redundant = as.factor(as.character(redundant))) %>% # make sure that redundancy is stored as factor, not as integer
   mutate(redundantAdj = ifelse(trialType=="high_difficulty",as.character(clickedmaterial),as.character(clickedcolor))) %>%
   mutate(redundantAdj = ifelse(redundantAdj == "wood", "wooden", redundantAdj)) %>%
   left_join(pd_tomerge, by=c("targetName","competitorName","notCompetitorName","redundantAdj")) %>%
-  mutate(logRT = log(MeanRT))
+  mutate(logRT = log(MeanRT),MeanRT = MeanRT/1000) # JD: get log RT and code raw RTs in seconds instead of ms
 
-m1 = lmer(logRT ~ trialType + (1+trialType) + (1|gameid) + (1|targetName), data=tomodel,REML=F) 
+# JD: this analysis should be done in exp 3, not here. here you've just imported mean RTs by item. to do this analysis properly you need to do it on the RTs you got from exp 3 directly. part of the reason this won't converge is that there isn't any logRT variability by gameid (because nobody in exp 2 took the experiment that estimated RT, so you're just getting the exact same RT for each object regardless of gameid)
+m1 = lmer(logRT ~ ctrialType +  (1+ctrialType|gameid) + (1|targetName), data=tomodel,REML=F) 
 summary(m1)
 ```
 
@@ -66,14 +72,40 @@ summary(m1)
 
 bigger RT = more perceptually difficulty = less redundant adjective use
 ```{r model3, echo=FALSE}
-m2 = glmer(redundant ~ trialType*MeanRT + (1+trialType) + (1|gameid) + (1|targetName), data=tomodel, family="binomial")
+tomodel = tomodel %>% 
+  mutate(cMeanRT = MeanRT-mean(MeanRT), clogRT = logRT-mean(logRT))
+
+m2 = glmer(redundant ~ ctrialType*cMeanRT + (1+ctrialType|gameid) + (1|targetName), data=tomodel, family="binomial") # JD: i fixed the slopes. you had written "(1+trialType) + (1|gameid)", which doesn't mean anything, and i changed it to "(1+trialType|gameid)", which means "for each gameid add random intercept adjustments and random adjustments to the trialType effect. but i also used centered trial type, since that reduces collinearity".
+# the problem that remains: the model can't converge (it does converge when you get rid of the by-gameid slope for tiral type, but that's not the right model) because (i think) it can't separate the variance contributed by the trial type and the mean rt predictor
 summary(m2)
 ```
 
 **Same model with logRT as predictor**
 ```{r model4, echo=FALSE}
-m3 = glmer(redundant ~ trialType*logRT + (1+trialType) + (1|gameid) +  (1|targetName), data=tomodel, family="binomial")
+m3 = glmer(redundant ~ ctrialType*clogRT + (1|gameid) +  (1|targetName), data=tomodel, family="binomial",control=glmerControl(optimizer="bobyqa",
+                                 optCtrl=list(maxfun=2e5))) 
 summary(m3)
+check_collinearity(m3) # lots of collinearity -- estimates of trial type and log RT likely off. will have to regress one factor against the other and use residuals predictor
+
+# optimizers: bobyqa (default), Nelder_Mead, nlminbwrap, nloptwrap
+# doesn't converge in 10000 evaluations, so run it for longer:
+# ss = getME(m3,c("theta","fixef"))
+# m3.larger = update(m3,start=ss,control=glmerControl(optCtrl=list(maxfun=2e4)))
+# summary(m3.larger)
+# 
+# # try more optimizers
+# aa = allFit(m3)
+
+# the model converges just fine, but only finds that trial type affects redundancy. let's compare to the main-effects-only model:
+
+m4 = glmer(redundant ~ ctrialType + clogRT + (1+ctrialType|gameid) +  (1|targetName), data=tomodel, family="binomial")
+summary(m4)
+
+anova(m4,m3) # adding interaction term not justified. let's compare to trial-type-only model
+
+m5 = glmer(redundant ~ ctrialType + (1+ctrialType|gameid) +  (1|targetName), data=tomodel, family="binomial")
+summary(m5)
+anova(m5,m4) # adding main effect of logRT not justified
 ```
 
 **Same model with perceptual difficulty difference score for each context (difference between RTs to target's sufficient and redundant feature)**

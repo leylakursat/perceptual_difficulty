@@ -156,8 +156,38 @@ tomodel = targets %>%
   mutate(sufficientAdj = ifelse(trialType=="high_difficulty",as.character(clickedcolor),as.character(clickedmaterial))) %>%
   mutate(sufficientAdj = ifelse(sufficientAdj == "wood", "wooden", sufficientAdj)) %>% 
   left_join(pd_wide, by=c("targetName","competitorName","notCompetitorName")) %>%
-  mutate(diffPd = ifelse(trialType=="high_difficulty",color_RT-material_RT,material_RT-color_RT))
+  mutate(ratioHighLowPD = ifelse(trialType=="high_difficulty",color_RT/material_RT,material_RT/color_RT)) %>% 
+  mutate(logRatioHighLowPD = log(ratioHighLowPD))
 
-m4 = glmer(redundant ~ diffPd + (1+trialType) + (1|gameid) + (1|targetName), data=tomodel, family="binomial")
+# let's regress log ratio onto feature
+m_res = lm(logRatioHighLowPD ~ ctrialType, data=tomodel)
+summary(m_res) # higher log ratio on low difficulty trials
+
+tomodel$reslogRatioHighLowPD = residuals(m_res) # add log ratio residuals to main data frame
+
+# correlation betewen RT and feature before residualizing
+ggplot(tomodel, aes(x=trialType,y=logRatioHighLowPD)) +
+  geom_jitter(alpha=.5)
+
+# correlation betewen log ratio and feature after residualizing
+ggplot(tomodel, aes(x=trialType,y=reslogRatioHighLowPD)) +
+  geom_jitter(alpha=.5)
+
+tomodel = tomodel %>%   
+  mutate(clogRatioHighLowPD = logRatioHighLowPD-mean(logRatioHighLowPD), creslogRatioHighLowPD = reslogRatioHighLowPD-mean(reslogRatioHighLowPD)) 
+
+tomodel$redundant = as.factor(as.character(tomodel$redundant))
+
+ggplot(tomodel, aes(x=creslogRatioHighLowPD,y=ctrialType,color=redundant)) +
+  geom_point(alpha=.2)
+
+m4 = glmer(redundant ~ creslogRatioHighLowPD*ctrialType + (1+ctrialType|gameid) + (1|targetName), data=tomodel, family="binomial")
 summary(m4)
+check_collinearity(m4) # some moderate collinearity
+
+m5 = glmer(redundant ~ creslogRatioHighLowPD+ctrialType + (1+creslogRatioHighLowPD+ctrialType|gameid) + (1|targetName), data=tomodel, family="binomial")
+summary(m5)
+check_collinearity(m5) # some moderate collinearity
+
+anova(m5,m4)
 ```

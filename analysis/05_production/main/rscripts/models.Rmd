@@ -16,7 +16,9 @@ library(languageR)
 library(brms)
 library(lmerTest)
 library(performance)
+
 source("allFit.R")
+source("helpers.R")
 
 targets = read.csv("../data/targets.csv") #target selections in the production experiment
 pd = read.csv(file="../data/exp3_agr_pd.csv") #response times to target's features in the perceptual difficulty experiment (in context)
@@ -56,14 +58,17 @@ going from high difficulty(0) to low difficulty = material to color adjectives -
 #summary(m1)
 
 # LK: should be fixed, pd_all has all raw RTs of exp2 (with exclusions)
+
+# JD: OK, model throws non-convergence warnings, but it's one of the harmless ones. If you run it multiple times and it always returns the same results (which it does), we're fine. And if you use the "bobyqa" optimizer like below, it converges without warning and same values as with default optimizer. Clear effect of feature on response time in expected direction.
 table(pd_all$featureQuestion)
 
 pd_all = pd_all %>%
   mutate(featureQuestion = as.factor(featureQuestion)) %>%
   mutate(cFeatureQuestion = as.numeric(featureQuestion) - mean(as.numeric(featureQuestion))) %>%
-  mutate(logRT = log(rt), rt_sec = rt/1000)
+  mutate(logRT = log(rt), rt_sec = rt/1000, workerid=as.factor(as.character(workerid)))
 
-m1 = lmer(logRT ~ cFeatureQuestion +  (1+cFeatureQuestion|targetname), data=pd_all,REML=F) 
+m1 = lmer(logRT ~ cFeatureQuestion +  (1+cFeatureQuestion|targetname) + (1+cFeatureQuestion|workerid), data=pd_all,REML=F, control=lmerControl(optimizer="bobyqa",
+                                 optCtrl=list(maxfun=2e6))) 
 summary(m1)
 ```
 
@@ -78,46 +83,63 @@ pd_tomerge = pd %>%
   mutate(targetName = targetname) %>%
   select(targetName,competitorName,notCompetitorName,redundantAdj,MeanRT) #62 rows (for each context we have RT for both color and material adj)
 
+
+
+
 tomodel = targets %>%
   mutate(redundant = as.factor(as.character(redundant))) %>% # make sure that redundancy is stored as factor, not as integer
   mutate(redundantAdj = ifelse(trialType=="high_difficulty",as.character(clickedmaterial),as.character(clickedcolor))) %>%
   mutate(redundantAdj = ifelse(redundantAdj == "wood", "wooden", redundantAdj)) %>%
   left_join(pd_tomerge, by=c("targetName","competitorName","notCompetitorName","redundantAdj")) %>%
-  mutate(logRT = log(MeanRT),MeanRT = MeanRT/1000) %>% # JD: get log RT and code raw RTs in seconds instead of ms
-  mutate(cMeanRT = MeanRT-mean(MeanRT), clogRT = logRT-mean(logRT))
+  mutate(logRT = log(MeanRT),MeanRT = MeanRT/1000) # JD: get log RT and code raw RTs in seconds instead of ms
 
-m2 = glmer(redundant ~ ctrialType*cMeanRT + (1+ctrialType|gameid) + (1|targetName), data=tomodel, family="binomial") # JD: i fixed the slopes. you had written "(1+trialType) + (1|gameid)", which doesn't mean anything, and i changed it to "(1+trialType|gameid)", which means "for each gameid add random intercept adjustments and random adjustments to the trialType effect. but i also used centered trial type, since that reduces collinearity".
+# let's regress RT onto feature
+m_res = lm(logRT ~ ctrialType, data=tomodel)
+summary(m_res)
+
+tomodel$reslogRT = residuals(m_res) # add RT residuals to main data frame
+
+# correlation betewen RT and feature before residualizing
+ggplot(tomodel, aes(x=trialType,y=logRT)) +
+  geom_jitter(alpha=.5)
+
+# correlation betewen RT and feature after residualizing
+ggplot(tomodel, aes(x=trialType,y=reslogRT)) +
+  geom_jitter(alpha=.5)
+
+tomodel = tomodel %>%   
+  mutate(cMeanRT = MeanRT-mean(MeanRT), clogRT = logRT-mean(logRT), creslogRT = reslogRT-mean(reslogRT))
+
+ggplot(tomodel, aes(x=creslogRT,y=ctrialType,color=redundant)) +
+  geom_point(alpha=.2)
+
+
+m2 = glmer(redundant ~ ctrialType*creslogRT + (1+ctrialType*creslogRT|gameid) + (1|targetName), data=tomodel, family="binomial") 
 # the problem that remains: the model can't converge (it does converge when you get rid of the by-gameid slope for tiral type, but that's not the right model) because (i think) it can't separate the variance contributed by the trial type and the mean rt predictor
 summary(m2)
+check_collinearity(m2) # low correlations, all good
 ```
 
-**Same model with logRT as predictor**
-```{r model4, echo=FALSE}
-m3 = glmer(redundant ~ ctrialType*clogRT + (1|gameid) +  (1|targetName), data=tomodel, family="binomial",control=glmerControl(optimizer="bobyqa",
-                                 optCtrl=list(maxfun=2e5))) 
-summary(m3)
-check_collinearity(m3) # lots of collinearity -- estimates of trial type and log RT likely off. will have to regress one factor against the other and use residuals predictor
+```{r}
+agr = tomodel %>% 
+  mutate(redundant = as.numeric(as.character(redundant)), binreslogRT=cut_interval(reslogRT,10)) %>% 
+  group_by(trialType,binreslogRT) %>% 
+  summarise(Proportion = mean(redundant), CILow=ci.low(redundant),CIHigh=ci.high(redundant)) %>% 
+  ungroup() %>% 
+  mutate(YMin=Proportion-CILow,YMax=Proportion+CIHigh)
 
-# optimizers: bobyqa (default), Nelder_Mead, nlminbwrap, nloptwrap
-# doesn't converge in 10000 evaluations, so run it for longer:
-# ss = getME(m3,c("theta","fixef"))
-# m3.larger = update(m3,start=ss,control=glmerControl(optCtrl=list(maxfun=2e4)))
-# summary(m3.larger)
-# 
-# # try more optimizers
-# aa = allFit(m3)
+# no effect of RT above and beyond trial type:
+ggplot(agr, aes(x=binreslogRT,y=Proportion,color=trialType,group=trialType)) +
+  geom_point() +
+  geom_smooth() +
+  geom_errorbar(aes(ymin=YMin,ymax=YMax),width=.25) +
+  theme(axis.text.x=element_text(angle=45,hjust=1,vjust=1))
 
-# the model converges just fine, but only finds that trial type affects redundancy. let's compare to the main-effects-only model:
-
-m4 = glmer(redundant ~ ctrialType + clogRT + (1+ctrialType|gameid) +  (1|targetName), data=tomodel, family="binomial")
-summary(m4)
-
-anova(m4,m3) # adding interaction term not justified. let's compare to trial-type-only model
-
-m5 = glmer(redundant ~ ctrialType + (1+ctrialType|gameid) +  (1|targetName), data=tomodel, family="binomial")
-summary(m5)
-anova(m5,m4) # adding main effect of logRT not justified
+# histograms of mean logRTs by trial type completely disjoint. so: trial type explains difference in redundancy, but no added explanatory power from RT measure. next step: test whether relative RT explains outcome 
+ggplot(tomodel, aes(x=logRT,fill=trialType)) +
+  geom_histogram(alpha=.5)
 ```
+
 
 **Same model with perceptual difficulty difference score for each context (difference between RTs to target's sufficient and redundant feature)**
 ```{r model5, echo=FALSE}

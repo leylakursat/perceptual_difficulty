@@ -1,14 +1,14 @@
 # Fdb version 3
-["bibtex perceptual_difficulty_2"] 1606291924 "perceptual_difficulty_2.aux" "perceptual_difficulty_2.bbl" "perceptual_difficulty_2" 1606293006
+["bibtex perceptual_difficulty_2"] 1606293461 "perceptual_difficulty_2.aux" "perceptual_difficulty_2.bbl" "perceptual_difficulty_2" 1606293576
   "pd-references.bib" 1606288574 5365 a9e14393d909b06076189fa11f47a1f2 ""
-  "perceptual_difficulty_2.aux" 1606292978 6664 4ff42c05d60c818652a73e240a51b754 ""
+  "perceptual_difficulty_2.aux" 1606293543 6664 4ff42c05d60c818652a73e240a51b754 ""
   "sp.bst.bst" 0 -1 0 ""
   (generated)
-  "perceptual_difficulty_2.blg"
   "perceptual_difficulty_2.bbl"
-["pdflatex"] 1606292977 "/Users/leylakursat/Desktop/repos/perceptual_difficulty/papers/lsa/paper/perceptual_difficulty_2.tex" "/Users/leylakursat/Desktop/repos/perceptual_difficulty/papers/lsa/paper/perceptual_difficulty_2.pdf" "perceptual_difficulty_2" 1606293006
-  "/Users/leylakursat/Desktop/repos/perceptual_difficulty/papers/lsa/paper/perceptual_difficulty_2.aux" 1606292978 6664 4ff42c05d60c818652a73e240a51b754 ""
-  "/Users/leylakursat/Desktop/repos/perceptual_difficulty/papers/lsa/paper/perceptual_difficulty_2.tex" 1606293005 32216 43442ff51183a167eba00988d1c84272 ""
+  "perceptual_difficulty_2.blg"
+["pdflatex"] 1606293542 "/Users/leylakursat/Desktop/repos/perceptual_difficulty/papers/lsa/paper/perceptual_difficulty_2.tex" "/Users/leylakursat/Desktop/repos/perceptual_difficulty/papers/lsa/paper/perceptual_difficulty_2.pdf" "perceptual_difficulty_2" 1606293576
+  "/Users/leylakursat/Desktop/repos/perceptual_difficulty/papers/lsa/paper/perceptual_difficulty_2.aux" 1606293543 6664 4ff42c05d60c818652a73e240a51b754 ""
+  "/Users/leylakursat/Desktop/repos/perceptual_difficulty/papers/lsa/paper/perceptual_difficulty_2.tex" 1606293576 32216 43442ff51183a167eba00988d1c84272 ""
   "/usr/local/texlive/2018/texmf-dist/fonts/enc/dvips/base/8r.enc" 1480098666 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2018/texmf-dist/fonts/map/fontname/texfonts.map" 1511824771 3332 103109f5612ad95229751940c61aada0 ""
   "/usr/local/texlive/2018/texmf-dist/fonts/tfm/adobe/times/ptmb7t.tfm" 1480098689 2172 fd0c924230362ff848a33632ed45dc23 ""
@@ -103,19 +103,19 @@
   "/usr/local/texlive/2018/texmf.cnf" 1523934483 577 0b39adfd7c93507ff20c9c14c2f1a33f ""
   "img/exp2_trial.png" 1605948667 187296 380ba6d476e8bab917d8c0f824a6e231 ""
   "img/exp3_trial.png" 1605947936 201500 864677fd25f5bc7da6949450f07de65d ""
-  "perceptual_difficulty_2.aux" 1606292978 6664 4ff42c05d60c818652a73e240a51b754 ""
-  "perceptual_difficulty_2.bbl" 1606291924 5212 261db9d2af20fc905a842948aa349635 "bibtex perceptual_difficulty_2"
-  "perceptual_difficulty_2.out" 1606292978 875 b7aacd5ac66ea181b318d1b705ffde42 ""
-  "perceptual_difficulty_2.tex" 1606293005 32216 43442ff51183a167eba00988d1c84272 ""
+  "perceptual_difficulty_2.aux" 1606293543 6664 4ff42c05d60c818652a73e240a51b754 ""
+  "perceptual_difficulty_2.bbl" 1606293461 5212 261db9d2af20fc905a842948aa349635 "bibtex perceptual_difficulty_2"
+  "perceptual_difficulty_2.out" 1606293543 875 b7aacd5ac66ea181b318d1b705ffde42 ""
+  "perceptual_difficulty_2.tex" 1606293576 32216 43442ff51183a167eba00988d1c84272 ""
   "plots/exp1_proportion.png" 1606289353 70442 4152a0a9e302e8ee4b2408a0e58e6e43 ""
   "plots/exp1_rt.png" 1606289452 64368 362760acf6e7b1359971701dd7911a55 ""
   "plots/exp2_proportion.png" 1594806213 88167 b1bd6c14369cba440740c9a4867febc0 ""
   "plots/exp3_proportion.png" 1606290753 65259 ac3e07e39eb89fc4033cf24b73b42436 ""
-  "plots/exp3_rt.png" 1606291026 61461 566347cb864f7280974fd5c41bbbcd6b ""
+  "plots/exp3_rt.png" 1606293300 61620 9961c4d4935f8c2863b544f01ab22d05 ""
   (generated)
-  "perceptual_difficulty_2.pdf"
+  "/Users/leylakursat/Desktop/repos/perceptual_difficulty/papers/lsa/paper/perceptual_difficulty_2.pdf"
+  "perceptual_difficulty_2.log"
   "perceptual_difficulty_2.aux"
   "/Users/leylakursat/Desktop/repos/perceptual_difficulty/papers/lsa/paper/perceptual_difficulty_2.log"
-  "perceptual_difficulty_2.log"
-  "/Users/leylakursat/Desktop/repos/perceptual_difficulty/papers/lsa/paper/perceptual_difficulty_2.pdf"
   "perceptual_difficulty_2.out"
+  "perceptual_difficulty_2.pdf"

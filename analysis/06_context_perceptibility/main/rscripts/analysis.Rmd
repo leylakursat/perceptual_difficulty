@@ -58,6 +58,16 @@ check = critical %>%
   count()
 
 write.csv(critical,"../data/exp3_all_pd.csv") 
+
+tosave = critical %>%
+  mutate(adjQuestion = ifelse(adjQuestion=="wooden","wood",as.character(adjQuestion))) %>%
+  mutate(targetsfeature = ifelse(targetmaterial == adjQuestion, 1, ifelse(targetcolor == adjQuestion, 1, 0))) %>%
+  filter(targetsfeature==1) %>%
+  filter(gaveRightAnswer==1) %>%
+  select(targetname,adjQuestion,featureQuestion,rt)
+
+write.csv(tosave,"../data/exp3_targets_features.csv") 
+  
 ```
 
 **Proportion of correct responses by list**
@@ -174,13 +184,13 @@ dp_by_item =  critical %>%
 ggplot(toplot, aes(x=featureQuestion, y=Mean, fill=featureQuestion)) +
   geom_bar(stat="identity", position= position_dodge(.9)) +
   geom_errorbar(aes(ymin=YMin,ymax=YMax),width=.25, position = position_dodge(.9)) +
-  #geom_point(data=dp_by_item, aes(y=Mean),alpha=.2) +
+  geom_point(data=dp_by_item, aes(y=Mean),alpha=.2) +
   scale_fill_manual(values=c("#FFC20A","#0C7BDC")) +
-  xlab("Feature_type") +
+  xlab("Feature type") +
   ylab("Proportion of correct responses") +
   theme(legend.position="none")
 
-ggsave(file="../graphs/proportion_for_paper.png",width=3,height=3)
+ggsave(file="../graphs/proportion_for_paper_d.png",width=3,height=3)
 
 ```
 
@@ -337,6 +347,94 @@ ggsave(file="../graphs/rt_for_paper_d.png",width=3,height=3)
 
 ```
 
+```{r ercorrelation, echo=FALSE}
+View(critical)
 
+exp1 = read.csv("../../../04_randomized_tperceptibilty/main/data/exp1_all.csv")
+
+exp3_prop = critical %>%
+  filter(number_matching=="yes") %>%
+  dplyr::rename(feature_type=featureQuestion,label=targetname) %>%
+  group_by(feature_type,label) %>%
+  dplyr::summarise(Mean=mean(gaveRightAnswer)) %>%
+  mutate(condition="exp3")
+
+exp1_prop = exp1 %>% 
+  filter(feature_matching=="yes") %>%
+  group_by(feature_type,label) %>%
+  dplyr::summarise(Mean=mean(gaveRightAnswer)) %>%
+  mutate(condition="exp1") %>%
+  filter(label %in% exp3_prop$label)
+
+merged = rbind(exp1_prop,exp3_prop) %>%
+  spread(condition,Mean)
+
+ggplot(merged, aes(x=exp1, y=exp3, color=feature_type)) +
+  geom_point() +
+  geom_smooth(method=lm) +
+  xlab("Proportion of correct responses in exp1") +
+  ylab("Proportion of correct responses in exp3") +
+  labs(color="Property type") +
+  scale_color_manual(values=c("#FFC20A","#0C7BDC"))
+
+ggsave(file="../graphs/prop_correlation.png",width=6,height=4)
+
+merged2 = rbind(exp1_prop,exp3_prop) %>%
+  spread(feature_type,Mean)
+
+ggplot(merged2, aes(x=color, y=material, color=condition)) +
+  geom_point() +
+  geom_smooth(method=lm) +
+  xlab("Proportion of correct responses to color") +
+  ylab("Proportion of correct responses to material") +
+  labs(color="Experiment") +
+  scale_color_manual(values=c("#FFC20A","#0C7BDC"))
+
+ggsave(file="../graphs/prop_correlation2.png",width=6,height=4)
+
+
+```
+```{r rtcorrelation, echo=FALSE}
+exp3_rt = critical %>%
+  filter(number_matching=="yes") %>%
+  dplyr::rename(feature_type=featureQuestion,label=targetname) %>%
+  group_by(feature_type,label) %>%
+  dplyr::summarise(Mean=mean(rt)) %>%
+  mutate(condition="exp3")
+
+exp1_rt = exp1 %>% 
+  filter(feature_matching=="yes") %>%
+  group_by(feature_type,label) %>%
+  dplyr::summarise(Mean=mean(rt)) %>%
+  mutate(condition="exp1") %>%
+  filter(label %in% exp3_prop$label)
+
+merged_rt = rbind(exp1_rt,exp3_rt) %>%
+  spread(condition,Mean)
+
+ggplot(merged_rt, aes(x=exp1, y=exp3, color=feature_type)) +
+  geom_point() +
+  geom_smooth(method=lm) +
+  xlab("Mean response time in exp1 (ms)") +
+  ylab("Mean response time in exp3 (ms)") +
+  labs(color="Property type") +
+  scale_color_manual(values=c("#FFC20A","#0C7BDC"))
+
+ggsave(file="../graphs/rt_correlation.png",width=6,height=4)
+
+merged_rt2 = rbind(exp1_rt,exp3_rt) %>%
+  spread(feature_type,Mean)
+
+ggplot(merged_rt2, aes(x=color, y=material, color=condition)) +
+  geom_point() +
+  geom_smooth(method=lm) +
+  xlab("Mean response time to color") +
+  ylab("Mean response time to material") +
+  labs(color="Experiment") +
+  scale_color_manual(values=c("#FFC20A","#0C7BDC"))
+
+ggsave(file="../graphs/rt_correlation2.png",width=6,height=4)
+
+```
 
 

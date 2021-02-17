@@ -16,6 +16,9 @@ library(languageR)
 library(brms)
 library(lmerTest)
 library(performance)
+library(sjPlot)
+library(sjlabelled)
+library(sjmisc)
 
 source("allFit.R")
 source("helpers.R")
@@ -23,6 +26,8 @@ source("helpers.R")
 targets = read.csv("../data/targets.csv") #target selections in the production experiment
 pd = read.csv(file="../data/exp3_agr_pd.csv") #response times to target's features in the perceptual difficulty experiment (in context)
 pd_all = read.csv(file="../data/exp3_all_pd.csv")
+exp1 = read.csv("../../../04_randomized_tperceptibilty/main/data/exp1_correct_matching.csv") #all correct responses to matching features
+exp3 = read.csv("../data/exp3_targets_features.csv") #all correct responses to targets features
 ```
 
 # Exp.2
@@ -83,14 +88,11 @@ pd_tomerge = pd %>%
   mutate(targetName = targetname) %>%
   select(targetName,competitorName,notCompetitorName,redundantAdj,MeanRT) #62 rows (for each context we have RT for both color and material adj)
 
-
-
-
 tomodel = targets %>%
   mutate(redundant = as.factor(as.character(redundant))) %>% # make sure that redundancy is stored as factor, not as integer
   mutate(redundantAdj = ifelse(trialType=="high_difficulty",as.character(clickedmaterial),as.character(clickedcolor))) %>%
   mutate(redundantAdj = ifelse(redundantAdj == "wood", "wooden", redundantAdj)) %>%
-  left_join(pd_tomerge, by=c("targetName","competitorName","notCompetitorName","redundantAdj")) %>%
+  left_join(pd_tomerge, by=c("targetName","competitorName","notCompetitorName","redundantAdj")) %>% #merge by specific context not only redundant property
   mutate(logRT = log(MeanRT),MeanRT = MeanRT/1000) # JD: get log RT and code raw RTs in seconds instead of ms
 
 # let's regress RT onto feature
@@ -113,11 +115,23 @@ tomodel = tomodel %>%
 ggplot(tomodel, aes(x=creslogRT,y=ctrialType,color=redundant)) +
   geom_point(alpha=.2)
 
+#set_label(tomodel$redundant) <- "Redundancy"
+#set_label(tomodel$ctrialType) <- "trial type"
+#set_label(tomodel$creslogRT) <- "residualized response time (perceptual difficulty)"
 
 m2 = glmer(redundant ~ ctrialType*creslogRT + (1+ctrialType*creslogRT|gameid) + (1|targetName), data=tomodel, family="binomial") 
 # the problem that remains: the model can't converge (it does converge when you get rid of the by-gameid slope for tiral type, but that's not the right model) because (i think) it can't separate the variance contributed by the trial type and the mean rt predictor
 summary(m2)
 check_collinearity(m2) # low correlations, all good
+
+plot_model(m2, show.values=TRUE, transform = NULL, show.intercept = TRUE) +
+scale_x_discrete(labels=list(
+    ctrialType = "property type", 
+    creslogRT = "residualized response time \n (perceptual difficulty)",
+    'ctrialType:creslogRT' = "property type : residualized rt"))
+
+ggsave("../graphs/model_estimates.png",width=4,height=4)
+
 ```
 
 ```{r}
@@ -138,6 +152,17 @@ ggplot(agr, aes(x=binreslogRT,y=Proportion,color=trialType,group=trialType)) +
 # histograms of mean logRTs by trial type completely disjoint. so: trial type explains difference in redundancy, but no added explanatory power from RT measure. next step: test whether relative RT explains outcome 
 ggplot(tomodel, aes(x=logRT,fill=trialType)) +
   geom_histogram(alpha=.5)
+
+theme_set(theme_bw())
+
+ggplot(tomodel, aes(x=logRT, fill=trialType)) +
+  geom_density(alpha=0.6) +
+  xlab("Log-transformed response time") +
+  ylab("Density") +
+  labs(fill="Trial type") +
+  scale_fill_manual(values=c("#FFC20A","#0C7BDC"),labels=c("high difficulty", "low difficulty"))
+
+ggsave("../graphs/exp23_density.png", height=3,width=5)
 ```
 
 
@@ -190,4 +215,63 @@ summary(m5)
 check_collinearity(m5) # some moderate collinearity
 
 anova(m5,m4)
+```
+
+#for presentation: bins of perceptual difficulty
+```{r bins, echo=FALSE}
+unique_targets = targets %>%
+  select(targetName) %>%
+  unique() #%>%
+  #mutate(targetName = ifelse(targetName=="table_metal_silver_original","table_metal_original", ifelse(targetName=="plate_plastic_blue_original","plate_plastic_original",as.character(targetName))))
+
+exp1_relevant = exp1 %>%
+  mutate(label = ifelse(label=="table_metal_original","table_metal_silver_original", ifelse(label=="plate_plastic_original","plate_plastic_blue_original",as.character(label)))) %>%
+  filter(label %in% unique_targets$targetName) %>%
+  group_by(label,feature_type) %>%
+  dplyr::summarize(Mean=mean(rt)) %>%
+  dplyr::rename(targetname=label, featureQuestion=feature_type) %>%
+  mutate(experiment = "exp1") %>%
+  spread(featureQuestion,Mean) %>%
+  merge(production_relevant, by=c("targetname")) %>%
+  mutate(mean_redundantProp = ifelse(RedundantProperty == "color redundant", color, ifelse(RedundantProperty == "material redundant", material, NA))) %>%
+  mutate(redundantProperty = ifelse(RedundantProperty == "color redundant", "color", ifelse(RedundantProperty == "material redundant", "material", NA))) %>%
+  select(targetname,redundantProperty,mean_redundantProp,experiment)
+
+exp1_relevant$bin <- cut(exp1_relevant$mean_redundantProp, breaks = 30, labels =head(seq(from=1,to=31,by=1),-1))
+
+exp3_relevant = exp3 %>%
+  group_by(targetname,featureQuestion) %>%
+  dplyr::summarize(Mean=mean(rt),CILow=ci.low(rt),CIHigh=ci.high(rt)) %>%
+  ungroup() %>%
+  mutate(YMin=Mean-CILow,YMax=Mean+CIHigh) %>%
+  mutate(experiment = "exp3")
+
+exp3_relevant = exp3 %>%
+  group_by(targetname,featureQuestion) %>%
+  dplyr::summarize(Mean=mean(rt)) %>%
+  mutate(experiment = "exp3") %>%
+  spread(featureQuestion,Mean) %>%
+  merge(production_relevant, by=c("targetname")) %>%
+  mutate(mean_redundantProp = ifelse(RedundantProperty == "color redundant", color, ifelse(RedundantProperty == "material redundant", material, NA))) %>%
+  mutate(redundantProperty = ifelse(RedundantProperty == "color redundant", "color", ifelse(RedundantProperty == "material redundant", "material", NA))) %>%
+  select(targetname,redundantProperty,mean_redundantProp,experiment)
+
+exp3_relevant$bin <- cut(exp3_relevant$mean_redundantProp, breaks = 30, labels =head(seq(from=1,to=31,by=1),-1))
+
+production_relevant = targets %>%
+  group_by(targetName,RedundantProperty) %>%
+  dplyr::summarize(Proportion=mean(redundant)) %>%
+  dplyr::rename(targetname=targetName)
+
+experiments = rbind(exp1_relevant,exp3_relevant)
+
+merged = merge(production_relevant,experiments,by=c("targetname"))
+
+ggplot(merged, aes(x=bin, y=Proportion, color=experiment, shape=redundantProperty)) +
+  geom_point() +
+  geom_smooth(method=lm) +
+  xlab("bins of perceptual difficulty of redundant property") +
+  ylab("proportion of redundant adjective use")
+
+ggsave("../graphs/correlation.png", height=4,width=8)
 ```

@@ -26,14 +26,14 @@ df$rt <- as.character(gsub("\\[","",df$rt))
 df$response <- as.character(gsub("\\']","",df$response))
 df$response <- as.character(gsub("\\'","",df$response))
 df$response <- as.character(gsub(" ","",df$response))
-df = df %>% rename(feature_matching=correct_answer)
+df = df %>% dplyr::rename(feature_matching=correct_answer)
 
 df = df %>%
   filter(slide_number_in_experiment != "bot_check") %>%
   filter(slide_number_in_experiment != "practice_trial") %>%
   droplevels %>%
   mutate(gaveRightAnswer=ifelse(response==feature_matching,1,0)) %>%
-  mutate(id = row_number()) %>%
+  dplyr::mutate(id = row_number()) %>%
   mutate(response = ifelse(rt=="'Late'","late",response))
 
 #remove late responses
@@ -82,7 +82,7 @@ Participants with accuracy lower than 75% are excluded (11 participants)
 ```{r accexclusions, echo=FALSE}
 toplot =  df %>%
   group_by(workerid) %>%
-  summarise(Mean=mean(gaveRightAnswer),CILow=ci.low(gaveRightAnswer),CIHigh=ci.high(gaveRightAnswer)) %>%
+  dplyr::summarise(Mean=mean(gaveRightAnswer),CILow=ci.low(gaveRightAnswer),CIHigh=ci.high(gaveRightAnswer)) %>%
   ungroup() %>%
   mutate(YMin=Mean-CILow,YMax=Mean+CIHigh) %>%
   mutate(lowacc=ifelse(Mean<0.75,"1","0"))
@@ -101,6 +101,15 @@ exclude
 
 df = df[!(df$workerid %in% exclude$workerid),]
 ```
+```{r getdf, include=FALSE}
+tosave =  df %>%
+  filter(feature_matching=="yes") %>%
+  filter(gaveRightAnswer=="1")
+  
+write.csv(tosave, '../data/exp1_correct_matching.csv')
+write.csv(df, '../data/exp1_all.csv')
+```
+
 **Proportion of correct responses**
 
 ```{r proportion, echo=FALSE}

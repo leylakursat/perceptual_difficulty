@@ -336,5 +336,10 @@ ggsave(file="../graphs/by_image_incorrect_matching.pdf",width=14,height=20)
 
 ```
 
-
-
+```{r getdf, include=FALSE}
+tosave =  df %>%
+  filter(feature_matching=="'yes'") %>%
+  filter(gaveRightAnswer=="1")
+  
+write.csv(tosave, '../data/exp1_correct_matching.csv')
+```

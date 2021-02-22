@@ -50,9 +50,8 @@
 \usepackage{color}
 \usepackage[export]{adjustbox}
 
-\definecolor{Red}{RGB}{255,0,0}
-\newcommand{\red}[1]{\textcolor{Red}{#1}}
-\newcommand{\jd}[1]{\textcolor{Red}{[jd: #1]}}
+\definecolor{Pink}{RGB}{255,50,170}
+\newcommand{\jd}[1]{\textcolor{Pink}{[jd: #1]}}  
 \definecolor{Blue}{RGB}{0,100,255}
 \newcommand{\blue}[1]{\textcolor{Blue}{#1}}
 \newcommand{\lk}[1]{\textcolor{Blue}{[lk: #1]}}
@@ -98,13 +97,16 @@
 Perceptual Difficulty Differences Predict Asymmetry in Overmodification with Color and Material Adjectives
 \vskip .5em
 \normalfont
-{Leyla Kursat\symfootnote{Author: Leyla Kursat, Stanford University (\href{mailto:lkursat@stanford.edu}{lkursat@stanford.edu})}} 
-% \& Judith Degen, Stanford University (\href{mailto:jdegen@stanford.edu}{jdegen@stanford.edu}).}}
+{Leyla Kursat\symfootnote{Author: Leyla Kursat, Stanford University (\href{mailto:lkursat@stanford.edu}{lkursat@stanford.edu})}}
+% \& Judith Degen, Stanford University (\href{mailto:jdegen@stanford.edu}{jdegen@stanford.edu}).}
 \vskip .5em
 \end{center}
 
 \begin{abstract}
-When referring to objects, speakers are often more specific than they need to be for establishing unique reference. Adjectival overspecification patterns are not random, but structured: color adjectives are produced redundantly more often than size or material adjectives; color adjectives are more likely to be produced redundantly with increasing scene variation; and adjectives are more likely to be produced redundantly, the more atypical the property denoted by the adjective is for the object under discussion. The only current computational model of referring expression production that accounts jointly for all of these patterns is couched within the Rational Speech Act framework and assumes that adjectives differ in how noisy, and consequently, how useful they are for the purpose of establishing reference. One hypothesis about the nature of this noise is that it reflects the perceptual difficulty of establishing whether the property denoted by the adjective holds of the contextually relevant objects. Here, we take a first step towards testing the prediction that systematic differences in the overmodification patterns observed for color and material adjectives can be explained by a difference in perceptual difficulty of establishing whether objects are of a particular color or material. In Exp.1, we norm the perceptual difficulty associated with establishing whether an object exhibits a color or material and select objects with highest and lowest perceptual difficulty for testing in Exp. 2. In Exp. 2, we test in a reference game whether adjectives that denote more perceptually difficult properties indeed are less frequently produced redundantly. Finally in Exp. 3, we test the effect of perceptual difficulty beyond property type. We provide preliminary support for the perceptual difficulty hypothesis by showing that the propensity to redundantly use color or material adjectives may be driven by the asymmetry in the perceptual difficulty of establishing the properties that the adjectives donote.
+\jd{uncomment second author and fix formatting}
+When referring to objects, speakers are often more specific than necessary for establishing unique reference. A computational model of referring expression production that accounts for many of the key patterns in adjectival overmodification assumes that adjectives differ in how noisy (reliable), and consequently, how useful they are for  reference. Here we investigate one hypothesis about the source of the assumed adjectival noise:  that it reflects the perceptual difficulty of establishing whether the property denoted by the adjective holds of the contextually relevant objects. 
+%the prediction that systematic differences in the overmodification patterns observed for color and material adjectives can be explained by a difference in the perceptual difficulty of establishing whether objects are of a particular color or material. 
+In Exp.1, we collect perceptual difficulty norms for items that vary in color and material. In Exp. 2, we test the highest (material) and lowest (color) perceptual difficulty items in a reference game and find that material is indeed less likely to be used  redundantly, replicating previous work. In Exp. 3, we obtain norms for the tested items in a second perceptual difficulty measure with the aim of testing the effect of perceptual difficulty within property type. The overall results provide preliminary support for the hypothesis that the propensity to redundantly use color over material adjectives may be driven by the relative ease of assessing an object's color, compared to the relative difficulty of assessing its material.
 \end{abstract}
 
 \begin{keywords} %separated by semicolons
@@ -113,7 +115,7 @@ reference; perception; overinformativeness; experimental pragmatics
 
 \section{Introduction} 
 
-When referring to objects, speakers aim to be sufficiently informative in choosing which features of the object to include in their utterances. However, they are often more specific than they need to be for establishing unique reference (\citealt{Pechmann1989,GattEtAl2011,ArtsEtAl2011,KoolenEtAl2013}). Recent research has identified systematic patterns in adjectival overspecification, but the question regarding the source of these patterns remains open.
+When referring to objects, speakers are often more specific than necessary for the purpose of  establishing unique reference (\citealt{Pechmann1989,GattEtAl2011,ArtsEtAl2011,KoolenEtAl2013}). Recent research has identified systematic patterns in adjectival overspecification, but the question regarding the source of these patterns remains open.
 
 One way in which variability in the production of overinformative referring expressions is structured is through asymmetries in the redundant use of color, size and material adjectives. When size or material is the sufficient property to single out the intended referent, speakers routinely include color adjectives in their utterances (e.g., "the green plastic chair" instead of "the plastic chair" in Fig.~\ref{fig:chairs}). However, in contexts where color is sufficient for unique reference, speaker's don't tend to mention size or material redundantly (\citealt{Pechmann1989, Sedivy2003, GattEtAl2011, RubioFernandez2016, DegenEtAl2020}). Moreover, speakers' knowledge of the typicality of the properties of objects and the features of the context interact with these asymmetries. Color adjectives are more likely to be produced redundantly with increasing scene variation (\citealt{DegenEtAl2020, DaviesKatsos2013, KoolenEtAl2013}) and adjectives are more likely the be produced redundantly, the more atypical the property denoted by the adjective is for the object under discussion (\citealt{DegenEtAl2020, WesterbeekEtAl2015, Mitchell2013}).
 
@@ -263,6 +265,8 @@ There are two versions of the perceptual difficulty hypothesis. The work thus fa
 One avenue of future work is to more explicitly test the strong version of the hypothesis. The items we selected were structured such that there wasn't very much within-property variability, material being more difficult to asses than color categorically. A stronger test would specifically select for more within-property perceptual difficulty variability.
 
 Finally, the effects we found are consistent with the efficiency account of redundant adjective use and provide preliminary evidence that the noise term in \citet{DegenEtAl2020}'s computational model of referring expression production might be a function of the perceptual difficulty of properties adjectives denote. Formalizing noisy semantics and informativeness in this way also allows us to be neutral in regards to whether overmodification is a speaker-internal or listener-oriented process (\citealt{Arnold2008}). While some researchers argue that overmodification helps the speaker because the redundant attributes are more easily produced (\citealt{DaviesKatsos2013, KoolenEtAl2013}), others argue that it helps the listener by making it easier to identify the target (\citealt{FussellKraus1989a, ArtsEtAl2011,RubioFernandez2016}). Our task doesn't allow us to adjudicate between these two views. We provide evidence for the speaker internal pressure for redundantly mentioning the less perceptually difficult feature type, but remain agnostic with regards to how this aids listeners in target identification.
+
+\jd{fix all the references, make sure they follow APA guidelines. any ref that mentions a journal should include volume, issue, and pages. make sure the journal is always mentioned. make sure in proceedings the relevant letters are capitalized, eg Proceedings of the Annual Meeting etc, not Proceedings of the annual meeting}
 
 % optional: density plots for adjectives tested in each experiment (can format this better)
 % \begin{figure}[ht]

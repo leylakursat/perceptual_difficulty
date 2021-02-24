@@ -215,10 +215,12 @@ ggplot(only_other, aes(x=modifier_type, y=Mean, fill=trialType)) +
   geom_errorbar(aes(ymin = Ymin, ymax = Ymax),width=.25) +
   facet_grid(~trialType) +
   theme(legend.position = "none", axis.title.x = element_blank()) +
-  scale_fill_manual(values = c("darkolivegreen2","steelblue"))
+  #scale_fill_manual(values = c("darkolivegreen2","steelblue")) +
+  scale_fill_manual(values=c("orange","darkgreen")) +
+  ylab("Proportion of utterance")
 
   
-  scale_fill_manual(values = c("lightblue1","skyblue","deepskyblue1","dodgerblue2"))
+  #scale_fill_manual(values = c("lightblue1","skyblue","deepskyblue1","dodgerblue2"))
 
 ggsave("../graphs/prop_other_type.png", height=3, width=6)
 

@@ -1,12 +1,12 @@
 # Fdb version 3
-["bibtex ProcLingSocAmer-template"] 1604969042 "ProcLingSocAmer-template.aux" "ProcLingSocAmer-template.bbl" "ProcLingSocAmer-template" 1604969043
+["bibtex ProcLingSocAmer-template"] 1614109260 "ProcLingSocAmer-template.aux" "ProcLingSocAmer-template.bbl" "ProcLingSocAmer-template" 1614109260
   "ProcLingSocAmer-template.aux" 1604969042 1860 564dc90858fe5222ecd8bbd65cc8008c ""
   "YourBib.bib" 0 -1 0 ""
   "sp.bst.bst" 0 -1 0 ""
   (generated)
   "ProcLingSocAmer-template.bbl"
   "ProcLingSocAmer-template.blg"
-["pdflatex"] 1604969042 "/Users/leylakursat/Desktop/repos/perceptual_difficulty/papers/lsa/paper/template/ProcLingSocAmer-template.tex" "/Users/leylakursat/Desktop/repos/perceptual_difficulty/papers/lsa/paper/template/ProcLingSocAmer-template.pdf" "ProcLingSocAmer-template" 1604969043
+["pdflatex"] 1604969042 "/Users/leylakursat/Desktop/repos/perceptual_difficulty/papers/lsa/paper/template/ProcLingSocAmer-template.tex" "/Users/leylakursat/Desktop/repos/perceptual_difficulty/papers/lsa/paper/template/ProcLingSocAmer-template.pdf" "ProcLingSocAmer-template" 1614109260
   "/Users/leylakursat/Desktop/repos/perceptual_difficulty/papers/lsa/paper/template/ProcLingSocAmer-template.aux" 1604969042 1860 564dc90858fe5222ecd8bbd65cc8008c ""
   "/Users/leylakursat/Desktop/repos/perceptual_difficulty/papers/lsa/paper/template/ProcLingSocAmer-template.tex" 1604969042 11761 0fffdce563ea164bac1866be2c412283 ""
   "/usr/local/texlive/2018/texmf-dist/fonts/enc/dvips/base/8r.enc" 1480098666 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
@@ -93,9 +93,9 @@
   (generated)
   "ProcLingSocAmer-template.aux"
   "ProcLingSocAmer-template.log"
-  "/Users/leylakursat/Desktop/repos/perceptual_difficulty/papers/lsa/paper/template/ProcLingSocAmer-template.log"
   "/Users/leylakursat/Desktop/repos/perceptual_difficulty/papers/lsa/paper/ProcLingSocAmer-template.log"
   "/Users/leylakursat/Desktop/repos/perceptual_difficulty/papers/lsa/paper/ProcLingSocAmer-template.pdf"
-  "/Users/leylakursat/Desktop/repos/perceptual_difficulty/papers/lsa/paper/template/ProcLingSocAmer-template.pdf"
   "ProcLingSocAmer-template.pdf"
+  "/Users/leylakursat/Desktop/repos/perceptual_difficulty/papers/lsa/paper/template/ProcLingSocAmer-template.pdf"
   "ProcLingSocAmer-template.out"
+  "/Users/leylakursat/Desktop/repos/perceptual_difficulty/papers/lsa/paper/template/ProcLingSocAmer-template.log"

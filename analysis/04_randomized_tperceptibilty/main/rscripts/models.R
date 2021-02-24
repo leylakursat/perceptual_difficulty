@@ -16,11 +16,19 @@ df$gaveWrongAnswer=ifelse(df$gaveRightAnswer==1,0,1)
 m = glmer(gaveWrongAnswer ~ feature_type + (1|workerid), data=df, family="binomial")
 summary(m)
 
+mm = glmer(gaveWrongAnswer ~ feature_type + (1+feature_type|workerid) + (1|item), data=df, family="binomial")
+summary(mm)
+
+levels(df$feature_type)
+
 table(df$gaveWrongAnswer,df$feature_type)
 
 # 2. Predict response time from property - linear regression
 m2=lmer(logRT ~ feature_type + (1|workerid), data=df, REML=F)
 summary(m2)
+
+mm2=lmer(logRT ~ feature_type + (1+feature_type|workerid) + (1|item), data=df, REML=F)
+summary(mm2)
 
 m3=lmer(rt ~ feature_type + (1|workerid), data=df, REML=F)
 summary(m3)

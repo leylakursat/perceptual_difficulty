@@ -163,8 +163,6 @@ INPUT /usr/local/texlive/2018/texmf-dist/fonts/tfm/adobe/times/ptmri8r.tfm
 INPUT /usr/local/texlive/2018/texmf-dist/fonts/vf/adobe/times/ptmr7t.vf
 INPUT /usr/local/texlive/2018/texmf-dist/fonts/tfm/adobe/times/ptmr8r.tfm
 INPUT /usr/local/texlive/2018/texmf-dist/fonts/tfm/adobe/times/ptmrc7t.tfm
-INPUT /usr/local/texlive/2018/texmf-dist/fonts/vf/adobe/times/ptmrc7t.vf
-INPUT /usr/local/texlive/2018/texmf-dist/fonts/tfm/adobe/times/ptmr8r.tfm
 INPUT /Users/leylakursat/Desktop/repos/perceptual_difficulty/papers/lsa/paper/plots/exp1_proportion.png
 INPUT /Users/leylakursat/Desktop/repos/perceptual_difficulty/papers/lsa/paper/plots/exp1_proportion.png
 INPUT /Users/leylakursat/Desktop/repos/perceptual_difficulty/papers/lsa/paper/plots/exp1_proportion.png
@@ -172,11 +170,7 @@ INPUT /usr/local/texlive/2018/texmf-dist/fonts/tfm/adobe/times/ptmr7t.tfm
 INPUT /Users/leylakursat/Desktop/repos/perceptual_difficulty/papers/lsa/paper/plots/exp1_rt.png
 INPUT /Users/leylakursat/Desktop/repos/perceptual_difficulty/papers/lsa/paper/plots/exp1_rt.png
 INPUT /Users/leylakursat/Desktop/repos/perceptual_difficulty/papers/lsa/paper/plots/exp1_rt.png
-INPUT /usr/local/texlive/2018/texmf-dist/fonts/vf/adobe/times/ptmr7t.vf
-INPUT /usr/local/texlive/2018/texmf-dist/fonts/tfm/adobe/times/ptmr8r.tfm
-INPUT /usr/local/texlive/2018/texmf-dist/fonts/vf/adobe/times/ptmr7t.vf
-INPUT /usr/local/texlive/2018/texmf-dist/fonts/tfm/adobe/times/ptmr8r.tfm
-INPUT /usr/local/texlive/2018/texmf-dist/fonts/vf/adobe/times/ptmr7t.vf
+INPUT /usr/local/texlive/2018/texmf-dist/fonts/vf/adobe/times/ptmrc7t.vf
 INPUT /usr/local/texlive/2018/texmf-dist/fonts/tfm/adobe/times/ptmr8r.tfm
 INPUT /Users/leylakursat/Desktop/repos/perceptual_difficulty/papers/lsa/paper/img/exp2_trial.png
 INPUT /Users/leylakursat/Desktop/repos/perceptual_difficulty/papers/lsa/paper/img/exp2_trial.png
@@ -184,6 +178,12 @@ INPUT /Users/leylakursat/Desktop/repos/perceptual_difficulty/papers/lsa/paper/im
 INPUT /Users/leylakursat/Desktop/repos/perceptual_difficulty/papers/lsa/paper/img/exp3_trial.png
 INPUT /Users/leylakursat/Desktop/repos/perceptual_difficulty/papers/lsa/paper/img/exp3_trial.png
 INPUT /Users/leylakursat/Desktop/repos/perceptual_difficulty/papers/lsa/paper/img/exp3_trial.png
+INPUT /usr/local/texlive/2018/texmf-dist/fonts/vf/adobe/times/ptmr7t.vf
+INPUT /usr/local/texlive/2018/texmf-dist/fonts/tfm/adobe/times/ptmr8r.tfm
+INPUT /usr/local/texlive/2018/texmf-dist/fonts/vf/adobe/times/ptmr7t.vf
+INPUT /usr/local/texlive/2018/texmf-dist/fonts/tfm/adobe/times/ptmr8r.tfm
+INPUT /usr/local/texlive/2018/texmf-dist/fonts/vf/adobe/times/ptmr7t.vf
+INPUT /usr/local/texlive/2018/texmf-dist/fonts/tfm/adobe/times/ptmr8r.tfm
 INPUT /Users/leylakursat/Desktop/repos/perceptual_difficulty/papers/lsa/paper/plots/exp2_proportion.png
 INPUT /Users/leylakursat/Desktop/repos/perceptual_difficulty/papers/lsa/paper/plots/exp2_proportion.png
 INPUT /Users/leylakursat/Desktop/repos/perceptual_difficulty/papers/lsa/paper/plots/exp2_proportion.png

@@ -207,8 +207,7 @@ only_other = d %>%
   dplyr::summarize(Mean=mean(value),CILow=ci.low(value),CIHigh=ci.high(value)) %>%
   ungroup() %>%
   mutate(Ymin=Mean-CILow,Ymax=Mean+CIHigh) %>%
-  mutate(trialType=fct_recode(trialType,"high difficulty"="high_difficulty","low difficulty"="low_difficulty"))
-
+  mutate(trialType=fct_recode(trialType,"high difficulty \n material redundant"="high_difficulty","low difficulty \n color redundant"="low_difficulty"))
 
 ggplot(only_other, aes(x=modifier_type, y=Mean, fill=trialType)) +
   geom_bar(stat="identity") +
@@ -219,7 +218,6 @@ ggplot(only_other, aes(x=modifier_type, y=Mean, fill=trialType)) +
   scale_fill_manual(values=c("orange","darkgreen")) +
   ylab("Proportion of utterance")
 
-  
   #scale_fill_manual(values = c("lightblue1","skyblue","deepskyblue1","dodgerblue2"))
 
 ggsave("../graphs/prop_other_type.png", height=3, width=6)

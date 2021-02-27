@@ -134,7 +134,7 @@ ggplot(toplot, aes(x=feature_type, y=Mean, fill=feature_type)) +
   ylab("Proportion of correct responses") +
   theme(legend.position="none")
 
-ggsave(file="../graphs/proportion_for_paper_pp.png",width=3,height=3)
+ggsave(file="../graphs/proportion_for_paper_pp.pdf",width=3,height=3)
 
 ```
 
@@ -279,7 +279,7 @@ ggplot(toplot, aes(x=feature_type, y=Mean, fill=feature_type)) +
   scale_fill_manual(values=c("#FFC20A","#0C7BDC")) +
   theme(legend.position="none")
 
-ggsave(file="../graphs/rt_for_paper_pp.png",width=3,height=3)
+ggsave(file="../graphs/rt_for_paper_pp.pdf",width=3,height=3)
 ```
 
 **RTs to color and material features (only incorrect responses to matching features)** 

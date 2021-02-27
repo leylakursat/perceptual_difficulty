@@ -222,6 +222,27 @@ ggplot(only_other, aes(x=modifier_type, y=Mean, fill=trialType)) +
 
 ggsave("../graphs/prop_other_type.png", height=3, width=6)
 
+only_other = d %>%
+  filter(otherMod=="1") %>%
+  mutate(other=ifelse(shade=="0" & size=="0" & shape=="0",1,0)) %>%
+  gather(modifier_type,value,shade:other) %>%
+  group_by(modifier_type,trialType) %>%
+  mutate(value=as.numeric(value)) %>%
+  filter(value == "1") %>%
+  count(value) %>%
+  mutate(prop = n/301) %>%
+  mutate(trialType=fct_recode(trialType,"high difficulty \n material redundant"="high_difficulty","low difficulty \n color redundant"="low_difficulty"))
+
+ggplot(only_other, aes(x=modifier_type, y=prop, fill=trialType)) +
+  geom_bar(stat="identity") +
+  #geom_errorbar(aes(ymin = Ymin, ymax = Ymax),width=.25) +
+  facet_grid(~trialType) +
+  theme(legend.position = "none", axis.title.x = element_blank()) +
+  #scale_fill_manual(values = c("darkolivegreen2","steelblue")) +
+  scale_fill_manual(values=c("orange","darkgreen")) +
+  ylab("Proportion of utterance")
+
+ggsave("../graphs/prop_other_type_acrossf.png", height=3, width=6)
 ```
 
 **In how many trials did the listener choose the right object?**
@@ -279,6 +300,8 @@ ggplot(agr, aes(x=trialType,y=Mean,fill=RedundantProperty)) +
   facet_grid(~MentionType) + 
   scale_fill_manual(values=c("darkgreen","orange")) +
   theme(legend.position = "none",axis.title.x = element_blank(),axis.text.x = element_text(size=7))
+
+ggsave("../graphs/exp2_proportion.pdf", width=6.5, height=3.5)
 ```
 
 **Mixed effects logistic regression predicting redundant adjective use from fixed effects of redundant property, with random by-subject and by-item intercepts and slopes for redundant property**
@@ -314,7 +337,6 @@ agr = targets_other %>%
   mutate(Ymin=Mean-CIlow, Ymax=Mean+CIhigh) %>%
   mutate(trialType=fct_recode(trialType,"high difficulty\nmaterial redundant"="high_difficulty","low difficulty\ncolor redundant"="low_difficulty"))
   
-
 agr$MentionType <- factor(agr$MentionType, levels = c("onlyColor", "onlyMaterial", "onlyOther", "colorOther", "materialOther", "colorMaterial", "colorMaterialOther"))
 
 ggplot(agr, aes(x=trialType,y=Mean,fill=RedundantProperty)) +
@@ -327,6 +349,33 @@ ggplot(agr, aes(x=trialType,y=Mean,fill=RedundantProperty)) +
   theme(legend.position = "none",axis.title.x = element_blank(),axis.text.x = element_text(size=5)) 
 
 ggsave("../graphs/fulldata.pdf", width=11, height=4)
+
+agr = targets_other %>%
+  mutate(redundantOther = ifelse(SufficientProperty=="color",materialOther,ifelse(SufficientProperty=="material",colorOther,NA))) %>%
+  select(id,trialType,speakerMessages,RedundantProperty,SufficientProperty,UtteranceType,otherMod,onlyOther,redundantOther) %>%
+  filter(otherMod=="1") %>% # do we want to do this?
+  gather(MentionType, mention, onlyOther:redundantOther) %>%
+  group_by(trialType,MentionType) %>%
+  summarise(Mean=mean(mention),CIlow=ci.low(mention),CIhigh=ci.high(mention), count=n()) %>%
+  ungroup() %>%
+  mutate(Ymin=Mean-CIlow, Ymax=Mean+CIhigh) %>%
+  mutate(MentionType = case_when(MentionType == "onlyOther" ~ "only 'other' modifier", trialType == "high_difficulty" ~ "material + 'other' modifier", TRUE ~ "color + 'other' modifier")) %>%
+  mutate(trialType=fct_recode(trialType,"high difficulty\nmaterial redundant"="high_difficulty","low difficulty\ncolor redundant"="low_difficulty"))
+  
+agr$MentionType <- factor(agr$MentionType,levels = c("only 'other' modifier","material + 'other' modifier","color + 'other' modifier"))
+
+ggplot(agr, aes(x=MentionType,y=Mean,fill=trialType)) +
+  geom_bar(stat = "identity") +
+  geom_errorbar(aes(ymin = Ymin, ymax = Ymax),width=.25) +
+  xlab("Trial type") +
+  ylab("Proportion of utterance") +
+  facet_grid(~trialType, scales= "free_x") +
+  scale_fill_manual(values=c("orange","darkgreen")) +
+  theme(legend.position = "none",axis.title.x = element_blank()) #+
+  scale_x_discrete(labels=c("only 'other' modifier","material + 'other' modifier","only 'other' modifier","color + 'other' modifier"))
+
+ggsave("../graphs/other_other.pdf", width=6.5, height=3.5)
+
 ```
 
 ## Fillers

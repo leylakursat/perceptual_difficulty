@@ -189,11 +189,11 @@ ggplot(toplot, aes(x=featureQuestion, y=Mean, fill=featureQuestion)) +
   geom_errorbar(aes(ymin=YMin,ymax=YMax),width=.25, position = position_dodge(.9)) +
   geom_point(data=dp_by_item, aes(y=Mean),alpha=.2) +
   scale_fill_manual(values=c("#FFC20A","#0C7BDC")) +
-  xlab("Feature type") +
+  xlab("Property type") +
   ylab("Proportion of correct responses") +
   theme(legend.position="none")
 
-ggsave(file="../graphs/proportion_for_paper_d.png",width=3,height=3)
+ggsave(file="../graphs/proportion_for_paper_d.pdf",width=3,height=3)
 
 ```
 
@@ -341,12 +341,12 @@ ggplot(toplot, aes(x=featureQuestion, y=Mean, fill=featureQuestion)) +
   geom_bar(stat = "identity", position=position_dodge()) +
   geom_errorbar(aes(ymin = YMin, ymax = YMax),width=.2, position=position_dodge((.9))) +
   geom_point(data=dp_by_item, aes(y=Mean),alpha=.2) +
-  xlab("Feature type") +
+  xlab("Property type") +
   ylab("Mean response time (ms)") +
   scale_fill_manual(values=c("#FFC20A","#0C7BDC")) +
   theme(legend.position="none")
 
-ggsave(file="../graphs/rt_for_paper_d.png",width=3,height=3)
+ggsave(file="../graphs/rt_for_paper_d.pdf",width=3,height=3)
 
 ```
 

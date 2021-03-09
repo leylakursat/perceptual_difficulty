@@ -172,8 +172,8 @@ pd_wide = pd %>%
   mutate(targetName = targetname) %>%
   select(targetName,competitorName,notCompetitorName,featureQuestion,MeanRT) %>%
   spread(featureQuestion,MeanRT) %>%
-  rename(color_RT = color) %>%
-  rename(material_RT = material)
+  mutate(color_RT = color) %>%
+  mutate(material_RT = material)
 
 tomodel = targets %>%
   mutate(redundantAdj = ifelse(trialType=="high_difficulty",as.character(clickedmaterial),as.character(clickedcolor))) %>%
